@@ -1,4 +1,4 @@
-package crawler.weibo.console;
+package crawler.weibo.gui;
 
 import java.io.*;
 

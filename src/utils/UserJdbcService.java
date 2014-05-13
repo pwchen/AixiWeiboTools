@@ -16,6 +16,7 @@ import oracle.sql.CLOB;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import crawler.weibo.dao.JDBCUtilSingle;
 import crawler.weibo.model.WeiboUser;
 
 public class UserJdbcService {

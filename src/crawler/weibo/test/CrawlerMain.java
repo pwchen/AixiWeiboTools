@@ -26,10 +26,10 @@ import org.apache.http.client.HttpClient;
 import org.json.JSONException;
 
 import utils.FileUtil;
-import crawler.weibo.console.ConsoleTextArea;
+import crawler.weibo.gui.ConsoleTextArea;
 import crawler.weibo.login.WeiboLogin;
-import crawler.weibo.thread.GetMessageMain;
-import crawler.weibo.thread.GetUserInfoThread;
+import crawler.weibo.service.GetMessageMain;
+import crawler.weibo.service.GetUserInfoThread;
 
 public class CrawlerMain extends JFrame {
 	/**

@@ -7,7 +7,7 @@ import utils.FileUtil;
 import utils.UserJdbcService;
 import crawler.weibo.login.WeiboLogin;
 import crawler.weibo.model.WeiboUser;
-import crawler.weibo.thread.GetUserInfoThread;
+import crawler.weibo.service.GetUserInfoThread;
 
 public class Test {
 

@@ -1,4 +1,4 @@
-package crawler.weibo.thread;
+package crawler.weibo.service;
 
 import java.util.ArrayDeque;
 import java.util.List;

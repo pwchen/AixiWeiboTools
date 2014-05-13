@@ -1,4 +1,4 @@
-package crawler.weibo.thread;
+package crawler.weibo.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

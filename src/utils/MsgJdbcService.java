@@ -9,6 +9,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import crawler.weibo.dao.JDBCUtilSingle;
 import crawler.weibo.model.WeiboMsg;
 
 public class MsgJdbcService {

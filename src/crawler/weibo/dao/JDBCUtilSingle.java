@@ -1,4 +1,4 @@
-package utils;
+package crawler.weibo.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
