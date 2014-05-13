@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.gdut.utils.PropertyUtils;
-import cn.edu.gdut.utils.UserJdbcService;
+import utils.PropertyUtils;
+import utils.UserJdbcService;
 
 public class CrawlUserConnection {
 	private static int MaxThreadSize = PropertyUtils.getMaxThreadCount();

@@ -6,7 +6,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.gdut.weibo.model.WeiboUser;
+import crawler.weibo.model.WeiboUser;
 
 public class CrawUserConnectionFromOneUser {
 	private static final Log logger = LogFactory

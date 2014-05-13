@@ -11,9 +11,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import cn.edu.gdut.utils.FileUtils;
-import cn.edu.gdut.weibo.login.WeiboLoginHttpClientUtils;
-import cn.edu.gdut.weibo.model.WeiboUser;
+import utils.FileUtils;
+import crawler.weibo.login.WeiboLoginHttpClientUtils;
+import crawler.weibo.model.WeiboUser;
 
 /**
  * 第一次以个人主页url抓取网页，分析后调用相应的接口，接口返回的是json

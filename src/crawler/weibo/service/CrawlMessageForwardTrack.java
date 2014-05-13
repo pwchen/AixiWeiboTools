@@ -17,8 +17,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import cn.edu.gdut.utils.FileUtils;
-import cn.edu.gdut.weibo.login.WeiboLoginHttpClientUtils;
+import utils.FileUtils;
+import crawler.weibo.login.WeiboLoginHttpClientUtils;
 
 public class CrawlMessageForwardTrack {
 

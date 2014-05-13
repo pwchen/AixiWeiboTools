@@ -3,9 +3,8 @@ package crawler.weibo.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import cn.edu.gdut.utils.SimpleUserParser;
-import cn.edu.gdut.utils.UserJdbcService;
-import cn.edu.gdut.weibo.model.WeiboUser;
+import utils.UserJdbcService;
+import crawler.weibo.model.WeiboUser;
 
 public class CrawlUserAndFollowsThread implements Runnable {
 	CrawlUserConnection cc;
