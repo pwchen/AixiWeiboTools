@@ -1,7 +1,6 @@
 package crawler.weibo.login;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.List;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,10 +23,11 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import utils.CrawlerContext;
 import utils.FileUtils;
-import utils.PropertyUtils;
 
 /**
+ * 微博登陆器，根据最大次数自动换号
  * 
  * @author Joe
  * 
@@ -39,26 +38,34 @@ public class WeiboLoginHttpClientUtils {
 			+ "5A87AC253062882729293E5506350508E7F9AA3BB77F4333231490F915F6D63C55FE2F08A49B353F444AD39"
 			+ "93CACC02DB784ABBB8E42A9B1BBFFFB38BE18D78E87A0E41B9B8F73A928EE0CCEE"
 			+ "1F6739884B9777E4FE9E88A1BBE495927AC4A799B3181D6442443";
-	public static String[] userNameList = PropertyUtils.getUname().split(",");
-	public static String passwd = PropertyUtils.getPwd();
-	public static int maxReqCount = PropertyUtils.getReqcount();
-	public static int failureCount = PropertyUtils.getFailureCount();
+	public static String[] userNameList = CrawlerContext.getContext()
+			.getUserNameList();
+	public static String passwd = CrawlerContext.getContext().getCommonPwd();
+	public static int requestNumber = CrawlerContext.getContext()
+			.getRequestNumber();// 最大请求次数
+	public static int failureCount = CrawlerContext.getContext()
+			.getFailureNumber();// 最大连接失败的次数
 	public static String cookie = initCookieString();
 	public static HttpClient httpClient = null;
-	public static int uNum = 0;
+	public static int currentUserIndex = 0; // 当前用户的编号
 	public static boolean expireClient = false;// 登陆过期
-	public static String userName = userNameList[uNum];
+	public static String nextUserName = userNameList[currentUserIndex];
 	public static int reqCount = 0;
 
 	private static final Log logger = LogFactory
 			.getLog(WeiboLoginHttpClientUtils.class);
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 2000; i++) {
+		for (int i = 0; i < 20000; i++) {
 			getLoginhttpClient();
 		}
 	}
 
+	/**
+	 * 获取一个已经登陆的客户端
+	 * 
+	 * @return HttpClient
+	 */
 	public synchronized static HttpClient getLoginhttpClient() {
 		if (httpClient == null) {
 			int i = 0;
@@ -69,14 +76,16 @@ public class WeiboLoginHttpClientUtils {
 				if (httpClient != null) {
 					break;
 				}
-				if (++uNum >= userNameList.length) {
-					uNum = 0;
+				if (++currentUserIndex >= userNameList.length) {// 换下一个用户
+					currentUserIndex = 0;
 				}
-				userName = userNameList[uNum];
+				nextUserName = userNameList[currentUserIndex];
 			}
 		}
-		if (++reqCount >= maxReqCount) {// 请求次数超过最大请求，换号
-			maxReqCount = (int) (PropertyUtils.getReqcount() - Math.random() * 200);
+		int randomNumber = (int) Math.random() * 500;
+		if (++reqCount >= requestNumber - randomNumber) {// 请求次数超过最大请求，换号
+			logger.warn("当前请求次数reqCount:" + reqCount + ".请求次数超过最大请求，换号");
+			requestNumber = (int) (requestNumber - Math.random() * 200);
 			expireClient = true;
 			return changeLoginAccount();
 		}
@@ -85,16 +94,20 @@ public class WeiboLoginHttpClientUtils {
 
 	public synchronized static HttpClient changeLoginAccount() {
 		if (expireClient) {
-			logger.error("当前请求次数reqCount:" + reqCount);
 			httpClient = null;
-			if (++uNum >= userNameList.length) {
-				uNum = 0;
+			if (++currentUserIndex >= userNameList.length) {
+				currentUserIndex = 0;
 			}
-			userName = userNameList[uNum];
+			nextUserName = userNameList[currentUserIndex];
 		}
 		return getLoginhttpClient();
 	}
 
+	/**
+	 * 登陆过程
+	 * 
+	 * @return
+	 */
 	private static HttpClient getLoginStatus() {
 
 		final HttpClient client = HttpConnectionManager.getHttpClient();
@@ -131,7 +144,7 @@ public class WeiboLoginHttpClientUtils {
 		nvps.add(new BasicNameValuePair("vsnf", "1"));
 		nvps.add(new BasicNameValuePair("ssosimplelogin", "1"));
 		nvps.add(new BasicNameValuePair("vsnval", ""));
-		nvps.add(new BasicNameValuePair("su", encodeUserName(userName)));
+		nvps.add(new BasicNameValuePair("su", encodeUserName(nextUserName)));
 		nvps.add(new BasicNameValuePair("service", "miniblog"));
 		nvps.add(new BasicNameValuePair("servertime", servertime + ""));
 		nvps.add(new BasicNameValuePair("nonce", nonce));
@@ -154,10 +167,10 @@ public class WeiboLoginHttpClientUtils {
 						.replace("Set-Cookie:", "").trim();
 				cookie = cookiestr.substring(0, cookiestr.indexOf(";")) + ";";
 			}
-			cookie += "un=" + userName;
+			cookie += "un=" + nextUserName;
 			String entity = EntityUtils.toString(response.getEntity());
 			if (entity.indexOf("retcode=4049") != -1) {
-				logger.error(userName + "登陆失败！需要输入验证码！系统即将退出！");
+				logger.error(nextUserName + "登陆失败！需要输入验证码！系统即将退出！");
 				// FileUtils.shutDoun();//关机
 				System.exit(1);
 			}
@@ -184,7 +197,7 @@ public class WeiboLoginHttpClientUtils {
 				e.printStackTrace();
 			}
 
-			logger.info("用户名:" + userName + "登陆成功！\n" + s);
+			logger.info("用户名:" + nextUserName + "登陆成功！\n" + s);
 		} catch (ParseException e) {
 			logger.error(e);
 			return null;
@@ -254,99 +267,32 @@ public class WeiboLoginHttpClientUtils {
 	}
 
 	/**
-	 * 获取制定url的网页内容
+	 * 获取当前时间戳
 	 * 
-	 * @param client
-	 * @param personalUrl
 	 * @return
 	 */
-	public static String getRawHtml(String url) {
-		HttpClient client = getLoginhttpClient();
-		HttpGet getMethod = new HttpGet(url);
-		String entityStr = null;
-		InputStream in = null;
-		int count = 0;
-		boolean ex = true;// 出异常
-		while (count++ < failureCount && ex) {
-			ex = false;
-			try {
-				HttpResponse response = client.execute(getMethod);
-				HttpEntity entity = response.getEntity();
-				if (entity != null) {
-					in = entity.getContent(); // 之前没使用这个造成了大量异常抛出，只要是
-				}
-				entityStr = EntityUtils.toString(entity, "utf-8");
-			} catch (IOException e) {
-				ex = true;
-				logger.warn(e);
-				continue;
-			} finally {
-				if (in != null) {
-					try {
-						in.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			if (entityStr.indexOf("抱歉，网络繁忙") != -1) {
-				expireClient = true;
-				changeLoginAccount();
-				logger.error("抱歉，网络繁忙:" + url);
-				ex = true;
-			} else if (entityStr.indexOf("正确输入验证码答案") != -1) {
-				expireClient = true;
-				changeLoginAccount();
-				logger.error("正确输入验证码答案:" + url);
-				ex = true;
-			} else if (entityStr
-					.indexOf("æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿") != -1) {
-				FileUtils.saveToFile(entityStr, "tempuft.html", "utf-8");
-				FileUtils.saveToFile(entityStr, "tempgbk.html", "gbk");
-				logger.error("乱码异常:æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿"
-						+ url);
-				try {
-					Thread.sleep(6000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				return entityStr;
-			} else if (entityStr.indexOf("您当前访问的帐号异常") != -1) {
-				expireClient = true;
-				changeLoginAccount();
-				logger.error("您当前访问的帐号异常:" + url);
-				ex = true;
-			} else if (entityStr
-					.indexOf("The server returned an invalid or incomplete response") != -1) {
-				expireClient = true;
-				changeLoginAccount();
-				logger.error("502 Bad Gateway,The server returned an invalid or incomplete response:"
-						+ url);
-				ex = true;
-			} else if (entityStr.indexOf("页面地址有误") != -1) {
-				logger.warn("页面地址有误，或者该页面不存在:" + url);
-				return null;
-			}
-		}
-		if (count > failureCount) {
-			logger.error("超时次数超过最大次数:" + failureCount + "放弃此次请求。");
-		} else if (entityStr == null) {
-			logger.error("未知原因:" + url);
-		}
-		return entityStr;
-	}
-
 	private static String getCurrentTime() {
 		long servertime = new Date().getTime() / 1000;
 		return String.valueOf(servertime);
 	}
 
-	private static String encodeUserName(String email) {
-		email = email.replaceFirst("@", "%40");// MzM3MjQwNTUyJTQwcXEuY29t
-		email = Base64.encodeBase64String(email.getBytes());
-		return email;
+	/**
+	 * 对用户名加密
+	 * 
+	 * @param email
+	 * @return
+	 */
+	private static String encodeUserName(String un) {
+		un = un.replaceFirst("@", "%40");// MzM3MjQwNTUyJTQwcXEuY29t
+		un = Base64.encodeBase64String(un.getBytes());
+		return un;
 	}
 
+	/**
+	 * 初始化Cookie
+	 * 
+	 * @return
+	 */
 	private static String initCookieString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("wvr=4;");

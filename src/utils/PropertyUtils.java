@@ -6,58 +6,74 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class PropertyUtils {
 
-	private static Properties p = null;
+	private static final Log logger = LogFactory.getLog(PropertyUtils.class);
 
-	private static Properties getProperties() {
-		if (p == null) {
-			synchronized (PropertyUtils.class) {
-				if (p == null) {
-					p = new Properties();
-					try {
-						InputStream in = new FileInputStream(new File(
-								"img/account.properties"));
-						p.load(in);
-						in.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-						return null;
-					}
-				}
-			}
+	/**
+	 * 获取一个默认的配置，默认加载img/account.properties
+	 * 
+	 * @return
+	 */
+	public static Properties getDefaultProperties() {
+		Properties p = new Properties();
+		try {
+			InputStream in = new FileInputStream(new File(
+					"img/account.properties"));
+			p.load(in);
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
 		return p;
 	}
 
 	/**
-	 * 获取微博登录用户名
+	 * 根据配置文件路径获取一个指定的配置
 	 * 
+	 * @param path
 	 * @return
 	 */
-	public static String getUname() {
-		return getProperties().getProperty("uname");
+	public static Properties getPropertiesByPath(String path) {
+		Properties p = new Properties();
+		try {
+			InputStream in = new FileInputStream(new File(path));
+			p.load(in);
+			in.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return p;
 	}
 
 	/**
-	 * 获取微博登录密码
+	 * 获取String配置属性
 	 * 
 	 * @return
 	 */
-	public static String getPwd() {
-		return getProperties().getProperty("pwd");
+	public static String getStringProperty(Properties p, String key) {
+		return p.getProperty(key);
 	}
 
-	public static int getFailureCount() {
-		return Integer.parseInt(getProperties().getProperty("failurecount"));
+	/**
+	 * 获取int配置属性,若不能解析，将返回0
+	 * 
+	 * @return
+	 */
+	public static int getIntProperty(Properties p, String key) {
+		int value = 0;
+		String str = p.getProperty(key);
+		try {
+			value = Integer.parseInt(str);
+		} catch (NumberFormatException e) {
+			logger.error("未能将字符串" + str + "转换成数字！");
+			return 0;
+		}
+		return value;
 	}
-
-	public static int getMaxThreadCount() {
-		return Integer.parseInt(getProperties().getProperty("threadcount"));
-	}
-
-	public static int getReqcount() {
-		return Integer.parseInt(getProperties().getProperty("reqcount"));
-	}
-
 }
