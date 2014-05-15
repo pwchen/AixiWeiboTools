@@ -9,7 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
 
 import utils.FileUtil;
-import utils.UserJdbcService;
+import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboUser;
 
 public class GetMessageMain {

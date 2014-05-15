@@ -8,15 +8,15 @@ import org.apache.commons.logging.LogFactory;
 
 import crawler.weibo.model.WeiboUser;
 
-public class CrawUserConnectionFromOneUser {
+public class CrawUserRelationsByOneUser {
 	private static final Log logger = LogFactory
-			.getLog(CrawUserConnectionFromOneUser.class);
+			.getLog(CrawUserRelationsByOneUser.class);
 
 	public static void main(String[] args) {
 		String firstUid = "1197161814";// "1197161814：李开复";"1266321801:姚晨""1936617550自己"
 		Long[] uIdArr = crawlerSigleUser(firstUid);
 		logger.info("获取该用户粉丝及关注用户数量：" + uIdArr.length);
-		new CrawlUserConnection(uIdArr, uIdArr.length).getUserConnection();
+		new CrawlUserRelations(uIdArr, uIdArr.length).getUserConnection();
 		// ExtractNodesFromOracle.main(new String[] { "uId", firstUid });
 	}
 

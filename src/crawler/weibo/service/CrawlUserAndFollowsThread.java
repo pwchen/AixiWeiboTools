@@ -3,16 +3,18 @@ package crawler.weibo.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import utils.UserJdbcService;
+import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboUser;
+import crawler.weibo.service.parser.SimpleUserParser;
+import crawler.weibo.service.parser.UserParser;
 
 public class CrawlUserAndFollowsThread implements Runnable {
-	CrawlUserConnection cc;
+	CrawlUserRelations cc;
 	UserParser userParser = new UserParser();
 	private static final Log logger = LogFactory
 			.getLog(CrawlUserAndFollowsThread.class);
 
-	CrawlUserAndFollowsThread(CrawlUserConnection cc) {
+	CrawlUserAndFollowsThread(CrawlUserRelations cc) {
 		this.cc = cc;
 	}
 
@@ -77,7 +79,7 @@ public class CrawlUserAndFollowsThread implements Runnable {
 			if (oWeiboUser != null) {
 				return oWeiboUser;
 			} else {
-				if (!CrawlUserConnection.checkUserIdInUserIdList(userId)) {// 在UserIdList没有找到该用户，自己动手去爬
+				if (!CrawlUserRelations.checkUserIdInUserIdList(userId)) {// 在UserIdList没有找到该用户，自己动手去爬
 					WeiboUser weiboUser = SimpleUserParser
 							.getSimpleWeiboUserInfo(String.valueOf(userId));
 					if (weiboUser == null) {
@@ -106,7 +108,7 @@ public class CrawlUserAndFollowsThread implements Runnable {
 				}
 			}
 		} else {// 不需要返回该用户，该用户存在直接返回null
-			if (!CrawlUserConnection.checkUserIdInUserIdList(userId)) {// 若UserIdList中无该用户则加入该用户Id,开始爬这个用户
+			if (!CrawlUserRelations.checkUserIdInUserIdList(userId)) {// 若UserIdList中无该用户则加入该用户Id,开始爬这个用户
 				WeiboUser weiboUser = SimpleUserParser
 						.getSimpleWeiboUserInfo(String.valueOf(userId));
 				if (weiboUser == null) {

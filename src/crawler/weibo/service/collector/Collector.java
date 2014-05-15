@@ -13,7 +13,7 @@ import org.apache.http.util.EntityUtils;
 
 import utils.CrawlerContext;
 import utils.FileUtils;
-import crawler.weibo.login.WeiboLoginHttpClientUtils;
+import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
 public class Collector {
 	private static final Log logger = LogFactory.getLog(Collector.class);
@@ -43,7 +43,7 @@ public class Collector {
 				HttpResponse response = client.execute(getMethod);
 				HttpEntity entity = response.getEntity();
 				if (entity != null) {
-					in = entity.getContent(); // 之前没使用这个造成了大量异常抛出，只要是
+					in = entity.getContent(); // 之前没使用这个造成了大量异常抛出
 				}
 				entityStr = EntityUtils.toString(entity, "utf-8");
 			} catch (IOException e) {
@@ -60,12 +60,11 @@ public class Collector {
 				}
 			}
 			if (entityStr.indexOf("抱歉，网络繁忙") != -1) {
-
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("抱歉，网络繁忙:" + url);
 				ex = true;
 			} else if (entityStr.indexOf("正确输入验证码答案") != -1) {
-				WeiboLoginHttpClientUtils.expireClient = true;
+				WeiboLoginHttpClientUtils.expireClient = true;//账号异常，需要换号了
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("正确输入验证码答案:" + url);
 				ex = true;

@@ -1,4 +1,4 @@
-package utils;
+package crawler.weibo.dao;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -9,14 +9,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import oracle.sql.CLOB;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import crawler.weibo.dao.JDBCUtilSingle;
 import crawler.weibo.model.WeiboUser;
 
 public class UserJdbcService {
@@ -25,6 +23,11 @@ public class UserJdbcService {
 	private static final Log logger = LogFactory.getLog(UserJdbcService.class);
 	private static UserJdbcService userJdbcService = null;
 
+	/**
+	 * 获取一个单例Service
+	 * 
+	 * @return
+	 */
 	public static UserJdbcService getInstance() {
 		if (userJdbcService == null) {
 			synchronized (UserJdbcService.class) {
@@ -36,52 +39,59 @@ public class UserJdbcService {
 		return userJdbcService;
 	}
 
-	public synchronized List<String> getUserIDfromUser() {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		List<String> list = null;
-		String sql = "select userid from T_WEIBO_CRAWLER_USER t where t.follow_num<500 and t.message_num>5000";
-		try {
-			pstmt = oconn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			list = new ArrayList<String>();
-			while (rs.next()) {
-				list.add(rs.getString("userid"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return list;
-	}
-
 	/**
-	 * 从用户ID队列中取出最早的一条
+	 * 从数据库中取出所有用户的ID
 	 * 
 	 * @return
 	 */
-	public synchronized String getUserIDfromQueue() {
+	public synchronized ArrayList<String> getUserIdList() {
+		ArrayList<String> userIdList = new ArrayList<String>();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select userid from (select userid from T_WEIBO_CRAWLER_QUEUE t where t.is_success='0' order by t.update_time) where rownum=1";
+		String sql = "select userid  from t_weibo_user_info";
 		try {
 			pstmt = oconn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
+				userIdList.add(rs.getString("userid"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.error(e);
+		} finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		logger.info("在数据库中获得用户Id数量" + userIdList.size());
+		return userIdList;
+	}
+
+	/**
+	 * 从数据库中取出所有用户的ID,放入带索引的ArrayList
+	 * 
+	 * @return
+	 */
+	public synchronized ArrayList<Long>[] getUserIdListArray(int base) {
+		int count = 0;
+		ArrayList<Long>[] userIdListArr = new ArrayList[base];
+		for (int i = 0; i < base; i++) {
+			userIdListArr[i] = new ArrayList<Long>();
+		}
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select userid  from t_weibo_user_info";
+		try {
+			pstmt = oconn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
 				String userId = rs.getString("userid");
-				sql = "update T_WEIBO_CRAWLER_QUEUE t set t.is_success='1' where t.userid='"
-						+ userId + "'";
-				pstmt.close();
-				pstmt = oconn.prepareStatement(sql);
-				pstmt.executeUpdate();
-				return userId;
+				long userL = Long.parseLong(userId);
+				userIdListArr[(int) (userL % base)].add(userL);
+				count++;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -94,132 +104,16 @@ public class UserJdbcService {
 				e.printStackTrace();
 			}
 		}
-		return null;
-	}
-
-	/**
-	 * 将队列中is_success置为0
-	 * 
-	 * @param userId
-	 */
-	public synchronized void recoverUserIDfromQueue(String userId) {
-		PreparedStatement pstmt = null;
-		String sql = "update T_WEIBO_CRAWLER_QUEUE t set t.is_success='0',t.update_time=? where t.userid='"
-				+ userId + "'";
-		try {
-			pstmt = oconn.prepareStatement(sql);
-			pstmt.setTimestamp(1, new Timestamp(new Date().getTime()));
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
-		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-
-	/**
-	 * 更新列队中的用户id，is_success置为0，updatenum+1
-	 * 
-	 * @param userId
-	 */
-	public synchronized void updateUserIdfomQueue(String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select * from T_WEIBO_CRAWLER_QUEUE t where t.userid='"
-				+ userId + "'";
-		int updateNum = 0;
-		try {
-			pstmt = oconn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				updateNum = rs.getInt("UPDATE_NUM");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		sql = "update T_WEIBO_CRAWLER_QUEUE t set t.is_success='0',t.update_num=?,t.update_time=? where t.userid=?";
-		try {
-			pstmt = oconn.prepareStatement(sql);
-			pstmt.setInt(1, updateNum + 1);
-			pstmt.setTimestamp(2, new Timestamp(new Date().getTime()));
-			pstmt.setString(3, userId);
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
-		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	/**
-	 * 向队列中添加一个用户ID
-	 * 
-	 * @param userId
-	 */
-	public synchronized void addUserIDfromQueue(String userId) {
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = "select userid from T_WEIBO_CRAWLER_QUEUE t where t.userid='"
-				+ userId + "'";
-		try {
-			pstmt = oconn.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			if (!rs.next()) {
-				rs.close();
-				pstmt.close();
-				sql = "insert into T_WEIBO_CRAWLER_QUEUE (userid,create_time,update_time) values (?,?,?)";
-				pstmt = oconn.prepareStatement(sql);
-				pstmt.setString(1, userId);
-				Timestamp timestamp = new Timestamp(
-						new java.util.Date().getTime());
-				pstmt.setTimestamp(2, timestamp);
-				pstmt.setTimestamp(3, timestamp);
-				pstmt.executeUpdate();
-				return;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
-		} finally {
-			try {
-				rs.close();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public boolean needUpdate(WeiboUser oWeiboUser, WeiboUser weiboUser) {
-		int oldSum = oWeiboUser.getMessageNum() + oWeiboUser.getFollowNum();
-		int newSum = weiboUser.getMessageNum() + weiboUser.getFollowNum();
-		return newSum > oldSum;
+		logger.info("在数据库中获得用户Id数量" + count);
+		return userIdListArr;
 	}
 
 	public synchronized WeiboUser getWeiboUser(String userId) {
+		// logger.info("开始获取用户ID为" + userId + "的用户信息...");
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		if (userId != null) {
-			String sql = "select * from t_weibo_crawler_user t where t.userid='"
+			String sql = "select * from t_weibo_user_info t where t.userid='"
 					+ userId + "'";
 			try {
 				pstmt = oconn.prepareStatement(sql);
@@ -242,6 +136,7 @@ public class UserJdbcService {
 					weiboUser.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 					weiboUser.setVerifyInfo(rs.getString("VERIFY_INFO"));
 					weiboUser.setDaren(rs.getString("DAREN"));
+					weiboUser.setVip(rs.getString("VIP"));
 					weiboUser.setBirthday(rs.getString("BIRTHDAY"));
 					weiboUser.setQq(rs.getString("QQ"));
 					weiboUser.setMsn(rs.getString("MSN"));
@@ -254,7 +149,6 @@ public class UserJdbcService {
 					weiboUser.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
 					weiboUser.setFansUserId(rs.getString("FANS_USERID"));
 					weiboUser.setDengji(rs.getString("DENGJI"));
-					weiboUser.setMsgExistent(rs.getString("MSG_EXISTENT"));
 					return weiboUser;
 				}
 			} catch (SQLException e) {
@@ -270,6 +164,96 @@ public class UserJdbcService {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * 插入微博用户信息到微博用户表，并将插入结果返回用户列队
+	 * 
+	 * @param weiboUser
+	 */
+	public synchronized int inSertWeiboUser(WeiboUser weiboUser) {
+		PreparedStatement pstmt = null;
+		int flag = 0;
+		String userId = weiboUser.getUserId();
+		if (userId == null)
+			return 0;
+		String screenName = weiboUser.getScreenName();
+		String sex = weiboUser.getSex();
+		String description = weiboUser.getDescription();
+		String userName = weiboUser.getUserName();
+		int followNum = weiboUser.getFollowNum();
+		int fansNum = weiboUser.getFansNum();
+		int messageNum = weiboUser.getMessageNum();
+		String profileImageUrl = weiboUser.getProfileImageUrl();
+		String isVerified = weiboUser.getIsVerified();
+		String careerInfo = weiboUser.getCareerInfo();
+		String educationInfo = weiboUser.getEducationInfo();
+		String tag = weiboUser.getTag();
+		String verifyInfo = weiboUser.getVerifyInfo();
+		String daren = weiboUser.getDaren();
+		String birthday = weiboUser.getBirthday();
+		String qq = weiboUser.getQq();
+		String msn = weiboUser.getMsn();
+		String email = weiboUser.getEmail();
+		String blog = weiboUser.getBlog();
+		String domain = weiboUser.getDomain();
+		String dengji = weiboUser.getDengji();
+		String vip = weiboUser.getVip();
+		String region = weiboUser.getRegion();
+		String followUserId = weiboUser.getFollowUserId();
+		String fansUserId = weiboUser.getFansUserId();
+		Timestamp uCreateTime = null;
+		if (weiboUser.getuCreateTime() != null) {
+			uCreateTime = new Timestamp(weiboUser.getuCreateTime().getTime());
+		}
+		Date updateTime = new Date();
+		String sql = "INSERT INTO t_weibo_user_info (userid,screen_name,sex,verify_info,description,region,username,follow_num,fans_num,message_num,career_info,education_info,profile_image_url,is_verified,tag,birthday,qq,msn,email,u_create_time,follow_userid,vip,daren,dengji,fans_userid,create_time,update_time,blog,domain) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+		try {
+			pstmt = oconn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, screenName);
+			pstmt.setString(3, sex);
+			pstmt.setString(4, verifyInfo);
+			pstmt.setString(5, description);
+			pstmt.setString(6, region);
+			pstmt.setString(7, userName);
+			pstmt.setInt(8, followNum);
+			pstmt.setInt(9, fansNum);
+			pstmt.setInt(10, messageNum);
+			pstmt.setString(11, careerInfo);
+			pstmt.setString(12, educationInfo);
+			pstmt.setString(13, profileImageUrl);
+			pstmt.setString(14, isVerified);
+			pstmt.setString(15, tag);
+			pstmt.setString(16, birthday);
+			pstmt.setString(17, qq);
+			pstmt.setString(18, msn);
+			pstmt.setString(19, email);
+			pstmt.setTimestamp(20, uCreateTime);
+			pstmt.setClob(21, strtoColb(followUserId));
+			pstmt.setString(22, vip);
+			pstmt.setString(23, daren);
+			pstmt.setString(24, dengji);
+			pstmt.setClob(25, strtoColb(fansUserId));
+			pstmt.setTimestamp(26, new Timestamp(updateTime.getTime()));
+			pstmt.setTimestamp(27, new Timestamp(updateTime.getTime()));
+			pstmt.setString(28, blog);
+			pstmt.setString(29, domain);
+			flag = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.error(e);
+		} finally {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if (flag > 0) {
+			return 1;
+		}
+		return 0;
 	}
 
 	/**
@@ -314,14 +298,8 @@ public class UserJdbcService {
 		if (weiboUser.getuCreateTime() != null) {
 			uCreateTime = new Timestamp(weiboUser.getuCreateTime().getTime());
 		}
-		String msgExistent;
-		if (weiboUser.getMsgExistent() == null) {
-			msgExistent = "0";
-		} else {
-			msgExistent = "1";
-		}
 		Date updateTime = new Date();
-		String sql = "update T_WEIBO_CRAWLER_USER t set FANS_USERID=?,screen_name=?,sex=?,verify_info=?,description=?,region=?,username=?,follow_num=?,fans_num=?,message_num=?,career_info=?,education_info=?,profile_image_url=?,is_verified=?,tag=?,birthday=?,qq=?,msn=?,email=?,u_create_time=?,follow_userid=?,vip=?,daren=?,dengji=?,update_time=?,blog=?,domain=?,msg_existent=? where userid=? ";
+		String sql = "update t_weibo_user_info t set FANS_USERID=?,screen_name=?,sex=?,verify_info=?,description=?,region=?,username=?,follow_num=?,fans_num=?,message_num=?,career_info=?,education_info=?,profile_image_url=?,is_verified=?,tag=?,birthday=?,qq=?,msn=?,email=?,u_create_time=?,follow_userid=?,vip=?,daren=?,dengji=?,update_time=?,blog=?,domain=? where userid=? ";
 		try {
 			pstmt = oconn.prepareStatement(sql);
 			pstmt.setClob(1, strtoColb(fansUserId));
@@ -351,8 +329,7 @@ public class UserJdbcService {
 			pstmt.setTimestamp(25, new Timestamp(updateTime.getTime()));
 			pstmt.setString(26, blog);
 			pstmt.setString(27, domain);
-			pstmt.setString(28, msgExistent);
-			pstmt.setString(29, userId);
+			pstmt.setString(28, userId);
 			flag = pstmt.executeUpdate();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -403,97 +380,6 @@ public class UserJdbcService {
 					e.printStackTrace();
 				}
 			}
-			return 1;
-		}
-		return 0;
-	}
-
-	/**
-	 * 插入微博用户信息到微博用户表，并将插入结果返回用户列队
-	 * 
-	 * @param weiboUser
-	 */
-	public synchronized int inSertWeiboUser(WeiboUser weiboUser) {
-		PreparedStatement pstmt = null;
-		int flag = 0;
-		String userId = weiboUser.getUserId();
-		if (userId == null)
-			return 0;
-		String screenName = weiboUser.getScreenName();
-		String sex = weiboUser.getSex();
-		String description = weiboUser.getDescription();
-		String userName = weiboUser.getUserName();
-		int followNum = weiboUser.getFollowNum();
-		int fansNum = weiboUser.getFansNum();
-		int messageNum = weiboUser.getMessageNum();
-		String profileImageUrl = weiboUser.getProfileImageUrl();
-		String isVerified = weiboUser.getIsVerified();
-		String careerInfo = weiboUser.getCareerInfo();
-		String educationInfo = weiboUser.getEducationInfo();
-		String tag = weiboUser.getTag();
-		String verifyInfo = weiboUser.getVerifyInfo();
-		String daren = weiboUser.getDaren();
-		String birthday = weiboUser.getBirthday();
-		String qq = weiboUser.getQq();
-		String msn = weiboUser.getMsn();
-		String email = weiboUser.getEmail();
-		String blog = weiboUser.getBlog();
-		String domain = weiboUser.getDomain();
-		String dengji = weiboUser.getDengji();
-		String vip = weiboUser.getVip();
-		String region = weiboUser.getRegion();
-		String followUserId = weiboUser.getFollowUserId();
-		String fansUserId = weiboUser.getFansUserId();
-		Timestamp uCreateTime = null;
-		if (weiboUser.getuCreateTime() != null) {
-			uCreateTime = new Timestamp(weiboUser.getuCreateTime().getTime());
-		}
-		Date updateTime = new Date();
-		String sql = "INSERT INTO t_weibo_crawler_user (userid,screen_name,sex,verify_info,description,region,username,follow_num,fans_num,message_num,career_info,education_info,profile_image_url,is_verified,tag,birthday,qq,msn,email,u_create_time,follow_userid,vip,daren,dengji,fans_userid,create_time,update_time,blog,domain) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-		try {
-			pstmt = oconn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, screenName);
-			pstmt.setString(3, sex);
-			pstmt.setString(4, verifyInfo);
-			pstmt.setString(5, description);
-			pstmt.setString(6, region);
-			pstmt.setString(7, userName);
-			pstmt.setInt(8, followNum);
-			pstmt.setInt(9, fansNum);
-			pstmt.setInt(10, messageNum);
-			pstmt.setString(11, careerInfo);
-			pstmt.setString(12, educationInfo);
-			pstmt.setString(13, profileImageUrl);
-			pstmt.setString(14, isVerified);
-			pstmt.setString(15, tag);
-			pstmt.setString(16, birthday);
-			pstmt.setString(17, qq);
-			pstmt.setString(18, msn);
-			pstmt.setString(19, email);
-			pstmt.setTimestamp(20, uCreateTime);
-			pstmt.setClob(21, strtoColb(followUserId));
-			pstmt.setString(22, vip);
-			pstmt.setString(23, daren);
-			pstmt.setString(24, dengji);
-			pstmt.setClob(25, strtoColb(fansUserId));
-			pstmt.setTimestamp(26, new Timestamp(updateTime.getTime()));
-			pstmt.setTimestamp(27, new Timestamp(updateTime.getTime()));
-			pstmt.setString(28, blog);
-			pstmt.setString(29, domain);
-			flag = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
-		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		if (flag > 0) {
-			recoverUserIDfromQueue(userId);
 			return 1;
 		}
 		return 0;

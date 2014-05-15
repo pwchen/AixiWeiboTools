@@ -1,0 +1,123 @@
+2014-05-14 17:34:06,188 INFO  [main] (WeiboLoginHttpClientUtils.java:187)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 17:34:06,196 ERROR [main] (WeiboLoginHttpClientUtils.java:88)     - 当前请求次数reqCount:1900
+2014-05-14 17:34:08,335 INFO  [main] (WeiboLoginHttpClientUtils.java:187)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-05-14 19:17:03,908 INFO  [main] (WeiboLoginHttpClientUtils.java:191)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 19:17:03,916 ERROR [main] (WeiboLoginHttpClientUtils.java:92)     - 当前请求次数reqCount:1900
+2014-05-14 19:17:05,837 INFO  [main] (WeiboLoginHttpClientUtils.java:191)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-05-14 19:17:26,447 INFO  [main] (WeiboLoginHttpClientUtils.java:191)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 19:17:26,454 ERROR [main] (WeiboLoginHttpClientUtils.java:92)     - 当前请求次数reqCount:1900
+2014-05-14 19:17:29,098 INFO  [main] (WeiboLoginHttpClientUtils.java:191)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-05-14 19:43:49,102 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 19:43:49,104 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 19:43:49,105 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 19:43:49,105 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 19:43:51,652 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 19:43:51,652 ERROR [main] (WeiboLoginHttpClientUtils.java:77)     - 未知错误！无法登陆！
+2014-05-14 19:43:51,652 ERROR [main] (WeiboLoginHttpClientUtils.java:96)     - 当前请求次数reqCount:1900
+2014-05-14 19:43:53,400 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-05-14 19:43:53,400 ERROR [main] (WeiboLoginHttpClientUtils.java:77)     - 未知错误！无法登陆！
+2014-05-14 19:47:31,358 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 19:47:31,358 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 19:47:31,358 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 19:47:31,358 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 19:47:41,264 INFO  [main] (WeiboLoginHttpClientUtils.java:199)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 19:47:41,264 WARN  [main] (WeiboLoginHttpClientUtils.java:86)     - 当前请求次数reqCount:1900.请求次数超过最大请求，换号
+2014-05-14 19:47:43,418 INFO  [main] (WeiboLoginHttpClientUtils.java:199)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-05-14 19:48:37,453 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 19:48:37,453 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 19:48:37,453 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 19:48:37,453 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 19:48:42,508 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 19:48:42,556 WARN  [main] (WeiboLoginHttpClientUtils.java:87)     - 当前请求次数reqCount:1900.请求次数超过最大请求，换号
+2014-05-14 19:48:44,443 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-05-14 19:50:41,809 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 19:50:41,825 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 19:50:41,825 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 19:50:41,825 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 19:50:45,928 ERROR [main] (WeiboLoginHttpClientUtils.java:209)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-14 19:50:48,939 ERROR [main] (WeiboLoginHttpClientUtils.java:126)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-14 19:50:52,249 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3845698072","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"纯真的镜系列"}}
+2014-05-14 19:50:52,328 WARN  [main] (WeiboLoginHttpClientUtils.java:88)     - 当前请求次数reqCount:1900.请求次数超过最大请求，换号
+2014-05-14 19:50:54,387 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-05-14 19:50:54,466 WARN  [main] (WeiboLoginHttpClientUtils.java:88)     - 当前请求次数reqCount:1757.请求次数超过最大请求，换号
+2014-05-14 19:50:56,665 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:9850717@qq.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841291650","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"数据挖掘阿蒙"}}
+2014-05-14 19:50:56,697 WARN  [main] (WeiboLoginHttpClientUtils.java:88)     - 当前请求次数reqCount:1633.请求次数超过最大请求，换号
+2014-05-14 19:50:58,726 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:gdut2015@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846159823","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2015"}}
+2014-05-14 19:50:58,805 WARN  [main] (WeiboLoginHttpClientUtils.java:88)     - 当前请求次数reqCount:1573.请求次数超过最大请求，换号
+2014-05-14 20:18:53,159 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 20:18:53,174 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 20:18:53,174 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 20:18:53,174 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 20:18:57,823 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 20:19:28,915 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 20:19:28,931 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 20:19:28,931 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 20:19:28,931 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 20:19:31,193 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-14 20:19:49,299 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-14 20:19:49,299 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-14 20:19:49,299 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-14 20:19:49,299 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-14 20:19:51,791 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-15 09:31:35,831 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-15 09:31:35,831 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-15 09:31:35,831 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-15 09:31:35,831 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-15 09:32:01,259 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-15 15:49:42,830 INFO  [main] (CrawUserRelationsByOneUser.java:30)     - 爬取入口ID：1197161814
+2014-05-15 15:49:43,423 INFO  [main] (JDBCUtilSingle.java:43)     - main建立连接....
+2014-05-15 15:51:24,414 INFO  [main] (CrawUserRelationsByOneUser.java:30)     - 爬取入口ID：1197161814
+2014-05-15 15:51:24,492 INFO  [main] (JDBCUtilSingle.java:43)     - main建立连接....
+2014-05-15 15:51:24,913 ERROR [main] (UserJdbcService.java:156)     - java.sql.SQLSyntaxErrorException: ORA-00942: 表或视图不存在
+
+2014-05-15 15:52:03,461 INFO  [main] (CrawUserRelationsByOneUser.java:30)     - 爬取入口ID：1197161814
+2014-05-15 15:52:03,539 INFO  [main] (JDBCUtilSingle.java:43)     - main建立连接....
+2014-05-15 15:52:03,773 INFO  [main] (CrawlerContext.java:140)     - 在配置文件中读取了9个微博账户
+2014-05-15 15:52:03,773 INFO  [main] (CrawlerContext.java:145)     - 当前线程数量为：10
+2014-05-15 15:52:03,773 INFO  [main] (CrawlerContext.java:147)     - 当前连接失败的次数为：10
+2014-05-15 15:52:03,773 INFO  [main] (CrawlerContext.java:151)     - 当前每次登陆最大的请求数量为：1900
+2014-05-15 15:52:03,788 INFO  [main] (UserJdbcService.java:69)     - 在数据库中获得用户Id数量0
+2014-05-15 15:52:07,532 INFO  [main] (WeiboLoginHttpClientUtils.java:200)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/oguide/recommend?guide=old","userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-05-15 15:52:33,336 INFO  [main] (CrawlUserAndFollowsThread.java:137)     - 李开复:新增入库成功!
+2014-05-15 15:52:33,351 INFO  [main] (CrawUserRelationsByOneUser.java:18)     - 获取该用户粉丝及关注用户数量：385
+2014-05-15 15:52:33,351 INFO  [Thread-1] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-1] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-8] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-8] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-10] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-10] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-3] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-3] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-5] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-5] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-7] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-7] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-9] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-9] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-4] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-4] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-6] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-6] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..
+2014-05-15 15:52:33,351 INFO  [Thread-2] (CrawlUserConnection.java:72)     - 全部385个用户ID，已经获取完毕.
+2014-05-15 15:52:33,351 INFO  [Thread-2] (CrawlUserAndFollowsThread.java:65)     - 已经没有可以获取的userID了，线程即将退出..

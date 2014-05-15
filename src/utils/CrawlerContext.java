@@ -144,7 +144,7 @@ public class CrawlerContext {
 		this.threadNumber = PropertyUtils.getIntProperty(p, "threadnumber");
 		logger.info("当前线程数量为："+threadNumber);
 		this.failureNumber = PropertyUtils.getIntProperty(p, "failurenumber");
-		logger.info("当前连接失败的次数为："+failureNumber);
+		logger.info("允许连接失败最大次数为："+failureNumber);
 		this.initUserIdList = PropertyUtils.getStringProperty(p,
 				"inituseridlist").split(",");
 		this.requestNumber =PropertyUtils.getIntProperty(p, "requestnumber");

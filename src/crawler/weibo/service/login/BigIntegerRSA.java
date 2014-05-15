@@ -1,4 +1,4 @@
-package crawler.weibo.login;
+package crawler.weibo.service.login;
 
 
 import java.io.UnsupportedEncodingException;

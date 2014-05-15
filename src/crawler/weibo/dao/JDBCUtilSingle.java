@@ -10,9 +10,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public final class JDBCUtilSingle {
-	static String url = "jdbc:oracle:thin:@localhost:1521:weibo";
-	static String name = "weibo";
-	static String password = "111111";
+	static String url = "jdbc:oracle:thin:@192.168.1.92:1521:weibo";
+	static String name = "aixi0";
+	static String password = "aixi0";
 	static Connection conn = null;
 	private static JDBCUtilSingle jdbcUtilSingle = null;
 	private static final Log logger = LogFactory.getLog(JDBCUtilSingle.class);

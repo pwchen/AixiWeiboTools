@@ -1,0 +1,10 @@
+2014-05-14 17:34:06,196 ERROR [main] (WeiboLoginHttpClientUtils.java:88)     - 当前请求次数reqCount:1900
+2014-05-14 19:17:03,916 ERROR [main] (WeiboLoginHttpClientUtils.java:92)     - 当前请求次数reqCount:1900
+2014-05-14 19:17:26,454 ERROR [main] (WeiboLoginHttpClientUtils.java:92)     - 当前请求次数reqCount:1900
+2014-05-14 19:43:51,652 ERROR [main] (WeiboLoginHttpClientUtils.java:77)     - 未知错误！无法登陆！
+2014-05-14 19:43:51,652 ERROR [main] (WeiboLoginHttpClientUtils.java:96)     - 当前请求次数reqCount:1900
+2014-05-14 19:43:53,400 ERROR [main] (WeiboLoginHttpClientUtils.java:77)     - 未知错误！无法登陆！
+2014-05-14 19:50:45,928 ERROR [main] (WeiboLoginHttpClientUtils.java:209)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-14 19:50:48,939 ERROR [main] (WeiboLoginHttpClientUtils.java:126)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-15 15:51:24,913 ERROR [main] (UserJdbcService.java:156)     - java.sql.SQLSyntaxErrorException: ORA-00942: 表或视图不存在
+

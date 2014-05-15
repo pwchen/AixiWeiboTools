@@ -18,7 +18,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import utils.FileUtils;
-import crawler.weibo.login.WeiboLoginHttpClientUtils;
+import crawler.weibo.service.collector.Collector;
+import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
 public class CrawlMessageForwardTrack {
 
@@ -66,8 +67,7 @@ public class CrawlMessageForwardTrack {
 	 * @param url
 	 */
 	private static void startCrawling(String url) {
-		String entity = WeiboLoginHttpClientUtils.getRawHtml(url
-				+ "?type=repost");
+		String entity = Collector.getRawHtml(url + "?type=repost");
 		logger.info("爬取的微博地址:" + url);
 		if (entity == null) {
 			logger.error("页面被删了，监控器退出");
@@ -90,16 +90,12 @@ public class CrawlMessageForwardTrack {
 				String pageUrl = getPageUrl(document);
 				for (int i = 2; i <= totalPageNum; i++) {
 					try {
-						String temp = WeiboLoginHttpClientUtils
-								.getRawHtml(pageUrl.substring(0,
-										pageUrl.indexOf("page=") + 5)
-										+ i);
+						String temp = Collector.getRawHtml(pageUrl.substring(0,
+								pageUrl.indexOf("page=") + 5) + i);
 						if (temp == null) {
 							for (int j = 0; j < 5; j++) {
-								temp = WeiboLoginHttpClientUtils
-										.getRawHtml(pageUrl.substring(0,
-												pageUrl.indexOf("page=") + 5)
-												+ i);
+								temp = Collector.getRawHtml(pageUrl.substring(
+										0, pageUrl.indexOf("page=") + 5) + i);
 								if (temp != null)
 									break;
 							}

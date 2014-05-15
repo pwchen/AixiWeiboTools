@@ -5,20 +5,21 @@ import java.util.ArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import utils.PropertyUtils;
-import utils.UserJdbcService;
+import utils.CrawlerContext;
+import crawler.weibo.dao.UserJdbcService;
 
-public class CrawlUserConnection {
-	private static int MaxThreadSize = PropertyUtils.getMaxThreadCount();
+public class CrawlUserRelations {
+	private static int ThreadNumber = CrawlerContext.getContext()
+			.getThreadNumber();
 	private Long[] userIdArr;
 	private int currentIndex = 740;
 	private int count;// 已获取的评论数量
 	private static final Log logger = LogFactory
-			.getLog(CrawlUserConnection.class);
+			.getLog(CrawlUserRelations.class);
 	private static ArrayList<String> userIdList = UserJdbcService.getInstance()
 			.getUserIdList();
 
-	CrawlUserConnection(Long[] userIdArr, int count) {
+	CrawlUserRelations(Long[] userIdArr, int count) {
 		this.userIdArr = userIdArr;
 		this.count = count;
 	}
@@ -77,7 +78,7 @@ public class CrawlUserConnection {
 	 */
 	void getUserConnection() {
 		CrawlUserAndFollowsThread cuft = new CrawlUserAndFollowsThread(this);
-		for (int i = 0; i < MaxThreadSize; i++) {
+		for (int i = 0; i < ThreadNumber; i++) {
 			new Thread(cuft).start();
 		}
 	}

@@ -1,4 +1,4 @@
-package crawler.weibo.service;
+package crawler.weibo.service.parser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,13 +12,13 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import utils.FileUtils;
-import crawler.weibo.login.WeiboLoginHttpClientUtils;
 import crawler.weibo.model.WeiboUser;
+import crawler.weibo.service.collector.Collector;
 
 /**
  * 第一次以个人主页url抓取网页，分析后调用相应的接口，接口返回的是json
  * 
- * @author hoot
+ * @author Joe
  * 
  */
 public class UserParser {
@@ -60,7 +60,7 @@ public class UserParser {
 	public WeiboUser getWeiboUserInfo(String userId) {
 		String url = "http://weibo.com/" + userId + "/info";
 		String entity = null;
-		entity = WeiboLoginHttpClientUtils.getRawHtml(url);
+		entity = Collector.getRawHtml(url);
 		if (entity == null) {
 			return null;
 		}
@@ -782,7 +782,7 @@ public class UserParser {
 			for (int i = 1; i <= followPage; i++) {
 				String url = "http://weibo.com/" + userId + "/follow?page=" + i;
 				String entity = null;
-				entity = WeiboLoginHttpClientUtils.getRawHtml(url);
+				entity = Collector.getRawHtml(url);
 				if (entity == null) {
 					break;
 				}
@@ -804,7 +804,7 @@ public class UserParser {
 			for (int i = 1; i <= fansPage; i++) {
 				String url = "http://weibo.com/" + userId + "/fans?page=" + i;
 				String entity = null;
-				entity = WeiboLoginHttpClientUtils.getRawHtml(url);
+				entity = Collector.getRawHtml(url);
 				if (entity == null) {
 					break;
 				}

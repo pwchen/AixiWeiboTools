@@ -27,9 +27,9 @@ import org.json.JSONException;
 
 import utils.FileUtil;
 import crawler.weibo.gui.ConsoleTextArea;
-import crawler.weibo.login.WeiboLogin;
 import crawler.weibo.service.GetMessageMain;
 import crawler.weibo.service.GetUserInfoThread;
+import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
 public class CrawlerMain extends JFrame {
 	/**
@@ -54,7 +54,7 @@ public class CrawlerMain extends JFrame {
 	}
 
 	private void crawl() {
-		HttpClient client = WeiboLogin.getLoginStatus();
+		HttpClient client = WeiboLoginHttpClientUtils.getLoginhttpClient();
 		int failureCount = 0;
 		while (client == null) {
 			if (failureCount++ > FileUtil.getFailureCount()) {
@@ -76,7 +76,7 @@ public class CrawlerMain extends JFrame {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			client = WeiboLogin.getLoginStatus();
+			client = WeiboLoginHttpClientUtils.getLoginhttpClient();
 		}
 
 		if ("1".equals(FileUtil.getMode())) {

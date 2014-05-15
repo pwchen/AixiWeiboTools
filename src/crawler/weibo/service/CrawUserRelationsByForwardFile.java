@@ -8,7 +8,7 @@ import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrawUserConnectionFromForwardFile {
+public class CrawUserRelationsByForwardFile {
 
 	public static void main(String[] args) {
 		String msgUrl = "1762325394/AeAwhqd2m";
@@ -26,7 +26,7 @@ public class CrawUserConnectionFromForwardFile {
 	 */
 	public static void crawlUserConnection(String url) {
 		Long[] forwardIdArr = loadForwardIdArr(url);
-		new CrawlUserConnection(forwardIdArr, forwardIdArr.length)
+		new CrawlUserRelations(forwardIdArr, forwardIdArr.length)
 				.getUserConnection();
 	}
 

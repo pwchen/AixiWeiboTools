@@ -1,10 +1,8 @@
-package crawler.weibo.login;
+package crawler.weibo.service.login;
 
 import org.apache.http.HttpHost;
-import org.apache.http.auth.AuthScope;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.params.ClientPNames;
-import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.conn.routing.HttpRoute;
 import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
@@ -23,6 +21,11 @@ import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+/**
+ * 这里可以用于换IP
+ * @author Administrator
+ *
+ */
 public class HttpConnectionManager {
 
 	public static HttpClient getHttpClient() {
@@ -49,7 +52,6 @@ public class HttpConnectionManager {
 
 		DefaultHttpClient httpClient = new DefaultHttpClient(cm, params);
 
-		randomSelectAProxy(httpClient);
 		// 自定义cookies*****************
 		CookieSpecFactory csf = new CookieSpecFactory() {
 			public CookieSpec newInstance(HttpParams params) {
@@ -75,6 +77,10 @@ public class HttpConnectionManager {
 		return httpClient;
 	}
 
+	/**
+	 * 用于换代理
+	 * @param httpClient
+	 */
 	private static void randomSelectAProxy(DefaultHttpClient httpClient) {
 		// HttpHost proxy = new HttpHost("183.62.38.50", 9999, "http");
 		// // UsernamePasswordCredentials creds = new

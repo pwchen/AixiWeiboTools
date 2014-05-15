@@ -17,6 +17,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboMsg;
 import crawler.weibo.model.WeiboUser;
 

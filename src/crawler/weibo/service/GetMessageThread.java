@@ -6,7 +6,7 @@ import org.apache.http.client.HttpClient;
 
 import utils.FeedUtils;
 import utils.MsgJdbcService;
-import utils.UserJdbcService;
+import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboUser;
 
 public class GetMessageThread implements Runnable {

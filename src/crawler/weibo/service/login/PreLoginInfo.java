@@ -1,6 +1,10 @@
-package crawler.weibo.login;
+package crawler.weibo.service.login;
 
-
+/**
+ * 登陆时的信息
+ * @author Administrator
+ *
+ */
 public class PreLoginInfo {
 	public long servertime;
 	public String nonce;
