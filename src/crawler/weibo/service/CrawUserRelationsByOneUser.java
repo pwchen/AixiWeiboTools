@@ -14,19 +14,19 @@ public class CrawUserRelationsByOneUser {
 
 	public static void main(String[] args) {
 		String firstUid = "1197161814";// "1197161814：李开复";"1266321801:姚晨""1936617550自己"
-		Long[] uIdArr = crawlerSigleUser(firstUid);
+		Long[] uIdArr = crawlUserRelationsByUid(firstUid);
 		logger.info("获取该用户粉丝及关注用户数量：" + uIdArr.length);
 		new CrawlUserRelations(uIdArr, uIdArr.length).getUserConnection();
 		// ExtractNodesFromOracle.main(new String[] { "uId", firstUid });
 	}
 
 	/**
-	 * 爬取单个用户基本信息，并返回其关注和粉丝ID列表
+	 * 以爬取的方式获取单个用户基本信息，并返回其关注和粉丝ID列表
 	 * 
 	 * @param firstUid
 	 * @return
 	 */
-	private static Long[] crawlerSigleUser(String firstUid) {
+	private static Long[] crawlUserRelationsByUid(String firstUid) {
 		logger.info("爬取入口ID：" + firstUid);
 		WeiboUser weiboUser = new CrawlUserAndFollowsThread(null)
 				.getUserAllFromClientByUid(firstUid, true);

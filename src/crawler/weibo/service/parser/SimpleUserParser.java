@@ -13,8 +13,7 @@ import org.jsoup.nodes.Element;
 
 import utils.FileUtils;
 import crawler.weibo.model.WeiboUser;
-import crawler.weibo.service.collector.Collector;
-import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
+import crawler.weibo.service.fetcher.Fetcher;
 
 /**
  * 第一次以个人主页url抓取网页，分析后调用相应的接口，接口返回的是json
@@ -38,7 +37,7 @@ public class SimpleUserParser {
 		String url = "http://weibo.com/aj/user/newcard?type=1&id=" + userId
 				+ "&callback=STK_" + (new Date().getTime() * 1000);
 		String entity = null;
-		entity = Collector.getRawHtml(url);
+		entity = Fetcher.getRawHtml(url);
 		if (entity == null) {
 			return null;
 		}

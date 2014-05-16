@@ -1,4 +1,4 @@
-package crawler.weibo.service.collector;
+package crawler.weibo.service.fetcher;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,8 +15,13 @@ import utils.CrawlerContext;
 import utils.FileUtils;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
-public class Collector {
-	private static final Log logger = LogFactory.getLog(Collector.class);
+/**
+ * 采集器，用于获取原始HTML,可以根据原始的HTML内容判断账号是否请求次数过多，或者其他问题
+ * @author Administrator
+ *
+ */
+public class Fetcher {
+	private static final Log logger = LogFactory.getLog(Fetcher.class);
 
 	public static void main(String args[]) {
 		System.out.println(getRawHtml("http://weibo.com/u/5061880888"));

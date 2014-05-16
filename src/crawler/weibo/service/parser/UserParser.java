@@ -13,7 +13,7 @@ import org.jsoup.select.Elements;
 
 import utils.FileUtils;
 import crawler.weibo.model.WeiboUser;
-import crawler.weibo.service.collector.Collector;
+import crawler.weibo.service.fetcher.Fetcher;
 
 /**
  * 第一次以个人主页url抓取网页，分析后调用相应的接口，接口返回的是json
@@ -60,7 +60,7 @@ public class UserParser {
 	public WeiboUser getWeiboUserInfo(String userId) {
 		String url = "http://weibo.com/" + userId + "/info";
 		String entity = null;
-		entity = Collector.getRawHtml(url);
+		entity = Fetcher.getRawHtml(url);
 		if (entity == null) {
 			return null;
 		}
@@ -782,7 +782,7 @@ public class UserParser {
 			for (int i = 1; i <= followPage; i++) {
 				String url = "http://weibo.com/" + userId + "/follow?page=" + i;
 				String entity = null;
-				entity = Collector.getRawHtml(url);
+				entity = Fetcher.getRawHtml(url);
 				if (entity == null) {
 					break;
 				}
@@ -804,7 +804,7 @@ public class UserParser {
 			for (int i = 1; i <= fansPage; i++) {
 				String url = "http://weibo.com/" + userId + "/fans?page=" + i;
 				String entity = null;
-				entity = Collector.getRawHtml(url);
+				entity = Fetcher.getRawHtml(url);
 				if (entity == null) {
 					break;
 				}
