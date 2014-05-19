@@ -18,9 +18,9 @@ public class GetUserInfoThread implements Runnable {
 		this.httpClient = httpClient;
 	}
 
-	private String getUser() {
-		return UserJdbcService.getInstance().getUserIDfromQueue();
-	}
+	// private String getUser() {
+	// return UserJdbcService.getInstance().getUserIDfromQueue();
+	// }
 
 	private int insertUser(WeiboUser weiboUser) {
 		return UserJdbcService.getInstance().inSertWeiboUser(weiboUser);
@@ -38,7 +38,7 @@ public class GetUserInfoThread implements Runnable {
 		System.out.println(Thread.currentThread().getName()
 				+ Thread.currentThread().getName() + "启动...");
 		while (true) {
-			String userId = getUser();
+			String userId = null;// getUser();
 			if (userId == null) {// 等待其他线程将userId插入数据库队列
 				System.out.println(Thread.currentThread().getName()
 						+ Thread.currentThread().getName()
@@ -116,7 +116,7 @@ public class GetUserInfoThread implements Runnable {
 			} else {
 				System.out.println(Thread.currentThread().getName()
 						+ weiboUser.getScreenName() + "不需要更新！");
-				UserJdbcService.getInstance().updateUserIdfomQueue(userId);
+				// UserJdbcService.getInstance().updateUserIdfomQueue(userId);
 			}
 			// 这里以后可以继续加入微博信息爬取方法
 		}

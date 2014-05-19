@@ -12,7 +12,7 @@ public class CrawlUserRelations {
 	private static int ThreadNumber = CrawlerContext.getContext()
 			.getThreadNumber();
 	private Long[] userIdArr;
-	private int currentIndex = 740;
+	private int currentIndex = 0;
 	private int count;// 已获取的评论数量
 	private static final Log logger = LogFactory
 			.getLog(CrawlUserRelations.class);

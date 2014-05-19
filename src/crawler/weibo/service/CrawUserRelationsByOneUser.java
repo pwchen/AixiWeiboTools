@@ -13,7 +13,8 @@ public class CrawUserRelationsByOneUser {
 			.getLog(CrawUserRelationsByOneUser.class);
 
 	public static void main(String[] args) {
-		String firstUid = "1197161814";// "1197161814：李开复";"1266321801:姚晨""1936617550自己"
+		String firstUid = "1197161814";//
+									// "1197161814：李开复";"1266321801:姚晨""1936617550自己"
 		Long[] uIdArr = crawlUserRelationsByUid(firstUid);
 		logger.info("获取该用户粉丝及关注用户数量：" + uIdArr.length);
 		new CrawlUserRelations(uIdArr, uIdArr.length).getUserConnection();

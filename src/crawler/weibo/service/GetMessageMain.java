@@ -26,8 +26,9 @@ public class GetMessageMain {
 		logger.info(Thread.currentThread().getName() + "启动爬取微博模式...");
 		System.out.println(Thread.currentThread().getName() + "启动爬取微博模式...");
 		// String[] userIds = FileUtil.getMsgUserId().split(",");
-		List<String> userIds = UserJdbcService.getInstance()
-				.getUserIDfromUser();
+		List<String> userIds = null;
+		// UserJdbcService.getInstance()
+		// .getUserIDfromUser();
 		logger.info("入口用户有" + userIds.size() + ",分别是" + userIds);
 		System.out.println("入口用户有" + userIds.size() + ",分别是" + userIds);
 		for (int j = 0; j < userIds.size(); j++) {

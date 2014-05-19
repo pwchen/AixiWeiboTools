@@ -654,7 +654,7 @@ public class ParseFeed {
 			String userId = fans.get(i).select(".name>a").attr("usercard")
 					.substring(3);
 			fansStr += "," + userId;
-			UserJdbcService.getInstance().addUserIDfromQueue(userId);// 加入队列
+			// UserJdbcService.getInstance().addUserIDfromQueue(userId);// 加入队列
 		}
 		return fansStr;
 	}
@@ -672,7 +672,7 @@ public class ParseFeed {
 			String userId = follows.get(i).select(".name>a").attr("usercard")
 					.substring(3);
 			followsStr += "," + userId;
-			UserJdbcService.getInstance().addUserIDfromQueue(userId);// 加入队列
+			// UserJdbcService.getInstance().addUserIDfromQueue(userId);// 加入队列
 		}
 		return followsStr;
 	}

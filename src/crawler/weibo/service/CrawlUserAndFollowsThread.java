@@ -80,8 +80,9 @@ public class CrawlUserAndFollowsThread implements Runnable {
 				return oWeiboUser;
 			} else {
 				if (!CrawlUserRelations.checkUserIdInUserIdList(userId)) {// 在UserIdList没有找到该用户，自己动手去爬
-					WeiboUser weiboUser = SimpleUserParser
-							.getSimpleWeiboUserInfo(String.valueOf(userId));
+					// WeiboUser weiboUser = SimpleUserParser
+					// .getSimpleWeiboUserInfo(String.valueOf(userId));
+					WeiboUser weiboUser = UserParser.getWeiboUserInfo(userId);
 					if (weiboUser == null) {
 						return null;
 					}
@@ -109,8 +110,9 @@ public class CrawlUserAndFollowsThread implements Runnable {
 			}
 		} else {// 不需要返回该用户，该用户存在直接返回null
 			if (!CrawlUserRelations.checkUserIdInUserIdList(userId)) {// 若UserIdList中无该用户则加入该用户Id,开始爬这个用户
-				WeiboUser weiboUser = SimpleUserParser
-						.getSimpleWeiboUserInfo(String.valueOf(userId));
+			// WeiboUser weiboUser = SimpleUserParser
+			// .getSimpleWeiboUserInfo(String.valueOf(userId));
+				WeiboUser weiboUser = UserParser.getWeiboUserInfo(userId);
 				if (weiboUser == null) {
 					return null;
 				}

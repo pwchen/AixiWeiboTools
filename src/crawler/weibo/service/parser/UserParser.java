@@ -1,5 +1,7 @@
 package crawler.weibo.service.parser;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,7 +37,8 @@ public class UserParser {
 	 * @return
 	 * @throws JSONException
 	 */
-	private String getNormalHTMLDataFromResponse(String entity, String domid) {
+	private static String getNormalHTMLDataFromResponse(String entity,
+			String domid) {
 		String rawHTML = null;
 		try {
 			rawHTML = entity.substring(entity.indexOf(domid));
@@ -57,7 +60,7 @@ public class UserParser {
 	 * @param userId
 	 * @return
 	 */
-	public WeiboUser getWeiboUserInfo(String userId) {
+	public static WeiboUser getWeiboUserInfo(String userId) {
 		String url = "http://weibo.com/" + userId + "/info";
 		String entity = null;
 		entity = Fetcher.getRawHtml(url);
@@ -79,7 +82,7 @@ public class UserParser {
 	 * @param entity
 	 * @return
 	 */
-	public WeiboUser parseUserInfoDatabyModel(String entity) {
+	public static WeiboUser parseUserInfoDatabyModel(String entity) {
 		String domid1 = "\"domid\":\"" + "Pl_Official_Header__1" + "\"";
 		String domid2 = "\"domid\":\"" + "Pl_Core_Header__1" + "\"";
 		String domid3 = "\"pid\":\"pl_profile_hisInfo\"";
@@ -111,7 +114,7 @@ public class UserParser {
 	 * @param entity
 	 * @return
 	 */
-	private WeiboUser paseUserInfo_PlOfficialHeader(String entity) {
+	private static WeiboUser paseUserInfo_PlOfficialHeader(String entity) {
 		String domid = "\"domid\":\"" + "Pl_Official_Header__1" + "\"";
 		String plOfficialHeaderHtml = getNormalHTMLDataFromResponse(entity,
 				domid);
@@ -130,6 +133,8 @@ public class UserParser {
 			logger.error("解析页面出错！保存文件名：" + entityFileName);
 			return null;
 		}
+		String entityFileName = "entity" + new Date().getTime() + ".html";
+		FileUtils.saveToFile(entity, entityFileName, "utf-8");
 		// 达人
 		Element daren = document.select("i[node-type=daren]").first();
 		if (daren != null) {
@@ -203,7 +208,7 @@ public class UserParser {
 			weiboUser.setMessageNum(Integer.parseInt(weiboNum.text()));
 		}
 
-		Element userName = document.select("[name=profile_tab]").first();
+		Element userName = document.select("[class=pf_lin S_link1]").first();
 		if (userName != null) {
 			String hrefScr = userName.attr("href");
 			if (hrefScr.indexOf("/u/") != -1) {
@@ -216,18 +221,13 @@ public class UserParser {
 
 		}
 
-		domid = "\"domid\":\"" + "Pl_Official_LeftInfo__14" + "\"";
-		if (entity.indexOf(domid) == -1) {
-			return weiboUser;
-		}
-		/** Pl_Official_LeftInfo__14 **/
-		String plOfficialLeftInfoHtml = getNormalHTMLDataFromResponse(entity,
-				domid);
-		// PropertyUtils.saveToFile(pl_profile_infoBase,
-		// "pl_profile_infoBase.html",
-		// "utf-8");
+		domid = "<!-- 他人info -->";
+		entity = entity.substring(entity.indexOf(domid));
+		entity = entity.substring(0, entity.indexOf("\"})</script>"));
+		entity = entity.replace("\\r", "").replace("\\n", "")
+				.replace("\\t", "").replace("\\/", "/").replace("\\\"", "");
 
-		document = Jsoup.parse(plOfficialLeftInfoHtml, "http://weibo.com");
+		document = Jsoup.parse(entity, "http://weibo.com");
 
 		// 所在地
 		Element region = document.select(":contains(所在地)+div").first();
@@ -245,6 +245,13 @@ public class UserParser {
 		Element birthday = document.select(":contains(生日)+div").first();
 		if (birthday != null) {
 			weiboUser.setBirthday(birthday.text());
+		}
+
+		// 注册时间
+		Element uCreateDate = document.select(":contains(注册时间)+div").first();
+		if (uCreateDate != null) {
+			String tsStr = uCreateDate.text() + " 00:00:00";
+			weiboUser.setuCreateTime(Timestamp.valueOf(tsStr));
 		}
 
 		// 博客
@@ -275,24 +282,34 @@ public class UserParser {
 			weiboUser.setDomain(domain.text());
 		}
 
-		// 教育
-		Elements eduInfos = document.select(".con");
-		if (eduInfos.size() > 0) {
-			String eduInfo = "";
-			for (int i = 0; i < eduInfos.size(); i++) {
-				eduInfo += "," + eduInfos.get(i).text();
+		// 教育信息
+
+		Elements eduelements = document.select(":contains(教育信息)+div");
+		if (!eduelements.isEmpty()) {
+			Elements eduInfoHeads = eduelements.first().parent()
+					.siblingElements();
+			if (!eduInfoHeads.isEmpty()) {
+				String eduInfo = "";
+				for (int i = 0; i < eduInfoHeads.size(); i++) {
+					eduInfo += "," + eduInfoHeads.get(i).text();
+				}
+				weiboUser.setEducationInfo(eduInfo.substring(1));
 			}
-			weiboUser.setEducationInfo(eduInfo.substring(1));
 		}
 
-		// 职业
-		Elements careerInfos = document.select(".con");
-		if (careerInfos.size() > 0) {
-			String carreerInfo = "";
-			for (int i = 0; i < careerInfos.size(); i++) {
-				carreerInfo += "," + careerInfos.get(i).text();
+		// 工作信息
+
+		Elements careerelements = document.select(":contains(工作信息)+div");
+		if (!careerelements.isEmpty()) {
+			Elements careerInfoHeads = careerelements.first().parent()
+					.siblingElements();
+			if (!careerInfoHeads.isEmpty()) {
+				String eduInfo = "";
+				for (int i = 0; i < careerInfoHeads.size(); i++) {
+					eduInfo += "," + careerInfoHeads.get(i).text();
+				}
+				weiboUser.setCareerInfo(eduInfo.substring(1));
 			}
-			weiboUser.setCareerInfo(carreerInfo.substring(1));
 		}
 
 		return weiboUser;
@@ -305,7 +322,7 @@ public class UserParser {
 	 * @param entity
 	 * @return
 	 */
-	private WeiboUser paseUserInfo_PlCoreHeader(String entity) {
+	private static WeiboUser paseUserInfo_PlCoreHeader(String entity) {
 		String domid = "\"domid\":\"" + "Pl_Core_Header__1" + "\"";
 		String plCoreHeaderHtml = getNormalHTMLDataFromResponse(entity, domid);
 		// PropertyUtils.saveToFile(plCoreHeaderHtml, "PlCoreHeader.html",
@@ -487,7 +504,7 @@ public class UserParser {
 	 * @param entity
 	 * @return
 	 */
-	private WeiboUser paseUserInfo_plprofilehisInfo(String entity) {
+	private static WeiboUser paseUserInfo_plprofilehisInfo(String entity) {
 		String domid = "\"pid\":\"pl_profile_hisInfo\"";
 		String plprofilehisInfoHtml = getNormalHTMLDataFromResponse(entity,
 				domid);
@@ -611,47 +628,55 @@ public class UserParser {
 		document = Jsoup.parse(plprofileinfoBaseHtml, "http://weibo.com");
 
 		// 所在地
-		Element region = document.select(":contains(所在地)+div").first();
+		Element region = document.select(":contains(所在地)+div").first()
+				.nextElementSibling();
 		if (region != null) {
 			weiboUser.setRegion(region.text());
 		}
 
 		// 性别
-		Element sex = document.select(":contains(性别)+div").first();
+		Element sex = document.select(":contains(性别)+div").first()
+				.nextElementSibling();
 		if (sex != null) {
 			weiboUser.setSex(sex.text());
 		}
 
 		// 生日
-		Element birthday = document.select(":contains(生日)+div").first();
+		Element birthday = document.select(":contains(生日)+div").first()
+				.nextElementSibling();
 		if (birthday != null) {
 			weiboUser.setBirthday(birthday.text());
 		}
 
 		// 博客
-		Element blog = document.select(":contains(博客)+div>a").first();
+		Element blog = document.select(":contains(博客)+div>a").first()
+				.nextElementSibling();
 		if (blog != null) {
 			weiboUser.setBlog(blog.text());
 		}
 
 		// 邮箱
-		Element email = document.select(":contains(邮箱)+div>a").first();
+		Element email = document.select(":contains(邮箱)+div>a").first()
+				.nextElementSibling();
 		if (email != null) {
 			weiboUser.setEmail(email.text());
 		}
 		// QQ
-		Element qq = document.select(":contains(QQ)+div>a").first();
+		Element qq = document.select(":contains(QQ)+div>a").first()
+				.nextElementSibling();
 		if (qq != null) {
 			weiboUser.setQq(qq.text());
 		}
 		// MSN
-		Element msn = document.select(":contains(MSN)+div>a").first();
+		Element msn = document.select(":contains(MSN)+div>a").first()
+				.nextElementSibling();
 		if (msn != null) {
 			weiboUser.setMsn(msn.text());
 		}
 
 		// 个性域名
-		Element domain = document.select(":contains(个性域名)+div>a").first();
+		Element domain = document.select(":contains(个性域名)+div>a").first()
+				.nextElementSibling();
 		if (domain != null) {
 			weiboUser.setDomain(domain.text());
 		}
