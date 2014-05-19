@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
 
 import utils.CrawlerContext;
+import crawler.weibo.model.WeiboUser;
+import crawler.weibo.service.filter.WeiboUserFilter;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 import crawler.weibo.service.scheduler.Scheduler;
 import crawler.weibo.service.scheduler.Task;
@@ -15,7 +17,7 @@ import crawler.weibo.service.scheduler.Task;
  * @author Administrator
  * 
  */
-public class Worker implements Runnable, CrawerUserInterface {
+public class Worker implements Runnable, CrawlerUserInterface {
 	private Task initTask = null;
 	private HttpClient httpClient = null;
 	private static final Log logger = LogFactory.getLog(Worker.class);
@@ -50,22 +52,55 @@ public class Worker implements Runnable, CrawerUserInterface {
 		}
 	}
 
+	/**
+	 * 将来用于选择爬用户或者爬取类型，选择暂时用户爬
+	 * 
+	 * @param task
+	 */
 	private void doWorkBytask(Task task) {
 		if (task.getType() == 0) {
-			crawerUserInfAndReations(task.getUserId());
-		} else if (task.getType() == 1) {
-			crawerUserInfAndReationsAndTask(task.getUserId());
+			crawlerUserInfAndReations(task);
+		} else {
+			// 其他爬取类型
 		}
 	}
 
 	@Override
-	public void crawerUserInfAndReations(String userId) {
+	public void crawlerUserInfAndReations(Task task) {
+		WeiboUser wu = crawlerUserInf(task);
+		if (!WeiboUserFilter.filterUserByRules(wu)) {
+			wu = crawlerUserReations(task, wu);
+		}
+		if (task.getDepth() > 1) {
+			assignSuccessorTask(task, wu);
+		}
+	}
+
+	/**
+	 * 指定后续的任务并存入任务队列中
+	 * 
+	 * @param task
+	 * @param wu
+	 */
+	private void assignSuccessorTask(Task task, WeiboUser wu) {
+		int depth = task.getDepth() - 1;
+		String[] relations = wu.generateRelationArray();
+		for (String uId : relations) {
+			Task newTask = new Task(uId, 0, depth);
+			Scheduler.pushTask(newTask);
+		}
 
 	}
 
 	@Override
-	public void crawerUserInfAndReationsAndTask(String userId) {
+	public WeiboUser crawlerUserInf(Task task) {
+		String userId = task.getUserId();
+		return null;
+	}
 
+	@Override
+	public WeiboUser crawlerUserReations(Task task, WeiboUser wu) {
+		return null;
 	}
 
 }

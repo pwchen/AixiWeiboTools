@@ -1,6 +1,7 @@
 package crawler.weibo.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class WeiboUser {
 	private String userId;
@@ -272,6 +273,51 @@ public class WeiboUser {
 
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	/**
+	 * 生成粉丝列表
+	 * 
+	 * @return
+	 */
+	public String[] generateFansArray() {
+		return fansUserId.split(",");
+	}
+
+	/**
+	 * 生成关注列表
+	 * 
+	 * @return
+	 */
+	public String[] generateFollowsArray() {
+		return followUserId.split(",");
+	}
+
+	/**
+	 * 生成关注+粉丝列表
+	 * 
+	 * @return
+	 */
+	public String[] generateRelationArray() {
+		String[] userArr1 = generateFansArray();
+		String[] userArr2 = generateFollowsArray();
+		int userArr1Len = userArr1.length;
+		ArrayList<String> userList = new ArrayList<String>();
+		for (int i = 0; i < userArr1Len; i++)
+			userList.add(userArr1[i]);
+		for (int i = 0; i < userArr2.length; i++) {// 去重
+			boolean flag = true;
+			for (int j = 0; j < userArr1Len; j++) {
+				if (userArr1[j] == userArr2[i]) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				userList.add(userArr2[i]);
+			}
+		}
+		return userList.toArray(userArr1);
 	}
 
 	public String toString() {

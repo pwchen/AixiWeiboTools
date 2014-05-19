@@ -5,7 +5,6 @@ import org.apache.commons.logging.LogFactory;
 
 import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboUser;
-import crawler.weibo.service.parser.SimpleUserParser;
 import crawler.weibo.service.parser.UserParser;
 
 public class CrawlUserAndFollowsThread implements Runnable {

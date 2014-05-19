@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import crawler.weibo.service.filter.WeiboUserFilter;
+
 /**
  * 工作任务队列
  * 
@@ -33,11 +35,11 @@ public class Scheduler {
 		logger.info("从队列中取出用户ID" + task.getUserId() + "，工作类型" + task.getType()
 				+ ",当前剩余工作:" + scheduleList.size());
 		return task;
-
 	}
 
 	/**
 	 * 完成该任务后将该task从正在进行的工作队列中移除
+	 * 
 	 * @param task
 	 * @return
 	 */
@@ -49,17 +51,22 @@ public class Scheduler {
 	}
 
 	/**
-	 * 检查正在工作的队列中是否存在一个task，存在返回true，否则返回false
+	 * 检查改task是否在队列中
 	 * 
 	 * @param task
 	 * @return
 	 */
-	public static synchronized boolean checkTaskonWorkedList(Task task) {
+	public static synchronized boolean checkTask(Task task) {
 		if (Scheduler.getScheduleList().contains(task)) {
 			return true;
 		}
+		if (Scheduler.getWorkingList().contains(task)) {
+			return true;
+		}
+		if (WeiboUserFilter.filterUserByFilUserTab(task.getUserId())) {
+			return true;
+		}
 		return false;
-
 	}
 
 	/**
@@ -68,7 +75,7 @@ public class Scheduler {
 	 * @param task
 	 */
 	public static synchronized void pushTask(Task task) {
-		if (checkTaskonWorkedList(task))
+		if (checkTask(task))
 			return;
 		Scheduler.getScheduleList().add(task);
 		logger.info("用户ID" + task.getUserId() + "，工作类型" + task.getType()
@@ -83,12 +90,12 @@ public class Scheduler {
 		Scheduler.scheduleList = sList;
 	}
 
-	public static LinkedList<Task> getWorkedList() {
+	public static LinkedList<Task> getWorkingList() {
 		return workingList;
 	}
 
-	public static void setWorkedList(LinkedList<Task> workedList) {
-		Scheduler.workingList = workedList;
+	public static void setWorkingList(LinkedList<Task> workingList) {
+		Scheduler.workingList = workingList;
 	}
 
 	public static Log getLogger() {
