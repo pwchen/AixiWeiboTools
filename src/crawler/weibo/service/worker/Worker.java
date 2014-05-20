@@ -5,9 +5,12 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
 
 import utils.CrawlerContext;
+import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboUser;
+import crawler.weibo.service.fetcher.Fetcher;
 import crawler.weibo.service.filter.WeiboUserFilter;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
+import crawler.weibo.service.parser.UserParser;
 import crawler.weibo.service.scheduler.Scheduler;
 import crawler.weibo.service.scheduler.Task;
 
@@ -24,6 +27,9 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 	public Worker(Task task) {
 		this.initTask = task;
+	}
+
+	public Worker() {
 	}
 
 	@Override
@@ -67,12 +73,30 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 	@Override
 	public void crawlerUserInfAndReations(Task task) {
-		WeiboUser wu = crawlerUserInf(task);
-		if (!WeiboUserFilter.filterUserByRules(wu)) {
-			wu = crawlerUserReations(task, wu);
+		WeiboUser wu = UserJdbcService.getInstance().getWeiboUser(
+				task.getUserId());
+		if (wu != null) {// 数据库中已经存在该用户，则直接指派后续任务
+			if (task.getDepth() > 1) {
+				assignSuccessorTask(task, wu);
+			}
+			return;
 		}
-		if (task.getDepth() > 1) {
-			assignSuccessorTask(task, wu);
+		wu = crawlerUserInf(task);
+		if (wu != null && !WeiboUserFilter.filterUserByRules(wu)) {
+			wu = crawlerUserReations(wu);
+			int result = UserJdbcService.getInstance().inSertWeiboUser(wu);
+			if (result > 0) {
+				logger.info("用户：" + wu.getScreenName() + "加入数据库！");
+				if (task.getDepth() > 1) {
+					assignSuccessorTask(task, wu);
+				}
+			} else { // 其他未知原因
+				logger.error("用户：" + wu.getScreenName() + "存入数据库失败！");
+			}
+		} else if (wu == null) {
+			logger.warn(task + "爬取失败！");
+		} else {
+			logger.warn(wu.getUserId() + "被过滤器过滤掉！");
 		}
 	}
 
@@ -95,12 +119,82 @@ public class Worker implements Runnable, CrawlerUserInterface {
 	@Override
 	public WeiboUser crawlerUserInf(Task task) {
 		String userId = task.getUserId();
-		return null;
+		logger.info("开始采集用户ID：" + userId);
+		String rawHtml = Fetcher.fetchUserInfoHtmlByUid(userId);
+		if (rawHtml == null) {
+			return null;
+		}
+		WeiboUser wu = UserParser.paserUserInfo(rawHtml);
+		if (wu == null)
+			return null;
+		wu.setUserId(userId);
+		return wu;
 	}
 
 	@Override
-	public WeiboUser crawlerUserReations(Task task, WeiboUser wu) {
-		return null;
-	}
+	public WeiboUser crawlerUserReations(WeiboUser wu) {
 
+		String userId = wu.getUserId();
+		int followNum = wu.getFollowNum();
+		int fansNum = wu.getFansNum();
+		logger.info("开始采集用户：" + wu.getUserId() + "-" + wu.getScreenName()
+				+ " 的粉丝" + fansNum + "及关注" + followNum);
+		int followPage = followNum / 20 + 1;
+		if (followPage > 10) {
+			followPage = 10;
+		}
+		int fansPage = fansNum / 20 + 1;
+		if (fansPage > 10) {
+			fansPage = 10;
+		}
+		String followUserIds = "";
+		String fansUserIds = "";
+
+		if (followNum > 0) {
+			for (int i = 1; i <= followPage; i++) {
+				String entity = Fetcher.fetchUserFollows(userId, i);
+				if (entity == null) {
+					break;
+				}
+				String currentUids = UserParser.paserUserRelations(entity);
+				if ("0".equals(currentUids)) {
+					currentUids = "";
+					logger.warn("当前出错的id：" + userId + "/follow?page=" + i);
+					i--;
+					continue;
+				}
+				followUserIds += currentUids;
+			}
+			if ("".equals(followUserIds)) {
+				followUserIds = null;
+			} else {
+				followUserIds = followUserIds.substring(1);
+			}
+		}
+
+		if (fansNum > 0) {
+			for (int i = 1; i <= fansPage; i++) {
+				String entity = Fetcher.fetchUserFans(userId, i);
+				if (entity == null) {
+					break;
+				}
+				String currentUids = UserParser.paserUserRelations(entity);
+				if ("0".equals(currentUids)) {
+					currentUids = "";
+					logger.warn("当前出错的id：" + userId + "/fans?page=" + i);
+					i--;
+					continue;
+				}
+				fansUserIds += currentUids;
+			}
+			if ("".equals(fansUserIds)) {
+				fansUserIds = null;
+			} else {
+				fansUserIds = fansUserIds.substring(1);
+			}
+		}
+		wu.setFollowUserId(followUserIds);
+		wu.setFansUserId(fansUserIds);
+		return wu;
+	}
 }

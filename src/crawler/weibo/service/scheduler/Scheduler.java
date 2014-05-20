@@ -17,11 +17,11 @@ public class Scheduler {
 	/**
 	 * 待完成工作队列
 	 */
-	private static LinkedList<Task> scheduleList;
+	private static LinkedList<Task> scheduleList = new LinkedList<Task>();
 	/**
 	 * 正在进行的工作队列
 	 */
-	private static LinkedList<Task> workingList;
+	private static LinkedList<Task> workingList = new LinkedList<Task>();
 	private static final Log logger = LogFactory.getLog(Scheduler.class);
 
 	/**
@@ -30,10 +30,13 @@ public class Scheduler {
 	 * @return
 	 */
 	public static synchronized Task pollTask() {
+		if (scheduleList.size() < 1) {
+			return null;
+		}
 		Task task = (Task) getScheduleList().pollFirst();
 		workingList.push(task);
-		logger.info("从队列中取出用户ID" + task.getUserId() + "，工作类型" + task.getType()
-				+ ",当前剩余工作:" + scheduleList.size());
+		logger.info("从队列中取出" + task + ",当前剩余工作:" + scheduleList.size()
+				+ "，正在工作数量:" + workingList.size());
 		return task;
 	}
 
@@ -57,13 +60,18 @@ public class Scheduler {
 	 * @return
 	 */
 	public static synchronized boolean checkTask(Task task) {
-		if (Scheduler.getScheduleList().contains(task)) {
+		if (Scheduler.getWorkingList().contains(task)) {// 工作队列
 			return true;
 		}
-		if (Scheduler.getWorkingList().contains(task)) {
+		if (Scheduler.getScheduleList().contains(task)) {// 任务队列
 			return true;
 		}
-		if (WeiboUserFilter.filterUserByFilUserTab(task.getUserId())) {
+		if (WeiboUserFilter.filterUserByFilUserTab(task.getUserId())) {// 用户过滤表
+			return true;
+		}
+		if (task.getDepth() <= 1
+				&& WeiboUserFilter.filterUserByUserTab(task.getUserId()))// 用户表
+		{
 			return true;
 		}
 		return false;
@@ -78,8 +86,8 @@ public class Scheduler {
 		if (checkTask(task))
 			return;
 		Scheduler.getScheduleList().add(task);
-		logger.info("用户ID" + task.getUserId() + "，工作类型" + task.getType()
-				+ "加入工作队列,当前剩余工作:" + scheduleList.size());
+		logger.info(task.toString() + "加入工作队列,当前剩余工作:" + scheduleList.size()
+				+ "，正在工作数量:" + workingList.size());
 	}
 
 	public static LinkedList<Task> getScheduleList() {

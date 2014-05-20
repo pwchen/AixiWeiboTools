@@ -25,6 +25,6 @@ public interface CrawlerUserInterface {
 	 * 
 	 * @param task
 	 */
-	public WeiboUser crawlerUserReations(Task task, WeiboUser wu);
+	public WeiboUser crawlerUserReations(WeiboUser wu);
 
 }

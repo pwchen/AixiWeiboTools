@@ -1,7 +1,6 @@
 package crawler.weibo.service.parser;
 
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -29,7 +28,29 @@ public class UserParser {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 	/**
-	 * 接受从response中读取的html，去除\/之类的字符，返回json中的html数据
+	 * 根据用户的info页面html，解析成一个WeiboUser
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public static WeiboUser paserUserInfo(String entity) {
+		// entity = replaceESC(entity);
+		return parseUserInfoDatabyModel(entity);
+	}
+
+	/**
+	 * 去除转义字符 比如\r \n \t \/ \\ \"等
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	private static String replaceESC(String entity) {
+		return entity.replace("\\r", "").replace("\\n", "").replace("\\t", "")
+				.replace("\\/", "/").replace("\\\"", "");
+	}
+
+	/**
+	 * 根据JSON的domid，将该段JSON数据转换为html
 	 * 
 	 * @param rawHTML
 	 * @param pid
@@ -37,15 +58,13 @@ public class UserParser {
 	 * @return
 	 * @throws JSONException
 	 */
-	private static String getNormalHTMLDataFromResponse(String entity,
-			String domid) {
+	private static String getNormalHTMLDataByDomid(String entity, String domid) {
 		String rawHTML = null;
 		try {
 			rawHTML = entity.substring(entity.indexOf(domid));
 			rawHTML = rawHTML.substring(rawHTML.indexOf("\"html\":\"") + 8,
 					rawHTML.indexOf("\"})</script>"));
-			rawHTML = rawHTML.replace("\\r", "").replace("\\n", "")
-					.replace("\\t", "").replace("\\/", "/").replace("\\\"", "");
+			rawHTML = replaceESC(rawHTML);
 		} catch (StringIndexOutOfBoundsException e) {
 			logger.error(domid + ":" + e.getMessage());
 			FileUtils.saveToFile(entity, "domid_entity.html", "utf-8");
@@ -63,7 +82,7 @@ public class UserParser {
 	public static WeiboUser getWeiboUserInfo(String userId) {
 		String url = "http://weibo.com/" + userId + "/info";
 		String entity = null;
-		entity = Fetcher.getRawHtml(url);
+		entity = replaceESC(Fetcher.fetchRawHtml(url));
 		if (entity == null) {
 			return null;
 		}
@@ -77,7 +96,7 @@ public class UserParser {
 	}
 
 	/**
-	 * 判断页面类型并解析各类型页面特征，选择相应的页面解析方法
+	 * 判断页面类型并解析各类型页面特征，选择相应的页面解析方法,****这段代码非常乱，有时间要改写****
 	 * 
 	 * @param entity
 	 * @return
@@ -89,11 +108,13 @@ public class UserParser {
 		if (entity.indexOf(domid1) != -1) {
 			return paseUserInfo_PlOfficialHeader(entity);
 		} else if (entity.indexOf(domid2) != -1) {
+			// FileUtils.saveToFile(entity, "Pl_Core_Header.html", "utf-8");
 			return paseUserInfo_PlCoreHeader(entity);
 		} else if (entity.indexOf(domid3) != -1) {
+			// FileUtils.saveToFile(entity, "pl_profile_hisInfo", "utf-8");
 			return paseUserInfo_plprofilehisInfo(entity);
 		} else {
-			String entityFileName = "entity" + new Date().getTime() + ".html";
+			
 			if (entity.indexOf("抱歉，网络繁忙") != -1) {
 				logger.warn("抱歉，网络繁忙!稍后再试！");
 				return null;
@@ -102,6 +123,7 @@ public class UserParser {
 				logger.warn("抱歉，你访问的页面地址有误，或者该页面不存在");
 				return null;
 			}
+			String entityFileName = "parseUserInfoDatabyModel" + new Date().getTime() + ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
 			logger.error("日啊，又有新的模板！！！！！！！！！！！源文件保存至" + entityFileName);
 			return null;
@@ -116,8 +138,7 @@ public class UserParser {
 	 */
 	private static WeiboUser paseUserInfo_PlOfficialHeader(String entity) {
 		String domid = "\"domid\":\"" + "Pl_Official_Header__1" + "\"";
-		String plOfficialHeaderHtml = getNormalHTMLDataFromResponse(entity,
-				domid);
+		String plOfficialHeaderHtml = getNormalHTMLDataByDomid(entity, domid);
 
 		WeiboUser weiboUser = new WeiboUser();
 		Document document = Jsoup.parse(plOfficialHeaderHtml,
@@ -133,8 +154,7 @@ public class UserParser {
 			logger.error("解析页面出错！保存文件名：" + entityFileName);
 			return null;
 		}
-		String entityFileName = "entity" + new Date().getTime() + ".html";
-		FileUtils.saveToFile(entity, entityFileName, "utf-8");
+
 		// 达人
 		Element daren = document.select("i[node-type=daren]").first();
 		if (daren != null) {
@@ -208,6 +228,7 @@ public class UserParser {
 			weiboUser.setMessageNum(Integer.parseInt(weiboNum.text()));
 		}
 
+		// 用户名
 		Element userName = document.select("[class=pf_lin S_link1]").first();
 		if (userName != null) {
 			String hrefScr = userName.attr("href");
@@ -219,6 +240,9 @@ public class UserParser {
 						.setUserName(hrefScr.substring(1, hrefScr.indexOf("?")));
 			}
 
+		} else {
+			String entityFileName = "userName" + new Date().getTime() + ".html";
+			FileUtils.saveToFile(entity, entityFileName, "utf-8");
 		}
 
 		domid = "<!-- 他人info -->";
@@ -324,7 +348,7 @@ public class UserParser {
 	 */
 	private static WeiboUser paseUserInfo_PlCoreHeader(String entity) {
 		String domid = "\"domid\":\"" + "Pl_Core_Header__1" + "\"";
-		String plCoreHeaderHtml = getNormalHTMLDataFromResponse(entity, domid);
+		String plCoreHeaderHtml = getNormalHTMLDataByDomid(entity, domid);
 		// PropertyUtils.saveToFile(plCoreHeaderHtml, "PlCoreHeader.html",
 		// "utf-8");
 
@@ -335,7 +359,8 @@ public class UserParser {
 		if (screenName != null) {
 			weiboUser.setScreenName(screenName.text());
 		} else {
-			String entityFileName = "entity" + new Date().getTime() + ".html";
+			String entityFileName = "screenName" + new Date().getTime()
+					+ ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
 			logger.error("解析页面出错！保存文件名：" + entityFileName);
 			return null;
@@ -425,8 +450,8 @@ public class UserParser {
 		if (entity.indexOf(domid) == -1) {
 			return weiboUser;
 		}
-		String plCoreLeftPicTextUserHtml = getNormalHTMLDataFromResponse(
-				entity, domid);
+		String plCoreLeftPicTextUserHtml = getNormalHTMLDataByDomid(entity,
+				domid);
 		document = Jsoup.parse(plCoreLeftPicTextUserHtml, "http://weibo.com");
 
 		// 所在地
@@ -506,8 +531,7 @@ public class UserParser {
 	 */
 	private static WeiboUser paseUserInfo_plprofilehisInfo(String entity) {
 		String domid = "\"pid\":\"pl_profile_hisInfo\"";
-		String plprofilehisInfoHtml = getNormalHTMLDataFromResponse(entity,
-				domid);
+		String plprofilehisInfoHtml = getNormalHTMLDataByDomid(entity, domid);
 		// PropertyUtils.saveToFile(plprofilehisInfoHtml,
 		// "plprofilehisInfo.html",
 		// "utf-8");
@@ -520,7 +544,8 @@ public class UserParser {
 		if (screenName != null) {
 			weiboUser.setScreenName(screenName.text());
 		} else {
-			String entityFileName = "entity" + new Date().getTime() + ".html";
+			String entityFileName = "pl_profile_hisInfoscreenName"
+					+ new Date().getTime() + ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
 			logger.error("解析页面出错！保存文件名：" + entityFileName);
 			return null;
@@ -576,7 +601,7 @@ public class UserParser {
 
 		/*** pl_profile_photo ***/
 		domid = "\"pid\":\"pl_profile_photo\"";
-		String plprofilephotoHtml = getNormalHTMLDataFromResponse(entity, domid);
+		String plprofilephotoHtml = getNormalHTMLDataByDomid(entity, domid);
 		// PropertyUtils.saveToFile(pl_profile_photo, "pl_profile_photo.html",
 		// "utf-8");
 		document = Jsoup.parse(plprofilephotoHtml, "http://weibo.com");
@@ -620,8 +645,7 @@ public class UserParser {
 
 		/*** pl_profile_infoBase ***/
 		domid = "\"pid\":\"pl_profile_infoBase\"";
-		String plprofileinfoBaseHtml = getNormalHTMLDataFromResponse(entity,
-				domid);
+		String plprofileinfoBaseHtml = getNormalHTMLDataByDomid(entity, domid);
 		// PropertyUtils.saveToFile(pl_profile_infoBase,
 		// "pl_profile_infoBase.html",
 		// "utf-8");
@@ -684,8 +708,7 @@ public class UserParser {
 		/*** pl_profile_infoEdu ***/
 
 		domid = "\"pid\":\"pl_profile_infoBase\"";
-		String plprofileinfoEduHtml = getNormalHTMLDataFromResponse(entity,
-				domid);
+		String plprofileinfoEduHtml = getNormalHTMLDataByDomid(entity, domid);
 		// PropertyUtils.saveToFile(pl_profile_infoEdu,
 		// "pl_profile_infoEdu.html",
 		// "utf-8");
@@ -702,8 +725,7 @@ public class UserParser {
 
 		domid = "\"pid\":\"pl_profile_infoCareer\"";
 		/*** pl_profile_infoCareer ***/
-		String plprofileinfoCareerHtml = getNormalHTMLDataFromResponse(entity,
-				domid);
+		String plprofileinfoCareerHtml = getNormalHTMLDataByDomid(entity, domid);
 		// PropertyUtils.saveToFile(pl_profile_infoCareer,
 		// "pl_profile_infoCareer.html", "utf-8");
 		document = Jsoup.parse(plprofileinfoCareerHtml, "http://weibo.com");
@@ -726,7 +748,7 @@ public class UserParser {
 	 * @param entity
 	 * @return
 	 */
-	public String getUserFollowFromRaw(String entity) {
+	public static String paserUserRelations(String entity) {
 		String domid = "\"pid\":\"pl_relation_hisFollow\"";
 		String domid0 = "\"pid\":\"pl_relation_hisFans\"";
 		String domid1 = "\"domid\":\"Pl_Official_LeftHisRelation";
@@ -734,19 +756,20 @@ public class UserParser {
 		String followsStr = "";
 		String plOfficialLeftHisRelationHtml = null;
 		if (entity.indexOf(domid) != -1) {
-			plOfficialLeftHisRelationHtml = getNormalHTMLDataFromResponse(
-					entity, domid);
+			plOfficialLeftHisRelationHtml = getNormalHTMLDataByDomid(entity,
+					domid);
 		} else if (entity.indexOf(domid0) != -1) {
-			plOfficialLeftHisRelationHtml = getNormalHTMLDataFromResponse(
-					entity, domid0);
+			plOfficialLeftHisRelationHtml = getNormalHTMLDataByDomid(entity,
+					domid0);
 		} else if (entity.indexOf(domid1) != -1) {
-			plOfficialLeftHisRelationHtml = getNormalHTMLDataFromResponse(
-					entity, domid1);
+			plOfficialLeftHisRelationHtml = getNormalHTMLDataByDomid(entity,
+					domid1);
 		} else if (entity.indexOf("$CONFIG['product'] = 'enterpriseV2'") != -1) {
 			// 这里是一些无法爬取关系的企业用户或机关用户
 			return followsStr;
 		} else {
-			String htmlFileName = "entity" + new Date().getTime() + ".html";
+			String htmlFileName = "getUserFollowFromRaw" + new Date().getTime()
+					+ ".html";
 			FileUtils.saveToFile(entity, htmlFileName, "utf-8");
 			logger.error("日啊，又有新的关注列表模板!!!!!!!!!解析用户的关注列表出错，页面保存至："
 					+ htmlFileName);
@@ -771,7 +794,8 @@ public class UserParser {
 			}
 
 			if (userId == null || "".equals(userId)) {
-				String htmlFileName = "entity" + new Date().getTime() + ".html";
+				String htmlFileName = "getUserFollowFromRaw"
+						+ new Date().getTime() + ".html";
 				FileUtils.saveToFile(entity, htmlFileName, "utf-8");
 				logger.error("Pl_Official_LeftHisRelation解析用户的关注列表出错，页面保存至："
 						+ htmlFileName);
@@ -807,11 +831,11 @@ public class UserParser {
 			for (int i = 1; i <= followPage; i++) {
 				String url = "http://weibo.com/" + userId + "/follow?page=" + i;
 				String entity = null;
-				entity = Fetcher.getRawHtml(url);
+				entity = Fetcher.fetchRawHtml(url);
 				if (entity == null) {
 					break;
 				}
-				String currentUids = getUserFollowFromRaw(entity);
+				String currentUids = paserUserRelations(entity);
 				if ("0".equals(currentUids)) {
 					currentUids = "";
 					logger.error("当前出错的URL：" + url);
@@ -829,11 +853,11 @@ public class UserParser {
 			for (int i = 1; i <= fansPage; i++) {
 				String url = "http://weibo.com/" + userId + "/fans?page=" + i;
 				String entity = null;
-				entity = Fetcher.getRawHtml(url);
+				entity = Fetcher.fetchRawHtml(url);
 				if (entity == null) {
 					break;
 				}
-				String currentUids = getUserFollowFromRaw(entity);
+				String currentUids = paserUserRelations(entity);
 				if ("0".equals(currentUids)) {
 					currentUids = "";
 					logger.error("当前出错的URL：" + url);

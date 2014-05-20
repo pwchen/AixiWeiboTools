@@ -67,7 +67,7 @@ public class CrawlMessageForwardTrack {
 	 * @param url
 	 */
 	private static void startCrawling(String url) {
-		String entity = Fetcher.getRawHtml(url + "?type=repost");
+		String entity = Fetcher.fetchRawHtml(url + "?type=repost");
 		logger.info("爬取的微博地址:" + url);
 		if (entity == null) {
 			logger.error("页面被删了，监控器退出");
@@ -90,11 +90,11 @@ public class CrawlMessageForwardTrack {
 				String pageUrl = getPageUrl(document);
 				for (int i = 2; i <= totalPageNum; i++) {
 					try {
-						String temp = Fetcher.getRawHtml(pageUrl.substring(0,
+						String temp = Fetcher.fetchRawHtml(pageUrl.substring(0,
 								pageUrl.indexOf("page=") + 5) + i);
 						if (temp == null) {
 							for (int j = 0; j < 5; j++) {
-								temp = Fetcher.getRawHtml(pageUrl.substring(
+								temp = Fetcher.fetchRawHtml(pageUrl.substring(
 										0, pageUrl.indexOf("page=") + 5) + i);
 								if (temp != null)
 									break;

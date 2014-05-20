@@ -37,7 +37,7 @@ public class SimpleUserParser {
 		String url = "http://weibo.com/aj/user/newcard?type=1&id=" + userId
 				+ "&callback=STK_" + (new Date().getTime() * 1000);
 		String entity = null;
-		entity = Fetcher.getRawHtml(url);
+		entity = Fetcher.fetchRawHtml(url);
 		if (entity == null) {
 			return null;
 		}

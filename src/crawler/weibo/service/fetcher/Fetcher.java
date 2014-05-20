@@ -17,14 +17,50 @@ import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
 /**
  * 采集器，用于获取原始HTML,可以根据原始的HTML内容判断账号是否请求次数过多，或者其他问题
+ * 
  * @author Administrator
- *
+ * 
  */
 public class Fetcher {
 	private static final Log logger = LogFactory.getLog(Fetcher.class);
 
 	public static void main(String args[]) {
-		System.out.println(getRawHtml("http://weibo.com/u/5061880888"));
+		System.out.println(fetchRawHtml("http://weibo.com/u/5061880888"));
+	}
+
+	/**
+	 * 根据用户Id返回改用户的个人信息页面
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static String fetchUserInfoHtmlByUid(String userId) {
+		String url = "http://weibo.com/" + userId + "/info";
+		return fetchRawHtml(url);
+	}
+
+	/**
+	 * 根据用户ID以及页面号，返回改用户的粉丝列表页面
+	 * 
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
+	public static String fetchUserFans(String userId, int page) {
+		String url = "http://weibo.com/" + userId + "/fans?page=" + page;
+		return Fetcher.fetchRawHtml(url);
+	}
+
+	/**
+	 * 根据用户ID以及页面号，返回改用户的关注列表页面
+	 * 
+	 * @param userId
+	 * @param page
+	 * @return
+	 */
+	public static String fetchUserFollows(String userId, int page) {
+		String url = "http://weibo.com/" + userId + "/follow?page=" + page;
+		return Fetcher.fetchRawHtml(url);
 	}
 
 	/**
@@ -34,7 +70,7 @@ public class Fetcher {
 	 * @param personalUrl
 	 * @return
 	 */
-	public static String getRawHtml(String url) {
+	public static String fetchRawHtml(String url) {
 		HttpClient client = WeiboLoginHttpClientUtils.getLoginhttpClient();
 		HttpGet getMethod = new HttpGet(url);
 		String entityStr = null;
@@ -64,19 +100,28 @@ public class Fetcher {
 					}
 				}
 			}
+			int locationIndex = entityStr.indexOf("location.replace(");
+			if (locationIndex != -1) {
+				String location = entityStr.substring(locationIndex + 18);
+				location = location.substring(0, location.indexOf("\");"));
+				getMethod = new HttpGet(location);
+				ex = true;
+				logger.info("地址跳转：" + location);
+				continue;
+			}
 			if (entityStr.indexOf("抱歉，网络繁忙") != -1) {
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("抱歉，网络繁忙:" + url);
 				ex = true;
 			} else if (entityStr.indexOf("正确输入验证码答案") != -1) {
-				WeiboLoginHttpClientUtils.expireClient = true;//账号异常，需要换号了
+				WeiboLoginHttpClientUtils.expireClient = true;// 账号异常，需要换号了
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("正确输入验证码答案:" + url);
 				ex = true;
 			} else if (entityStr
 					.indexOf("æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿") != -1) {
 				FileUtils.saveToFile(entityStr, "tempuft.html", "utf-8");
-				FileUtils.saveToFile(entityStr, "tempgbk.html", "gbk");
+				// FileUtils.saveToFile(entityStr, "tempgbk.html", "gbk");
 				logger.error("乱码异常:æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿"
 						+ url);
 				try {

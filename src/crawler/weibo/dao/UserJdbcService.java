@@ -108,6 +108,12 @@ public class UserJdbcService {
 		return userIdListArr;
 	}
 
+	/**
+	 * 根据ID查一个用户
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	public synchronized WeiboUser getWeiboUser(String userId) {
 		// logger.info("开始获取用户ID为" + userId + "的用户信息...");
 		PreparedStatement pstmt = null;
@@ -202,7 +208,7 @@ public class UserJdbcService {
 		String region = weiboUser.getRegion();
 		String followUserId = weiboUser.getFollowUserId();
 		String fansUserId = weiboUser.getFansUserId();
-		Timestamp uCreateTime = null;
+		Timestamp uCreateTime = weiboUser.getuCreateTime();
 		if (weiboUser.getuCreateTime() != null) {
 			uCreateTime = new Timestamp(weiboUser.getuCreateTime().getTime());
 		}
@@ -241,8 +247,11 @@ public class UserJdbcService {
 			pstmt.setString(29, domain);
 			flag = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
-			logger.error(e);
+			// e.printStackTrace();
+			logger.warn(e);
+			if (e.getMessage().indexOf("违反唯一约束") != -1) {
+				return -1;
+			}
 		} finally {
 			try {
 				pstmt.close();
@@ -294,7 +303,7 @@ public class UserJdbcService {
 		String region = weiboUser.getRegion();
 		String followUserId = weiboUser.getFollowUserId();
 		String fansUserId = weiboUser.getFansUserId();
-		Timestamp uCreateTime = null;
+		Timestamp uCreateTime = weiboUser.getuCreateTime();
 		if (weiboUser.getuCreateTime() != null) {
 			uCreateTime = new Timestamp(weiboUser.getuCreateTime().getTime());
 		}
@@ -341,48 +350,24 @@ public class UserJdbcService {
 				e.printStackTrace();
 			}
 		}
-		if (flag > 0) {
-			sql = "select * from T_WEIBO_CRAWLER_QUEUE t where t.userid='"
-					+ userId + "'";
-			int updateNum = 0;
-			try {
-				pstmt = oconn.prepareStatement(sql);
-				rs = pstmt.executeQuery();
-				if (rs.next()) {
-					updateNum = rs.getInt("UPDATE_NUM");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				logger.error(e);
-			} finally {
-				try {
-					rs.close();
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			sql = "update T_WEIBO_CRAWLER_QUEUE t set t.is_success='0',t.update_num=?,t.update_time=? where t.userid='"
-					+ userId + "'";
-			try {
-				pstmt = oconn.prepareStatement(sql);
-				pstmt.setInt(1, updateNum + 1);
-				pstmt.setTimestamp(2, new Timestamp(new Date().getTime()));
-				pstmt.executeUpdate();
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				logger.error(e);
-			} finally {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			return 1;
-		}
-		return 0;
+		/*
+		 * if (flag > 0) { sql =
+		 * "select * from T_WEIBO_CRAWLER_QUEUE t where t.userid='" + userId +
+		 * "'"; int updateNum = 0; try { pstmt = oconn.prepareStatement(sql); rs
+		 * = pstmt.executeQuery(); if (rs.next()) { updateNum =
+		 * rs.getInt("UPDATE_NUM"); } } catch (SQLException e) {
+		 * e.printStackTrace(); logger.error(e); } finally { try { rs.close();
+		 * pstmt.close(); } catch (SQLException e) { e.printStackTrace(); } }
+		 * sql =
+		 * "update T_WEIBO_CRAWLER_QUEUE t set t.is_success='0',t.update_num=?,t.update_time=? where t.userid='"
+		 * + userId + "'"; try { pstmt = oconn.prepareStatement(sql);
+		 * pstmt.setInt(1, updateNum + 1); pstmt.setTimestamp(2, new
+		 * Timestamp(new Date().getTime())); pstmt.executeUpdate();
+		 * pstmt.close(); } catch (SQLException e) { e.printStackTrace();
+		 * logger.error(e); } finally { try { pstmt.close(); } catch
+		 * (SQLException e) { e.printStackTrace(); } } return 1; }
+		 */
+		return flag;
 	}
 
 	private CLOB strtoColb(String str) {
@@ -405,5 +390,36 @@ public class UserJdbcService {
 			logger.error(e1);
 		}
 		return clob;
+	}
+
+	/**
+	 * 检查改用户Id是否在过滤列表当中
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public synchronized boolean checkUserFilterList(String userId) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		if (userId != null) {
+			String sql = "select * from t_weibo_user_filterlist t where t.userid='"
+					+ userId + "'";
+			try {
+				pstmt = oconn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				return rs.next();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				logger.error(e);
+			} finally {
+				try {
+					rs.close();
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
 	}
 }

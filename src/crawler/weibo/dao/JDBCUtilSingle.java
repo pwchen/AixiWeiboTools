@@ -41,7 +41,6 @@ public final class JDBCUtilSingle {
 
 	public Connection getConnection() {
 		logger.info(Thread.currentThread().getName() + "建立连接....");
-		System.out.println(Thread.currentThread().getName() + "建立连接....");
 		if (conn == null) {
 			try {
 				conn = DriverManager.getConnection(url, name, password);
