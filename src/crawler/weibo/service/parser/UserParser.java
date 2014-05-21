@@ -46,7 +46,7 @@ public class UserParser {
 	 */
 	private static String replaceESC(String entity) {
 		return entity.replace("\\r", "").replace("\\n", "").replace("\\t", "")
-				.replace("\\/", "/").replace("\\\"", "");
+				.replace("\\/", "/").replace("\\\"", "\"");
 	}
 
 	/**
@@ -243,6 +243,7 @@ public class UserParser {
 		} else {
 			String entityFileName = "userName" + new Date().getTime() + ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
+			logger.error("解析userName出错,保存至文件"+entityFileName);
 		}
 
 		domid = "<!-- 他人info -->";
@@ -434,6 +435,7 @@ public class UserParser {
 			weiboUser.setMessageNum(messageNum);
 		}
 
+		//用户名
 		Element userName = document.select(".username>#place>span").first();
 		if (userName != null) {
 			String hrefScr = userName.text();
@@ -443,6 +445,9 @@ public class UserParser {
 				weiboUser.setUserName(hrefScr.substring(17));
 			}
 
+		} else {
+			String entityFileName = "userName" + new Date().getTime() + ".html";
+			FileUtils.saveToFile(entity, entityFileName, "utf-8");
 		}
 
 		/** plCoreLeftPicTextUserHtml 这里还有问题，以后再解析 **/

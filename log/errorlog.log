@@ -4,3 +4,9 @@
 2014-05-20 18:09:12,824 ERROR [pool-1-thread-6] ( Fetcher.java:135)     - 您当前访问的帐号异常:http://weibo.com/5049075378/follow?page=9
 2014-05-20 18:13:30,909 ERROR [pool-1-thread-8] (UserParser.java:774)     - 日啊，又有新的关注列表模板!!!!!!!!!解析用户的关注列表出错，页面保存至：getUserFollowFromRaw1400580810906.html
 2014-05-20 18:17:27,533 ERROR [pool-1-thread-4] ( Fetcher.java:113)     - 抱歉，网络繁忙:http://weibo.com/2438285715/follow?page=9
+2014-05-21 10:08:14,962 ERROR [pool-1-thread-9] (WeiboLoginHttpClientUtils.java:208)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-21 10:18:08,264 ERROR [pool-1-thread-1] (WeiboLoginHttpClientUtils.java:125)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-21 10:22:46,100 ERROR [pool-1-thread-1] (WeiboLoginHttpClientUtils.java:208)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-21 10:24:59,928 ERROR [pool-1-thread-1] (WeiboLoginHttpClientUtils.java:208)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-21 10:29:19,040 ERROR [pool-1-thread-1] (WeiboLoginHttpClientUtils.java:208)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-05-21 10:48:09,961 ERROR [pool-1-thread-1] (UserParser.java:778)     - 日啊，又有新的关注列表模板!!!!!!!!!解析用户的关注列表出错，页面保存至：getUserFollowFromRaw1400640489942.html

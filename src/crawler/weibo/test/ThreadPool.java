@@ -14,9 +14,9 @@ public class ThreadPool {
 		int threadNumber = CrawlerContext.getContext().getThreadNumber();
 		ExecutorService executorService = Executors
 				.newFixedThreadPool(threadNumber);
-		Task task = new Task("1786783961", 0, 3);
+		Task task = new Task("2824735424", 0, 3);
 		Scheduler.pushTask(task);
-		for (int i = 0; i < threadNumber; i++) {
+		for (int i = 0; i < 1; i++) {
 			Worker thread = new Worker();
 			executorService.execute(thread);
 		}
