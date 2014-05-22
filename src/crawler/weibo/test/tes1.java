@@ -1,31 +1,14 @@
 package crawler.weibo.test;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.sql.Timestamp;
 
 public class tes1 {
 
 	public static void main(String[] args) {
-		t1 tt1 = new t1();
-		Class cl = tt1.getClass();
-		try {
-			cl.getMethod(findMethodName(cl, "name1")).invoke(tt1);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Timestamp t1 = Timestamp.valueOf("2010-07-29 00:00:00");
+		Timestamp t2 = Timestamp.valueOf("2010-07-28 00:00:00");
+		System.out.println(t1.after(t2));
 	}
 
 	private static String findMethodName(Class userClass, String columnName) {

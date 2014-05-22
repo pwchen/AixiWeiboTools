@@ -1,0 +1,145 @@
+body {
+	scrollbar-face-color: #DEE3E7;
+	scrollbar-highlight-color: #D1D7DC;
+	scrollbar-shadow-color: #98AAB1;
+	scrollbar-3dlight-color: #ffffff;
+	scrollbar-arrow-color: #006666;
+	scrollbar-track-color: #EFEFEF;
+	scrollbar-darkshadow-color: #EFEFEF;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	overflow-x: auto;
+	overflow-y: auto;
+	font-size: 62.5%;
+	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana",
+		"sans-serif";
+}
+
+a {
+	color: #C75F3E;
+}
+
+div {
+	width: 100%;
+}
+
+/*列表表单样式，*/
+.list_tableNoHtc {
+	width: 100%;
+	font-size: 9pt;
+	background-color: #d4d4d4;
+}
+
+.tab_table {
+	width: 98%;
+	font-size: 9pt;
+	background-color: #ADB2C6;
+}
+
+/*简表分页信息样式*/
+.list_table_pageSplitInfo {
+	font-size: 9pt;
+	text-align: center;
+	background-color: #FFFFFF;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+/*列表标题样式，原版本bTrHead*/
+.list_table_thead_tr_title { /*background-color:#ffffff;*/
+	background-color: #F3F3F3;
+	height: 16px;
+}
+
+.list_table_thead_td_title {
+	font-size: 9pt;
+	text-align: center;
+	height: 16px;
+}
+
+.list_table_tbody_tr {
+	font-size: 9pt;
+	text-align: center;
+	_padding-top: 2px; /*IE6特殊处理*/
+	_padding-bottom: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-color: #FFFFFF;
+	height: 18px
+}
+
+.list_table_tbody_tr_p {
+	font-size: 9pt;
+	text-align: center;
+	_padding-top: 2px; /*IE6特殊处理*/
+	_padding-bottom: 2px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	background-color: #BDDFFF;
+	height: 18px
+}
+
+.list_table_tbody_td {
+	font-size: 9pt;
+	_padding-top: 3px; /*ie6特殊处理*/
+	padding-top: 1px;
+	_padding-bottom: 3px;
+	padding-bottom: 1px;
+	height: 16px;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.button {
+	font-size: 8pt;
+	background-color: #D8D8D8;
+	zoom: 1;
+	border: #5683BE;
+	border-style: solid;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	text-align: center;
+	padding-bottom: 1px;
+	cursor: hand;
+	overflow: visible;
+}
+
+div.zTreeDemoBackground {
+	width: 250px;
+	height: 362px;
+	text-align: left;
+}
+
+.changeselect,.changeinput,.changesortselect,.changeoperatorselect,.changeinputtype,.changetranexpress,.changetrantype
+	{
+	background: #f3f3dd;
+}
+
+.hover {
+	border-color: gray;
+}
+
+ul.ztree {
+	margin-top: 10px;
+	border: 1px solid #617775;
+	background: #f4f4f4;
+	width: 97%;
+	height: 280;
+	overflow-y: scroll;
+	overflow-x: auto;
+}
+
+.mybutton span {
+	font: normal 60% "Trebuchet MS", sans-serif;
+	font-size: 8px;
+}
+
+.showsqldivtext {
+	font-size: 16px;
+	text-align: left;
+	font-family: verdana;
+}

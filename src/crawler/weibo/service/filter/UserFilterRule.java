@@ -4,11 +4,11 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UserFilterRule {
-	public static String MATCH_MODE_EXACT = "fuzzy";// 模糊匹配，包含左匹配、右匹配、中间匹配和全匹配的结果
-	public static String MATCH_MODE_LEFTMATCH = "left";// 左匹配，从左边第一个字符匹配
-	public static String MATCH_MODE_RIGHTMATCH = "right";// 右匹配，从右边第一个字符匹配
-	public static String MATCH_MODE_MIDDLEMATCH = "middle";// 中间匹配，去除左右第一个字符进行精确匹配
-	public static String MATCH_MODE_FULLMATCH = "full";// 全匹配，从第一个字符开始，一直匹配至最后一个字符
+	public static String MATCH_MODE_FUZZY = "fuzzy";// 模糊匹配，包含左匹配、右匹配、中间匹配和全匹配的结果
+	public static String MATCH_MODE_LEFT = "left";// 左匹配，从左边第一个字符匹配
+	public static String MATCH_MODE_RIGHT = "right";// 右匹配，从右边第一个字符匹配
+	public static String MATCH_MODE_MIDDLE = "middle";// 中间匹配，去除左右第一个字符进行精确匹配
+	public static String MATCH_MODE_FULL = "full";// 全匹配，从第一个字符开始，一直匹配至最后一个字符
 	public static Map<String, String> MATCHMODE_MAP = new LinkedHashMap<String, String>();
 
 	public static String OPERATION_EQUAL = "=";
@@ -46,11 +46,11 @@ public class UserFilterRule {
 	private String defaultOperation; // 查询操作:＝;like;<;>
 
 	static {
-		MATCHMODE_MAP.put(MATCH_MODE_EXACT, "精确匹配");
-		MATCHMODE_MAP.put(MATCH_MODE_LEFTMATCH, "左匹配");
-		MATCHMODE_MAP.put(MATCH_MODE_RIGHTMATCH, "右匹配");
-		MATCHMODE_MAP.put(MATCH_MODE_MIDDLEMATCH, "中间匹配");
-		MATCHMODE_MAP.put(MATCH_MODE_FULLMATCH, "全文匹配");
+		MATCHMODE_MAP.put(MATCH_MODE_FUZZY, "精确匹配");
+		MATCHMODE_MAP.put(MATCH_MODE_LEFT, "左匹配");
+		MATCHMODE_MAP.put(MATCH_MODE_RIGHT, "右匹配");
+		MATCHMODE_MAP.put(MATCH_MODE_MIDDLE, "中间匹配");
+		MATCHMODE_MAP.put(MATCH_MODE_FULL, "全文匹配");
 
 		OPERATION_MAP.put(OPERATION_EQUAL, "等于");
 		OPERATION_MAP.put(OPERATION_LIKE, "匹配");
@@ -126,5 +126,6 @@ public class UserFilterRule {
 	public void setMatchMode(String matchMode) {
 		this.matchMode = matchMode;
 	}
-
+	
+	
 }

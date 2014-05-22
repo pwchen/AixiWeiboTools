@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+
+<link href="library/css/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
+<link href="library/css/default.css" rel="stylesheet" />
+<link href="library/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<script src="library/js/jquery-1.6.4.js"></script>
+<script src="library/js/jquery-ui-1.8.24.custom.min.js"></script>
+<script src="library/js/jquery.ztree.all-3.4.min.js"></script>
+<script src="library/js/customizedQuery.js"></script>
+
+<title>自定义查询设计器</title>
+</head>
+<body>
+	<!--表选择信息  -->
+	<div style="width: 100%;" class="ui-widget-content ui-corner-all"
+		id="tablelist_div">
+		<table class="list_tableNoHtc" cellspacing="0" cellpadding="0"
+			border="0">
+			<tr>
+				<td width="20%" rowspan="2">
+					<div>
+						搜 表&nbsp;<input type="text" id="querytext"
+							onkeydown="return queryonkeydown(event);" />&nbsp;&nbsp;<img
+							src="images/search.png" style="cursor: hand;"
+							onclick="queryTable();" title="只支持按表名或表描述精确查找"
+							onmouseover="this.style.border='1px solid #3f3f3f';this.style.width='14px';this.style.height='14px'"
+							onmouseout="this.style.border='';this.style.width='16px';this.style.height='16px'" />
+					</div>
+					<div class="zTreeDemoBackground left" style="height: 270px;">
+						<ul id="tableSetZTree" class="ztree"
+							style="height: 280px; padding: 0px;"></ul>
+					</div>
+				</td>
+				<td width="80%"><iframe name="tableviewiframe"
+						src="TableView.html" width="100%" height="240px" scrolling="no"></iframe></td>
+			</tr>
+			<tr>
+				<td><div class="ui-widget-content ui-corner-all"
+						style="height: 80px; border: 0px;">
+						<table class="list_tableNoHtc" border="0" cellpadding="0"
+							cellspacing="1">
+							<thead>
+								<tr class="list_table_thead_tr_title">
+									<th class="list_table_thead_td_title" colspan="2" width="17%"><span
+										class="mybutton" id="createconnetionbutton"
+										style="font-weight: normal;">添加表关联</span></th>
+									<th class="list_table_thead_td_title" colspan="3">关联关系</th>
+								</tr>
+							</thead>
+							<tbody id="connectiondesc">
+								<tr id="connectiondesc1" class="list_table_tbody_tr">
+								</tr>
+								<tr id="connectiondesc2" class="list_table_tbody_tr">
+								</tr>
+								<tr id="connectiondesc3" class="list_table_tbody_tr">
+								</tr>
+							</tbody>
+						</table>
+
+					</div></td>
+			</tr>
+		</table>
+	</div>
+	<div id="createconnetiondialog" title="添加表关联关系" style="display: none">
+		<table border="0" cellpadding="0" cellspacing="1" width="100%"
+			class="list_tableNoHtc">
+			<tr class="list_table_tbody_tr">
+				<th width="40%" colspan="2" class="list_table_tbody_th">左表</th>
+				<th width="20%" class="list_table_tbody_th">连接方式</th>
+				<th width="40%" colspan="2" class="list_table_tbody_th">右表</th>
+			</tr>
+			<tr class="list_table_tbody_tr">
+				<td align="center" colspan="2" class="list_table_tbody_td"><select
+					id="lefttableselect" name="lefttableselect"
+					onchange="changleftselect(this);">
+				</select></td>
+				<td align="center" class="list_table_tbody_td"><select
+					id="tableconnection">
+						<option value="Inner Join">等值连接</option>
+						<option value="Left Join">左连接</option>
+						<option value="Right Join">右连接</option>
+				</select></td>
+				<td align="center" colspan="2" class="list_table_tbody_td"><select
+					id="righttableselect" name="righttableselect"
+					onchange="changrightselect(this);">
+				</select></td>
+			</tr>
+		</table>
+		<div style="text-align: right;">
+			<span style="background-color: #71BBEA;">注：第一次选择的左表即默认指定为主表。</span>
+			&nbsp;&nbsp;&nbsp;&nbsp;<span id="addfields" class="mybutton">增加字段</span>
+		</div>
+		<table border="0" cellpadding="0" cellspacing="1" width="100%"
+			class="list_tableNoHtc">
+			<thead>
+				<tr class="list_table_tbody_tr">
+					<th colspan="5" class="list_table_tbody_th">关联字段</th>
+				</tr>
+			</thead>
+			<tbody id="fieldslist">
+				<!--关联字段initconnetiondialog中初始化  -->
+			</tbody>
+		</table>
+	</div>
+	<!--表选择信息  end-->
+	<!--显示字段 过滤条件 查询条件 排序设置 tabs  start-->
+	<div id="sTabs" style="width: 99.5%">
+		<ul>
+			<li><a href="#tab-1">显示字段</a></li>
+			<li><a href="#tab-2">过滤条件</a></li>
+			<li><a href="#tab-3">查询条件</a></li>
+			<li><a href="#tab-4">排序设置</a></li>
+		</ul>
+		<div id="tab-1">
+			<table id="sFieldsTable" border="0" cellpadding="0" cellspacing="1"
+				class="tab_table">
+			</table>
+			<span class="mybutton" id="addpseudofield"
+				style="font-weight: normal;">添加伪字段</span>
+			<div id="addpseudofielddiv" title="添加伪字段" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示名</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="pseudo_fieldAlias"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段值</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="pseudo_fieldName"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">翻译类型</td>
+						<td class="list_table_tbody_td"><select
+							id="pseudo_convertType" onchange="changconvertTypesel(this);"><option
+									value="" selected="selected">无</option>
+								<option value="kind">字典</option>
+								<option value="sql">sql</option>
+								<option value="url">url</option>
+								<option value="html">html</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">翻译表达式</td>
+						<td class="list_table_tbody_td"><textarea
+								class="change_convertExp" id="pseudo_convertExp" rows="4"></textarea></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示格式</td>
+						<td class="list_table_tbody_td"><input id="pseudo_pattern"
+							type="text"
+							title="pattern的值，下面举例  -- 整数：### 小数：###.## 至少四位整数：0000 至少有一个小数位：###.0# 格式 详细参见 java.text.DecimalFormat 的jdk文档描述"></input></td>
+					</tr>
+				</table>
+			</div>
+			<div id="editsfield" title="编辑显示字段" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">表名</td>
+						<td class="list_table_tbody_td" id="edit_tableComments"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段名</td>
+						<td class="list_table_tbody_td" id="edit_fieldComments"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示名</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_fieldAlias"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">翻译类型</td>
+						<td class="list_table_tbody_td"><select id="edit_convertType"
+							onchange="changconvertTypesel(this);"><option value=""
+									selected="selected">无</option>
+								<option value="kind">字典</option>
+								<option value="sql">sql</option>
+								<option value="url">url</option>
+								<option value="html">html</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">翻译表达式</td>
+						<td class="list_table_tbody_td"><textarea
+								id="edit_convertExp" rows="4" class="change_convertExp"></textarea></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示格式</td>
+						<td class="list_table_tbody_td"><input id="edit_pattern"
+							type="text"
+							title="pattern的值举例  -- 整数：### 小数：###.## 至少四位整数：0000 至少有一个小数位：###.0# 格式 详细参见 java.text.DecimalFormat 的jdk文档描述"></input></td>
+					</tr>
+				</table>
+			</div>
+			<div id="editpseudofield" title="编辑伪字段" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示名</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_pseudo_fieldAlias"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段值</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_pseudo_fieldName"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">翻译类型</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_pseudo_convertType"
+							onchange="changconvertTypesel(this);"><option value=""
+									selected="selected">无</option>
+								<option value="kind">字典</option>
+								<option value="sql">sql</option>
+								<option value="url">url</option>
+								<option value="html">html</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">翻译表达式</td>
+						<td class="list_table_tbody_td"><textarea
+								id="edit_pseudo_convertExp" rows="4" class="change_convertExp"></textarea></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示格式</td>
+						<td class="list_table_tbody_td"><input
+							id="edit_pseudo_pattern" type="text"
+							title="pattern的值举例  -- 整数：### 小数：###.## 至少四位整数：0000 至少有一个小数位：###.0# 格式 详细参见 java.text.DecimalFormat 的jdk文档描述"></input></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="tab-2">
+			<table id="sFiltersTable" border="0" cellpadding="0" cellspacing="1"
+				class="tab_table">
+			</table>
+			<div id="addfiltersdiv" title="添加过滤条件" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">表名</td>
+						<td class="list_table_tbody_td">字段名</td>
+						<td class="list_table_tbody_td">运算符</td>
+						<td class="list_table_tbody_td">值</td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td"><select
+							id="filtertableselect" name="filtertableselect"
+							onchange="changfiltertableselect(this);">
+						</select></td>
+						<td class="list_table_tbody_td"><select
+							id="filterfieldselect" name="filterfieldselect">
+						</select></td>
+						<td class="list_table_tbody_td"><select
+							id="filteroperationselect" name="filteroperationselect"><option
+									value='=' selected='selected'>&#61;</option>
+								<option value='!='>!&#61;</option>
+								<option value='>'>&#62;</option>
+								<option value='>='>&#62;=</option>
+								<option value='<'>&#60;</option>
+								<option value='<='>&#60;&#61;</option>
+								<option value='Like'>Like</option>
+						</select></td>
+						<td class="list_table_tbody_td"><input
+							title="若选择like模糊查询，请自行加入模糊匹配字符%？" id="filterfieldvalue"
+							name="filterfieldvalue"></input> <span
+							class="mybutton complexinput" style="font-weight: normal;"
+							onclick="opencomplexinput(this);">...</span></td>
+					</tr>
+				</table>
+			</div>
+			<div id="editfiltersdiv" title="编辑过滤条件" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">表名</td>
+						<td class="list_table_tbody_td" id="edit_filters_tablename"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段名</td>
+						<td class="list_table_tbody_td" id="edit_filters_fieldcomments"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">运算符</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_filters_operationselect"
+							name="edit_filters_operationselect"><option value='='
+									selected='selected'>&#61;</option>
+								<option value='!='>!&#61;</option>
+								<option value='>'>&#62;</option>
+								<option value='>='>&#62;=</option>
+								<option value='<'>&#60;</option>
+								<option value='<='>&#60;&#61;</option>
+								<option value='Like'>Like</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">值</td>
+						<td class="list_table_tbody_td"><input
+							title="若选择like模糊查询，请自行加入模糊匹配字符%？" id="edit_filters_fieldvalue"
+							name="edit_filters_fieldvalue"></input> <span
+							class="mybutton complexinput" style="font-weight: normal;"
+							onclick="opencomplexinput(this);">...</span></td>
+					</tr>
+				</table>
+			</div>
+			<div id="editcombinationdiv" title="编辑组合方式" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<th class="list_table_tbody_th">组合方式</th>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td"><textarea rows="2" cols="30"
+								id="editcombinationtext"></textarea></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">按序号用or、and、(、)进行组合,比如:</br> <span
+							style="font-size: 16px; color: #7F007F">( 1 or 2 ) and 3</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<span class="mybutton" id="addfilters" style="font-weight: normal;">添加过滤条件</span>
+			<span class="mybutton" id="editcombination"
+				style="font-weight: normal;">编辑组合方式</span> <span
+				id="editcombinationdesc" style="font-size: 16px; color: #7F007F"></span>
+		</div>
+		<div id="tab-3">
+			<table id="sCriteriasTable" border="0" cellpadding="0"
+				cellspacing="1" class="tab_table">
+			</table>
+			<div id="editscriteriasdiv" title="编辑查询条件" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">表名</td>
+						<td class="list_table_tbody_td" id="edit_criterias_tableComments"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段名</td>
+						<td class="list_table_tbody_td" id="edit_criterias_fieldComments"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">显示名</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_criterias_fieldAlias"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">匹配模式</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_criterias_matchmode"><option value="exact"
+									selected="selected">精确</option>
+								<option value="leftmatch">左匹配</option>
+								<option value="rightmatch">右匹配</option>
+								<option value="middlematch">模糊匹配</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">查询操作</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_criterias_operation"><option value='='
+									selected='selected'>&#61;</option>
+								<option value='!='>!&#61;</option>
+								<option value='>'>&#62;</option>
+								<option value='>='>&#62;=</option>
+								<option value='<'>&#60;</option>
+								<option value='<='>&#60;&#61;</option>
+								<option value='Like'>Like</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">输入类型</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_criterias_inputType" onchange="changinputtype(this);"><option
+									value='string' selected='selected'>字符串</option>
+								<option value='int'>整数</option>
+								<option value='double'>小数</option>
+								<option value='dateRange'>日期时间段</option>
+								<option value='select'>字典选择</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字典类型</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_criterias_dicType" style="display: none">
+								<option value='kind'>字典</option>
+								<option value='sql'>sql语句</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字典表达式</td>
+						<td class="list_table_tbody_td"><textarea
+								id="edit_criterias_dicExp" rows="4" style="display: none"></textarea></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">默认值</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_criterias_defaultVal"></input> <span
+							class="mybutton complexinput" style="font-weight: normal;"
+							onclick="opencomplexinput(this);">...</span></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="tab-4">
+			<table id="sSortsTable" border="0" cellpadding="0" cellspacing="1"
+				class="tab_table">
+			</table>
+		</div>
+		<div id="editssort" title="编辑字段排序" style="display: none">
+			<table border="0" cellpadding="0" cellspacing="1" width="100%"
+				class="list_tableNoHtc">
+				<tr class="list_table_tbody_tr">
+					<td class="list_table_tbody_td">表名</td>
+					<td class="list_table_tbody_td" id="edit_sort_tableName"></td>
+				</tr>
+				<tr class="list_table_tbody_tr">
+					<td class="list_table_tbody_td">字段名</td>
+					<td class="list_table_tbody_td" id="edit_sort_fieldComments"></td>
+				</tr>
+				<tr class="list_table_tbody_tr">
+					<td class="list_table_tbody_td">数据类型</td>
+					<td class="list_table_tbody_td" id="edit_sort_dataType"></td>
+				</tr>
+				<tr class="list_table_tbody_tr">
+					<td class="list_table_tbody_td">排序</td>
+					<td class="list_table_tbody_td"><select id="edit_sort_order">
+							<option value="Asc">升</option>
+							<option value="Desc">降</option>
+					</select></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<!--显示字段 过滤条件 查询条件 排序设置 tabs  start-->
+	<!-- 显示sql div -->
+	<div id="showsqldiv" class="ui-widget-content" style="display: none">
+		<div class="ui-widget-header mybutton" onclick="showSql();"
+			title="刷新sql" align="center">SQL</div>
+		<div class="showsqldivtext" id="showsqldivtext"
+			ondblclick="showSql();" title="双击这里刷新sql"></div>
+	</div>
+	<div align="center">
+		<br></br> <span class="mybutton" id="showsql"
+			style="font-weight: normal;">显示SQL</span> <span class="mybutton"
+			id="showsql" style="font-weight: normal;">预览</span> <span
+			class="mybutton" id="saveall" style="font-weight: normal;">保存</span>
+	</div>
+	<div id="complexinputdiv" title="选择复杂输入" style="display: none">
+		<table border="0" cellpadding="0" cellspacing="1" width="100%"
+			class="list_tableNoHtc">
+			<tr class="list_table_tbody_tr">
+				<td class="list_table_tbody_td">选项</td>
+				<td class="list_table_tbody_td">值</td>
+			</tr>
+			<tr class="list_table_tbody_tr">
+				<td class="list_table_tbody_td"><select id="complexinputselect">
+						<option value="request">request</option>
+						<option value="session">session</option>
+				</select></td>
+				<td class="list_table_tbody_td"><input type="text"
+					id="complexinputval"></input></td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>
