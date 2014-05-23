@@ -20,6 +20,13 @@ public class PropertyUtils {
 	 */
 	public static Properties getDefaultProperties() {
 		Properties p = new Properties();
+		File nf = new File("img/testfile");
+		try {
+			nf.createNewFile();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println(nf.getAbsolutePath());
 		try {
 			InputStream in = new FileInputStream(new File(
 					"img/account.properties"));

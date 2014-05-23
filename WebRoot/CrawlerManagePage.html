@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+
+<link href="library/css/jquery-ui-1.8.24.custom.css" rel="stylesheet" />
+<link href="library/css/default.css" rel="stylesheet" />
+<link href="library/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+
+<script src="library/js/jquery-1.6.4.js"></script>
+<script src="library/js/jquery-ui-1.8.24.custom.min.js"></script>
+<script src="library/js/jquery.ztree.all-3.4.min.js"></script>
+<script src="library/js/crawler.js"></script>
+
+<title>爱袭微博爬取工具管理平台</title>
+</head>
+<body>
+	<!--查询基本信息  -->
+	<div class="ui-widget-header ui-corner-all" id="title-div">
+		<table style="width: 100%" cellspacing="0" cellpadding="1">
+			<thead>
+				<tr>
+					<th>爱袭微博爬取工具管理平台</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+
+	<!--显示字段 过滤条件 查询条件 排序设置 tabs  start-->
+	<div id="sTabs" style="width: 99.5%">
+		<ul>
+			<li><a href="#tab-1">添加用户</a></li>
+			<li><a href="#tab-2">过滤条件</a></li>
+			<li><a href="#tab-3">查看日志</a></li>
+		</ul>
+		<div id="tab-1">
+			<!--文件上传控件 start -->
+			<div style="width: 100%;" class=" ui-corner-all" id="tablelist_div">
+				<div class="fileupload-buttonbar">
+					<div class="fileupload-buttons">
+						<span class="ui-corner-all"> <span>从CSV文件中导入...</span> <input
+							type="file" id="fileName" class="mybutton"></span> <span
+							class="mybutton" onclick="addUserFromFile();"
+							id="adduserfromfile" style="font-weight: normal;">导入</span>
+					</div>
+				</div>
+			</div>
+			<!--文件上传控件 end -->
+			<!--选择入口用户ID start -->
+			<br></br>
+			<table id="sUsersTable" border="0" cellpadding="0" cellspacing="1"
+				class="tab_table">
+			</table>
+			<span class="mybutton" id="addcrawleuser"
+				onclick="openaddcrawleuserdialog()" style="font-weight: normal;">添加用户</span>
+			<span class="mybutton" id="clearuser" onclick="clearUser()"
+				style="font-weight: normal;">清空</span>
+			<div id="addcrawleuserdiv" title="添加用户" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">用户ID</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="add_userId"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">爬取深度</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="add_depth"></input></td>
+					</tr>
+				</table>
+			</div>
+			<div id="editcrawleuserdiv" title="编辑用户" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">用户ID</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_userId"></input></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">爬取深度</td>
+						<td class="list_table_tbody_td"><input type="text"
+							id="edit_depth"></input></td>
+					</tr>
+				</table>
+			</div>
+			<br></br> <span class="mybutton" id="adduserfromfile"
+				style="font-weight: normal;">提交至服务器</span>
+		</div>
+		<!--选择入口用户ID end -->
+		<!--过滤条件 start  -->
+		<div id="tab-2">
+			<table id="sFiltersTable" border="0" cellpadding="0" cellspacing="1"
+				class="tab_table">
+			</table>
+			<div id="addfiltersdiv" title="添加过滤条件" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段名称</td>
+						<td class="list_table_tbody_td">标签</td>
+						<td class="list_table_tbody_td">输入类型</td>
+						<td class="list_table_tbody_td">操作符</td>
+						<td class="list_table_tbody_td">匹配模式</td>
+						<td class="list_table_tbody_td">值</td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td"><select
+							id="filtertableselect" name="filtertableselect"
+							onchange="changfiltertableselect(this);">
+						</select></td>
+						<td class="list_table_tbody_td"><select
+							id="filterfieldselect" name="filterfieldselect">
+						</select></td>
+						<td class="list_table_tbody_td"><select
+							id="filteroperationselect" name="filteroperationselect"><option
+									value='=' selected='selected'>&#61;</option>
+								<option value='='>&#61;</option>
+								<option value='>'>&#62;</option>
+								<option value='<'>&#60;</option>
+								<option value='Like'>Like</option>
+						</select></td>
+						<td class="list_table_tbody_td"><input
+							title="若选择like模糊查询，请自行加入模糊匹配字符%？" id="filterfieldvalue"
+							name="filterfieldvalue"></input> <span
+							class="mybutton complexinput" style="font-weight: normal;"
+							onclick="opencomplexinput(this);">...</span></td>
+					</tr>
+				</table>
+			</div>
+			<div id="editfiltersdiv" title="编辑过滤条件" style="display: none">
+				<table border="0" cellpadding="0" cellspacing="1" width="100%"
+					class="list_tableNoHtc">
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">表名</td>
+						<td class="list_table_tbody_td" id="edit_filters_tablename"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">字段名</td>
+						<td class="list_table_tbody_td" id="edit_filters_fieldcomments"></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">运算符</td>
+						<td class="list_table_tbody_td"><select
+							id="edit_filters_operationselect"
+							name="edit_filters_operationselect"><option value='='
+									selected='selected'>&#61;</option>
+								<option value='!='>!&#61;</option>
+								<option value='>'>&#62;</option>
+								<option value='>='>&#62;=</option>
+								<option value='<'>&#60;</option>
+								<option value='<='>&#60;&#61;</option>
+								<option value='Like'>Like</option>
+						</select></td>
+					</tr>
+					<tr class="list_table_tbody_tr">
+						<td class="list_table_tbody_td">值</td>
+						<td class="list_table_tbody_td"><input
+							title="若选择like模糊查询，请自行加入模糊匹配字符%？" id="edit_filters_fieldvalue"
+							name="edit_filters_fieldvalue"></input> <span
+							class="mybutton complexinput" style="font-weight: normal;"
+							onclick="opencomplexinput(this);">...</span></td>
+					</tr>
+				</table>
+			</div>
+			<span class="mybutton" id="addfilters" onclick="initaddfiltersdialog();" style="font-weight: normal;">添加过滤条件</span>
+			<br></br> <span class="mybutton" id="editcombination"
+				style="font-weight: normal;">提交至服务器</span> <span
+				id="editcombinationdesc" style="font-size: 16px; color: #7F007F"></span>
+		</div>
+		<div id="tab-3">
+			<div id="showlogdiv" class="ui-widget-content">
+				<div class="ui-widget-header mybutton" onclick="showLog();"
+					title="刷新日志" align="center">日志情况</div>
+				<div class="showlogdivtext" id="showlogdivtext"
+					ondblclick="showLog();" title="双击这里刷新sql">asdfasfd</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

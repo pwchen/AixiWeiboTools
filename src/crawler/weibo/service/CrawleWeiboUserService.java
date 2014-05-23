@@ -30,7 +30,7 @@ public class CrawleWeiboUserService {
 	 */
 	public static void initConfiguration() {
 		//getUserTaskByText("");
-		getUserTaskByFile("");
+		getUserTaskByFile("config\task.aixi");
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class CrawleWeiboUserService {
 		if (Scheduler.pollTask() == null) {
 			logger.error("任务队列中未发现入口任务，程序退出...");
 		}
-		for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < threadNumber; i++) {
 			Worker thread = new Worker();
 			executorService.execute(thread);
 		}
@@ -74,6 +74,7 @@ public class CrawleWeiboUserService {
 	 * @param fileName
 	 */
 	public static void getUserTaskByFile(String fileName) {
+		logger.info("读取任务文件"+fileName);
 		File file = new File(fileName);
 		BufferedReader reader = null;
 		try {
