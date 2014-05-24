@@ -99,16 +99,16 @@ $(function() {
 	var fieldsdata = eval("("
 			+ "[{columnName:'screenName',inputType:'String',comments:'屏幕名'},"
 			+ "{columnName:'sex',inputType:'String',comments:'性别'},"
-			+ "{columnName:'description',inputType:'String',comments:'用户自我描述信息'},"
+			+ "{columnName:'description',inputType:'String',comments:'用户描述信息'},"
 			+ "{columnName:'userName',inputType:'String',comments:'用户名'},"
-			+ "{columnName:'followNum',inputType:'int',comments:'关注数量 默认0'},"
-			+ "{columnName:'fansNum',inputType:'int',comments:'粉丝数量 默认0'},"
-			+ "{columnName:'messageNum',inputType:'int',comments:'消息数量 默认0'},"
-			+ "{columnName:'profileImageUrl',inputType:'String',comments:'头像URL 最短标识字符串'},"
-			+ "{columnName:'isVerified',inputType:'String',comments:'0 普通用户 1认证用户'},"
+			+ "{columnName:'followNum',inputType:'int',comments:'关注数量'},"
+			+ "{columnName:'fansNum',inputType:'int',comments:'粉丝数量 '},"
+			+ "{columnName:'messageNum',inputType:'int',comments:'消息数量'},"
+			+ "{columnName:'profileImageUrl',inputType:'String',comments:'头像URL'},"
+			+ "{columnName:'isVerified',inputType:'String',comments:'是否认证0/1'},"
 			+ "{columnName:'careerInfo',inputType:'String',comments:'职业信息'},"
 			+ "{columnName:'educationInfo',inputType:'String',comments:'教育信息'},"
-			+ "{columnName:'tag',inputType:'String',comments:'用户标签，用\",\"号分隔.'},"
+			+ "{columnName:'tag',inputType:'String',comments:'用户标签'},"
 			+ "{columnName:'daren',inputType:'String',comments:'是否达人'},"
 			+ "{columnName:'birthday',inputType:'String',comments:'生日'},"
 			+ "{columnName:'qq',inputType:'String',comments:'QQ'},"
@@ -474,7 +474,7 @@ function refreshsUsersDisplay() {
 		var userId = sUsers[i].get("userId");
 		var depth = sUsers[i].get("depth");
 		var trStr = "";
-		trStr += "<tr class='list_table_tbody_tr_p'><td class='list_table_tbody_td'>"
+		trStr += "<tr class='list_table_tbody_tr_p' onmouseover=\"this.style.backgroundColor='#BD66ee';\" onmouseout=\"this.style.backgroundColor='#BDDFFF';\"><td class='list_table_tbody_td'>"
 				+ (i + 1)
 				+ "</td><td class='list_table_tbody_td'>"
 				+ userId
@@ -493,83 +493,94 @@ function refreshsUsersDisplay() {
 	}
 
 }
+
+/**
+ * 提交过滤规则
+ */
+function submitUsers() {
+	var text = "[";
+	for (var i = 0; i < sUsers.length; i++) {
+		var userjson = "{";
+		userjson += "userId:'" + sUsers[i].get("userId") + "'";
+		userjson += ",depth:" + sUsers[i].get("depth") + "},";
+		text += userjson;
+	}
+	text = text.substring(0, text.length) + "]";
+	$.ajax({
+		type : "post",
+		url : "crawler",
+		dataType : "text",
+		data : {
+			type : "task",
+			data : text
+		},
+		success : function(msg) {
+			alert(msg);
+		}, // 操作成功后的操作！msg是后台传过来的值
+		error : function(msg) {
+			alert("error! " + msg);
+		} // 操作成功
+	});
+}
 /** **************************************过滤条件***************************** */
 
 /**
  * 初始化添加过滤条件dialog
  */
 function initaddfiltersdialog() {
-	$("#filtertableselect").empty();
-	$("<option value='0'>请选择........</option>").appendTo("#filtertableselect");
-	var nodes = zTree.transformToArray(zTree.getNodes());
-	if (sTables.size() < 1) {
-		alert("你还未选择一个表呢!");
-		return false;
+	$("#addfieldselect").empty();
+	$("#addoperationselect").hide();
+	$("#addmatchselect").hide();
+	$("#addcomments").text("");
+	$("#addinputtype").text("");
+	$("<option value='-1'>请选择........</option>").appendTo("#addfieldselect");
+	for (var i = 0; i < sFields.length; i++) {
+		$(
+				"<option value='" + i + "'>" + sFields[i].get("comments")
+						+ "</option>").appendTo("#addfieldselect");
 	}
-	for (var i = 0, l = nodes.length; i < l; i++) {
-		var node = nodes[i];
-		if (node.checked == true) {
-			$("<option value='" + node.id + "'>" + node.comments + "</option>")
-					.appendTo("#filtertableselect");
-		}
-	}
-	$("#filterfieldselect").empty();
-	$("<option value='0'>请选择........</option>").appendTo("#filterfieldselect");
-	$("#addfiltersdiv").dialog(
-			{
-				autoOpen : true,
-				width : 600,
-				height : 130,
-				resizable : false,
-				buttons : [
-						{
-							text : "保存",
-							click : function() {
-								var filterTableId = $(
-										"#filtertableselect option:selected")
-										.val();
-								var filterTableComments = $(
-										"#filtertableselect option:selected")
-										.html();
-								var filterFieldName = $(
-										"#filterfieldselect option:selected")
-										.val();
-								var filterFieldComments = $(
-										"#filterfieldselect option:selected")
-										.html();
-								if (filterTableId == "0"
-										|| filterFieldName == "0") {
-									alert("请选择！");
-									return false;
-								}
-								var filterTableName = sTables
-										.get(filterTableId).name;
-								var filterOperation = $(
-										"#filteroperationselect").val();
-								var filterFieldValue = $("#filterfieldvalue")
-										.val();
-								var filterMap = new Map();
-								filterMap.put("tableId", filterTableId);
-								filterMap.put("tableName", filterTableName);
-								filterMap.put("tableComments",
-										filterTableComments);
-								filterMap.put("fieldName", filterFieldName);
-								filterMap.put("fieldComments",
-										filterFieldComments);
-								filterMap.put("hidden", false);
-								filterMap.put("operation", filterOperation);
-								filterMap.put("fieldValue", filterFieldValue);
-								sFilters[sFilters.length] = filterMap;
-								$(this).dialog("close");
-								refreshSFiltersDisplay();
-							}
-						}, {
-							text : "关闭",
-							click : function() {
-								$(this).dialog("close");
-							}
-						} ]
-			});
+	$("#addfiltersdiv").dialog({
+		autoOpen : true,
+		width : 700,
+		height : 150,
+		resizable : false,
+		buttons : [ {
+			text : "保存",
+			click : function() {
+				var selectedId = $("#addfieldselect option:selected").val();
+				if (selectedId == -1) {
+					alert("请选择一个字段!");
+					return false;
+				}
+				var columnName = sFields[selectedId].get("columnName");
+				var comments = sFields[selectedId].get("comments");
+				var inputType = sFields[selectedId].get("inputType");
+				var matchMode = $("#addmatchselect option:selected").val();
+				var operation = $("#addoperationselect option:selected").val();
+				var inputValue = $("#addinputvalue").val();
+				if (inputValue == "") {
+					alert("请输入值!");
+					return false;
+				}
+				var filterMap = new Map();
+				filterMap.put("columnName", columnName);
+				filterMap.put("comments", comments);
+				filterMap.put("inputType", inputType);
+				filterMap.put("matchMode", matchMode);
+				filterMap.put("operation", operation);
+				filterMap.put("inputValue", inputValue);
+				sFilters[sFilters.length] = filterMap;
+				$(this).dialog("close");
+				alert("添加成功!" + sFilters.length);
+				refreshSFiltersDisplay();
+			}
+		}, {
+			text : "关闭",
+			click : function() {
+				$(this).dialog("close");
+			}
+		} ]
+	});
 }
 
 /**
@@ -577,18 +588,44 @@ function initaddfiltersdialog() {
  * 
  * @param sel
  */
-function changfiltertableselect(sel) {
-	var nodeid = sel.options[sel.selectedIndex].value;
-	$("#filterfieldselect").empty();
-	if (nodeid == "0") {// 请选择按钮
-		$("<option>请选择........</option>").appendTo("#filterfieldselect");
-		return;
+function changfieldselect(sel) {
+	var selectedId = sel.options[sel.selectedIndex].value;
+	if (selectedId == -1) {
+		$("#addcomments").text("");
+		$("#addinputtype").text("");
+		$("#addoperationselect").hide();
+		$("#addmatchselect").hide();
+		return false;
 	}
-	for (var i = 0; i < sFields.length; i++) {
-		var opt = "<option value='" + sFields[i].get("comments") + "'>"
-				+ sFields[i].get("columnName") + "</option>";
-		$(opt).appendTo("#filterfieldselect");
+	var columnName = sFields[selectedId].get("columnName");
+	var inputType = sFields[selectedId].get("inputType");
+	$("#addcomments").text(columnName);
+	$("#addinputtype").text(inputType);
+	if (inputType == "Timestamp") {
+		$("#adddateformtext").show();
+	} else {
+		$("#adddateformtext").hide();
 	}
+	if (inputType == "String") {
+		$("#addoperationselect").empty();
+		$("#addoperationselect").show();
+		$("#addmatchselect").empty();
+		$("#addmatchselect").show();
+		$("<option value='like'>like</option>").appendTo("#addoperationselect");
+		$(
+				"<option  title='模糊匹配' value='fuzzy' selected='selected'>fuzzy</option><option value='left'>left</option><option value='right'>right</option><option value='middle'>middle</option><option value='full'>full</option>")
+				.appendTo("#addmatchselect");
+		$("#addmatchselect").focus();
+	} else {
+		$("#addoperationselect").empty();
+		$("#addoperationselect").show();
+		$("#addmatchselect").hide();
+		$(
+				"<option	value='=' selected='selected'>&#61;</option><option value='>'>&#62;</option><option value='<'>&#60;</option>")
+				.appendTo("#addoperationselect");
+		$("#addoperationselect").focus();
+	}
+
 }
 
 /**
@@ -597,47 +634,79 @@ function changfiltertableselect(sel) {
  * @param index
  */
 function editSFilters(index) {
-	var tableComments = sFilters[index].get("tableComments");
-	var fieldComments = sFilters[index].get("fieldComments");
+	var columnName = sFilters[index].get("columnName");
+	var comments = sFilters[index].get("comments");
+	var inputType = sFilters[index].get("inputType");
 	var operation = sFilters[index].get("operation");
-	var fieldValue = sFilters[index].get("fieldValue");
-	$("#edit_filters_tablename").html(tableComments);
-	$("#edit_filters_fieldcomments").html(fieldComments);
-	$("#edit_filters_operationselect option:selected").attr("selected", false);
-	$("#edit_filters_operationselect option[value='" + operation + "']").attr(
-			"selected", true);
-	$("#edit_filters_fieldvalue").val(fieldValue);
-	$("#editfiltersdiv")
-			.dialog(
-					{
-						autoOpen : true,
-						width : 250,
-						height : 170,
-						resizable : false,
-						buttons : [
-								{
-									text : "保存",
-									click : function() {
-										sFilters[index]
-												.put(
-														"operation",
-														$(
-																"#edit_filters_operationselect")
-																.val());
-										sFilters[index].put("fieldValue", $(
-												"#edit_filters_fieldvalue")
-												.val());
-										alert("已保存！");
-										refreshSFiltersDisplay();
-										$(this).dialog("close");
-									}
-								}, {
-									text : "关闭",
-									click : function() {
-										$(this).dialog("close");
-									}
-								} ],
-					});
+	var matchMode = sFilters[index].get("matchMode");
+	var inputValue = sFilters[index].get("inputValue");
+	$("#editcolumnname").text(columnName);
+	$("#editcomments").text(comments);
+	$("#editinputtype").text(inputType);
+	$("#editinputvalue").val(inputValue);
+
+	if (inputType == "Timestamp") {
+		$("#editdateformtext").show();
+	} else {
+		$("#editdateformtext").hide();
+	}
+	if (inputType == "String") {
+		$("#editoperationselect").empty();
+		$("#editoperationselect").show();
+		$("#editmatchselect").empty();
+		$("#editmatchselect").show();
+		$("<option value='like'>like</option>")
+				.appendTo("#editoperationselect");
+		$(
+				"<option  title='模糊匹配' value='fuzzy'>fuzzy</option><option value='left'>left</option><option value='right'>right</option><option value='middle'>middle</option><option value='full'>full</option>")
+				.appendTo("#editmatchselect");
+		$("#editmatchselect").val(matchMode);
+		$("#editmatchselect").focus();
+	} else {
+		$("#editoperationselect").empty();
+		$("#editoperationselect").show();
+		$("#editmatchselect").hide();
+		$(
+				"<option	value='=' selected='selected'>&#61;</option><option value='>'>&#62;</option><option value='<'>&#60;</option>")
+				.appendTo("#editoperationselect");
+		$("#editoperationselect").val(operation);
+		$("#editoperationselect").focus();
+	}
+	$("#editfiltersdiv").dialog(
+			{
+				autoOpen : true,
+				width : 700,
+				height : 150,
+				resizable : false,
+				buttons : [
+						{
+							text : "保存",
+							click : function() {
+								var matchMode = $(
+										"#editmatchselect option:selected")
+										.val();
+								var operation = $(
+										"#editoperationselect option:selected")
+										.val();
+								var inputValue = $("#editinputvalue").val();
+								if (inputValue == "") {
+									alert("请输入值!");
+									return false;
+								}
+								sFilters[index].put("matchMode", matchMode);
+								sFilters[index].put("operation", operation);
+								sFilters[index].put("inputValue", inputValue);
+								refreshSFiltersDisplay();
+								$(this).dialog("close");
+								alert("已保存！");
+							}
+						}, {
+							text : "关闭",
+							click : function() {
+								$(this).dialog("close");
+							}
+						} ],
+			});
 }
 
 /**
@@ -646,11 +715,11 @@ function editSFilters(index) {
  * @param index
  */
 function deleteSFilters(index) {
-	if (!confirm("确定删除此过滤条件？")) {
+	if (!confirm("确定删除此过滤规则？")) {
 		return;
 	}
-	for (var i = index + 1; i < sFilters.length; i++) {
-		sFilters[i] = sFilters[i - 1];
+	for (var i = index; i < sFilters.length; i++) {
+		sFilters[i] = sFilters[i + 1];
 	}
 	sFilters.pop();
 	refreshSFiltersDisplay();
@@ -671,64 +740,38 @@ function removeSFilters(tableId) {
 }
 
 /**
- * 过滤条件隐藏
- * 
- * @param o
- * @param index
- */
-function hideSFilter(o, index) {
-	var sFilterMap = sFilters[index];
-	sFilterMap.put("hidden", o.checked);
-}
-
-function refreshFilterCombination() {
-	if (sFilters.length > 1) {
-		filtersCombination = "1";
-		for (var i = 1; i < sFilters.length; i++) {
-			filtersCombination = filtersCombination + " and " + (i + 1);
-		}
-	} else if (sFilters.length == 1) {
-		filtersCombination = "1";
-	}
-}
-
-/**
  * 刷新过滤条件
  */
 function refreshSFiltersDisplay() {
-	refreshFilterCombination();
 	$("#sFiltersTable").empty();
 	if (sFilters.length < 1) {
 		return;
 	}
 	$("#sFiltersTable")
 			.append(
-					"<tr class='list_table_thead_tr_title'><th width='3%'>序号</th><th width='10%'>表名</th><th width='10%'>字段名</th><th width='10%'>运算符</th><th>字段值</th><th width='3%'>隐藏</th><th width='6%'>操作</th></tr>");
+					"<tr class='list_table_thead_tr_title'><th width='3%'>序号</th><th width='10%'>标签</th><th width='10%'>字段名</th><th width='10%'>输入类型</th><th>操作符</th><th >匹配模式</th><th>输入值</th><th width='6%'>操作</th></tr>");
 	for (var i = 0; i < sFilters.length; i++) {
-		var filterTableTitle = sFilters[i].get("tableComments");
-		var filterFieldComments = sFilters[i].get("fieldComments");
-		var filterOperation = sFilters[i].get("operation");
-		var filterFieldValue = sFilters[i].get("fieldValue");
-		var hidden = sFilters[i].get("hidden");
-		var checked = "";
-		if (hidden == true) {
-			checked = "checked='checked'";
-		}
-		var trStr = "<tr class='list_table_tbody_tr'><td class='list_table_tbody_td'>"
+		var comments = sFilters[i].get("comments");
+		var columnName = sFilters[i].get("columnName");
+		var inputType = sFilters[i].get("inputType");
+		var operation = sFilters[i].get("operation");
+		var matchMode = sFilters[i].get("matchMode");
+		var inputValue = sFilters[i].get("inputValue");
+		var trStr = "<tr class='list_table_tbody_tr_p' onmouseover=\"this.style.backgroundColor='#BD66ee';\" onmouseout=\"this.style.backgroundColor='#BDDFFF';\"><td class='list_table_tbody_td'>"
 				+ (i + 1)
 				+ "</td><td class='list_table_tbody_td'>"
-				+ filterTableTitle
+				+ comments
 				+ "</td><td class='list_table_tbody_td'>"
-				+ filterFieldComments
+				+ columnName
 				+ "</td><td class='list_table_tbody_td'>"
-				+ filterOperation
+				+ inputType
 				+ "</td><td class='list_table_tbody_td'>"
-				+ filterFieldValue
-				+ "</td><td class='list_table_tbody_td'><input type='checkbox' "
-				+ checked
-				+ " onclick='hideSFilter(this, "
-				+ i
-				+ ")'></td><td class='list_table_tbody_td'><a href='#tab-2' onclick='editSFilters("
+				+ operation
+				+ "</td><td class='list_table_tbody_td'>"
+				+ matchMode
+				+ "</td><td class='list_table_tbody_td'>"
+				+ inputValue
+				+ "</td><td class='list_table_tbody_td'><a href='#tab-2' onclick='editSFilters("
 				+ i
 				+ ")'><img border='0' title='修改' src='./images/edit.gif'></a><a href='#tab-2' onclick='deleteSFilters("
 				+ i
@@ -738,22 +781,75 @@ function refreshSFiltersDisplay() {
 }
 
 /**
- * 翻译匹配模式
+ * 清空过滤表
  * 
- * @param matchMode
+ * @param fileName
  */
-function getMatchModeStr(matchMode) {
-	if (matchMode == "fuzzy") {
-		return "精确";
-	} else if (matchMode == "left") {
-		return "左匹配";
-	} else if (matchMode == "right") {
-		return "右匹配";
-	} else if (matchMode == "middle") {
-		return "模糊匹配";
-	} else {
-		return "匹配模式数据有误！";
+function clearFilter() {
+	if (window.confirm('你确定要删除所有过滤规则吗？')) {
+		sFilters = new Array();
+		refreshSFiltersDisplay();
 	}
+}
+
+/**
+ * 提交过滤规则
+ */
+function submitFilters() {
+	var text = "[";
+	for (var i = 0; i < sFilters.length; i++) {
+		var filterMap = sFilters[i];
+		var columnName = filterMap.get("columnName");
+		var comments = filterMap.get("comments");
+		var inputType = filterMap.get("inputType");
+		var matchMode = filterMap.get("matchMode");
+		var operation = filterMap.get("operation");
+		var inputValue = filterMap.get("inputValue");
+		var filterjson = "{";
+		filterjson += "columnName:'" + columnName + "',";
+		filterjson += "comments:'" + comments + "',";
+		filterjson += "inputType:'" + inputType + "',";
+		filterjson += "matchMode:'" + matchMode + "',";
+		filterjson += "operation:'" + operation + "',";
+		filterjson += "inputValue:'" + inputValue + "'},";
+		text += filterjson;
+	}
+	text = text.substring(0, text.length) + "]";
+	$.ajax({
+		type : "post",
+		url : "crawler",
+		dataType : "text",
+		data : {
+			type : "filter",
+			data : text
+		},
+		success : function(msg) {
+			alert(msg);
+		}, // 操作成功后的操作！msg是后台传过来的值
+		error : function(msg) {
+			alert("error! " + msg);
+		} // 操作成功
+	});
+}
+
+/**
+ * 开始爬数据
+ */
+function startCrawler() {
+	$.ajax({
+		type : "post",
+		url : "crawler",
+		dataType : "text",
+		data : {
+			type : "start"
+		},
+		success : function(msg) {
+			alert(msg);
+		}, // 操作成功后的操作！msg是后台传过来的值
+		error : function(msg) {
+			alert("error! " + msg);
+		} // 操作成功
+	});
 }
 
 /**

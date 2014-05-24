@@ -24,7 +24,7 @@ public class UserFilterRule {
 	/**
 	 * 字段描述
 	 */
-	private String label;
+	private String comments;
 	/**
 	 * 过滤值
 	 */
@@ -66,12 +66,12 @@ public class UserFilterRule {
 		this.columnName = columnName;
 	}
 
-	public String getLabel() {
-		return label;
+	public String getComments() {
+		return comments;
 	}
 
-	public void setLabel(String label) {
-		this.label = label;
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 	/**
@@ -126,6 +126,10 @@ public class UserFilterRule {
 	public void setMatchMode(String matchMode) {
 		this.matchMode = matchMode;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return this.columnName + this.operation + this.inputValue;
+	}
+
 }

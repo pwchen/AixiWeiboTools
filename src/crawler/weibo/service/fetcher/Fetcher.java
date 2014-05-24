@@ -100,15 +100,7 @@ public class Fetcher {
 					}
 				}
 			}
-			int locationIndex = entityStr.indexOf("location.replace(");
-			if (locationIndex != -1) {
-				String location = entityStr.substring(locationIndex + 18);
-				location = location.substring(0, location.indexOf("\");"));
-				getMethod = new HttpGet(location);
-				ex = true;
-				logger.info("地址跳转：" + location);
-				continue;
-			}
+
 			if (entityStr.indexOf("抱歉，网络繁忙") != -1) {
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("抱歉，网络繁忙:" + url);
@@ -145,6 +137,16 @@ public class Fetcher {
 			} else if (entityStr.indexOf("页面地址有误") != -1) {
 				logger.warn("页面地址有误，或者该页面不存在:" + url);
 				return null;
+			} else {
+				int locationIndex = entityStr.indexOf("location.replace(");
+				if (locationIndex != -1) {
+					String location = entityStr.substring(locationIndex + 18);
+					location = location.substring(0, location.indexOf("\");"));
+					getMethod = new HttpGet(location);
+					ex = true;
+					logger.info("地址跳转：" + location);
+					continue;
+				}
 			}
 		}
 		if (count > failureCount) {

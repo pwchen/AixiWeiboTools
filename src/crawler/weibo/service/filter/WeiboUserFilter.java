@@ -265,15 +265,16 @@ public class WeiboUserFilter {
 	 * @param jsonArray
 	 * @return
 	 */
-	public static void reflashUfrList(JSONArray jsonArray) {
+	public static int reflashUfrList(JSONArray jsonArray) {
 		ufrList.clear();
 		int size = jsonArray.length();
-		for (int i = 0; i > size; i++) {
+		for (int i = 0; i < size; i++) {
 			UserFilterRule rule = new UserFilterRule();
 			try {
 				rule.setColumnName(jsonArray.getJSONObject(i).getString(
 						"columnName"));
-				rule.setLabel(jsonArray.getJSONObject(i).getString("label"));
+				rule.setComments(jsonArray.getJSONObject(i).getString(
+						"comments"));
 				rule.setInputValue(jsonArray.getJSONObject(i).getString(
 						"inputValue"));
 				rule.setInputType(jsonArray.getJSONObject(i).getString(
@@ -285,8 +286,13 @@ public class WeiboUserFilter {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-			ufrList.add(rule);
+			if (ufrList.add(rule)) {
+				logger.info("成功添加规则" + rule);
+			} else {
+				logger.info("规则添加失败!" + rule);
+			}
 		}
+		return size;
 	}
 
 	/**

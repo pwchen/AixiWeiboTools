@@ -95,8 +95,6 @@ public class Worker implements Runnable, CrawlerUserInterface {
 			}
 		} else if (wu == null) {
 			logger.warn(task + "爬取失败！");
-		} else {
-			logger.warn(wu.getUserId() + "被过滤器过滤掉！");
 		}
 	}
 

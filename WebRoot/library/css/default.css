@@ -12,7 +12,7 @@ body {
 	margin-bottom: 0px;
 	overflow-x: auto;
 	overflow-y: auto;
-	font-size: 62.5%;
+	font-size: 80%;
 	font-family: "Trebuchet MS", "Arial", "Helvetica", "Verdana",
 		"sans-serif";
 }
@@ -78,7 +78,7 @@ div {
 	padding-top: 1px;
 	padding-bottom: 1px;
 	background-color: #BDDFFF;
-	height: 18px
+	height: 18px;
 }
 
 .list_table_tbody_td {
@@ -89,11 +89,7 @@ div {
 	padding-bottom: 1px;
 	height: 16px;
 	word-break: break-all;
-	word-wrap: break-word;
-}
-
-.button {
-	font-size: 8pt;
+	word-wrap: break-word; . button { font-size : 8pt;
 	background-color: #D8D8D8;
 	zoom: 1;
 	border: #5683BE;

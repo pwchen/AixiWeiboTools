@@ -21,16 +21,12 @@ public class CrawleWeiboUserService {
 	private static final Log logger = LogFactory
 			.getLog(CrawleWeiboUserService.class);
 
-	public static void main(String[] args) {
-		startCrawle(args);
-	}
-
 	/**
 	 * 初始化配置文件包括操作界面的用户列表，还有读取的爬取入口文件
 	 */
 	public static void initConfiguration() {
-		//getUserTaskByText("");
-		getUserTaskByFile("config\task.aixi");
+		// getUserTaskByText("");
+		// getUserTaskByFile("config\task.aixi");
 	}
 
 	/**
@@ -38,7 +34,8 @@ public class CrawleWeiboUserService {
 	 * 
 	 * @param args
 	 */
-	public static void startCrawle(String[] args) {
+	public static void startCrawle() {
+		System.out.println("start crawling!");
 		int threadNumber = CrawlerContext.getContext().getThreadNumber();
 		ExecutorService executorService = Executors
 				.newFixedThreadPool(threadNumber);
@@ -74,7 +71,7 @@ public class CrawleWeiboUserService {
 	 * @param fileName
 	 */
 	public static void getUserTaskByFile(String fileName) {
-		logger.info("读取任务文件"+fileName);
+		logger.info("读取任务文件" + fileName);
 		File file = new File(fileName);
 		BufferedReader reader = null;
 		try {
