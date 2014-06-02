@@ -87,8 +87,14 @@
 				</table>
 			</div>
 			<br></br> <span class="mybutton" id="submitusers"
-				onclick="submitUsers()" style="font-weight: normal;">提交至服务器</span> <span class="mybutton" id="startcrawler" onclick="startCrawler()"
-				style="font-weight: normal;">启动爬虫</span>
+				onclick="submitUsers()" style="font-weight: normal;">提交至服务器</span> <span
+				class="mybutton" id="startcrawler" onclick="startCrawler()"
+				style="font-weight: normal;">启动爬虫</span><span class="mybutton"
+				id="pausecrawler" onclick="pauseCrawler()"
+				style="font-weight: normal; display: none">暂停爬虫</span>
+				<span class="mybutton"
+				id="resumecrawler" onclick="resumeCrawler()"
+				style="font-weight: normal; display: none">继续爬虫</span>
 		</div>
 		<!--选择入口用户ID end -->
 		<!--过滤条件 start  -->

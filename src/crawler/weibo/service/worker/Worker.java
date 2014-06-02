@@ -43,7 +43,8 @@ public class Worker implements Runnable, CrawlerUserInterface {
 		while (true) {
 			if (initTask == null) {
 				try {
-					logger.info("队列中暂时没有任务，休息20s.");
+					logger.info("队列中任务数量为" + Scheduler.getScheduleList().size()
+							+ "，休息20s.");
 					Thread.sleep(20000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -67,15 +68,19 @@ public class Worker implements Runnable, CrawlerUserInterface {
 		if (task.getType() == 0) {
 			crawlerUserInfAndReations(task);
 		} else {
+			logger.error("获得一个错误的任务类型:" + task);
 			// 其他爬取类型
 		}
 	}
 
 	@Override
 	public void crawlerUserInfAndReations(Task task) {
+		logger.info("开始任务：" + task);
 		WeiboUser wu = UserJdbcService.getInstance().getWeiboUser(
 				task.getUserId());
 		if (wu != null) {// 数据库中已经存在该用户，则直接指派后续任务
+			logger.info("数据库中已经存在该用户:" + wu.getScreenName() + "，任务深度为"
+					+ task.getDepth());
 			if (task.getDepth() > 1) {
 				assignSuccessorTask(task, wu);
 			}
@@ -107,17 +112,21 @@ public class Worker implements Runnable, CrawlerUserInterface {
 	private void assignSuccessorTask(Task task, WeiboUser wu) {
 		int depth = task.getDepth() - 1;
 		String[] relations = wu.generateRelationArray();
+		if (relations == null)
+			return;
+		int addCount = 0;
 		for (String uId : relations) {
+			addCount++;
 			Task newTask = new Task(uId, 0, depth);
 			Scheduler.pushTask(newTask);
 		}
-
+		logger.info("为用户：" + wu.getScreenName() + "指定了" + addCount + "个后续任务.");
 	}
 
 	@Override
 	public WeiboUser crawlerUserInf(Task task) {
 		String userId = task.getUserId();
-		logger.info("开始采集用户ID：" + userId);
+		logger.info("开始采集用户ID：" + userId + "的基本信息...");
 		String rawHtml = Fetcher.fetchUserInfoHtmlByUid(userId);
 		if (rawHtml == null) {
 			return null;

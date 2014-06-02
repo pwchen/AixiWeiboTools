@@ -32,11 +32,24 @@ public class WeiboUserFilter {
 		for (int i = 0; i < ufrList.size(); i++) {
 			UserFilterRule rule = ufrList.get(i);
 			if (compareRule(rule, wu)) {
-				logger.info("用户：" + wu.getScreenName() + "因为"
-						+ rule.getColumnName() + " " + rule.getOperation()
-						+ rule.getInputValue() + "而被过滤");
+				logger.info("用户：" + wu.getScreenName() + "因为" + rule);
+				addToFilterList(wu.getUserId(), rule.toString());
 				return true;
 			}
+		}
+		return false;
+	}
+
+	/**
+	 * 加入到过滤表中
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static boolean addToFilterList(String userId, String type) {
+		if (UserJdbcService.getInstance().addUserToFilterList(userId, type)) {
+			logger.info(userId + ":" + type + "→加入过滤表！");
+			return true;
 		}
 		return false;
 	}

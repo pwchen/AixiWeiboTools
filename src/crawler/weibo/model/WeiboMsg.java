@@ -1,7 +1,6 @@
 package crawler.weibo.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class WeiboMsg {
 

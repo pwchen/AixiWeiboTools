@@ -35,8 +35,8 @@ public class Scheduler {
 		}
 		Task task = (Task) getScheduleList().pollFirst();
 		workingList.push(task);
-		logger.info("从队列中取出" + task + ",当前剩余工作:" + scheduleList.size()
-				+ "，正在工作数量:" + workingList.size());
+		// logger.info("从队列中取出" + task + ",当前剩余工作:" + scheduleList.size()
+		//		+ "，正在工作数量:" + workingList.size());
 		return task;
 	}
 
@@ -48,7 +48,7 @@ public class Scheduler {
 	 */
 	public static synchronized Task removeWorkingTask(Task task) {
 		workingList.remove(task);
-		logger.info("正在进行的工作队列移除" + task);
+		//logger.info("正在进行的工作队列移除" + task);
 		return task;
 
 	}
@@ -82,12 +82,13 @@ public class Scheduler {
 	 * 
 	 * @param task
 	 */
-	public static synchronized void pushTask(Task task) {
+	public static synchronized int pushTask(Task task) {
 		if (checkTask(task))
-			return;
+			return 0;
 		Scheduler.getScheduleList().add(task);
-		logger.info(task.toString() + "加入工作队列,当前剩余工作:" + scheduleList.size()
-				+ "，正在工作数量:" + workingList.size());
+		// logger.info(task.toString() + "→加入工作队列,当前剩余工作:" + scheduleList.size()
+		//		+ "，正在工作数量:" + workingList.size());
+		return 1;
 	}
 
 	public static LinkedList<Task> getScheduleList() {

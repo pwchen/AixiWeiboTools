@@ -118,14 +118,14 @@ public class WeiboLoginHttpClientUtils {
 		try {
 			info = getPreLoginBean(client);
 		} catch (HttpException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			logger.error(e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			logger.error("登陆失败，请确认已连接正确网络！" + e);
 			return null;
 		} catch (JSONException e) {
-			e.printStackTrace();
+			// e.printStackTrace();
 			logger.error(e);
 		}
 
@@ -180,6 +180,12 @@ public class WeiboLoginHttpClientUtils {
 				FileUtils.saveToFile(entity, fileName, "utf-8");
 				return null;
 			}
+			if(entity.indexOf("UG020908")!=-1){
+				String fileName = "loginFail" + new Date().getTime() + ".html";
+				logger.error("登陆失败,原因保存至:" + fileName);
+				FileUtils.saveToFile(entity, fileName, "utf-8");
+				return null;
+			}
 
 			String url = entity.substring(
 					entity.indexOf("http://weibo.com/ajaxlogin.php?"),
@@ -205,7 +211,7 @@ public class WeiboLoginHttpClientUtils {
 			logger.error(e);
 			return null;
 		} catch (IOException e) {
-			logger.error(e);
+			logger.warn(e);
 			return null;
 		}
 		return client;

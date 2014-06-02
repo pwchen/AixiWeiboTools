@@ -6,9 +6,9 @@ import java.sql.Timestamp;
 public class tes1 {
 
 	public static void main(String[] args) {
-		Timestamp t1 = Timestamp.valueOf("2010-07-29 00:00:00");
-		Timestamp t2 = Timestamp.valueOf("2010-07-28 00:00:00");
-		System.out.println(t1.after(t2));
+		String[] userArr1 = null;
+		for (String str : userArr1)
+			System.out.println(str);
 	}
 
 	private static String findMethodName(Class userClass, String columnName) {

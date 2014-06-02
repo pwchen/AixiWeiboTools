@@ -281,7 +281,11 @@ public class WeiboUser {
 	 * @return
 	 */
 	public String[] generateFansArray() {
-		return fansUserId.split(",");
+		if (fansUserId == null) {
+			return null;
+		} else {
+			return fansUserId.split(",");
+		}
 	}
 
 	/**
@@ -290,7 +294,11 @@ public class WeiboUser {
 	 * @return
 	 */
 	public String[] generateFollowsArray() {
-		return followUserId.split(",");
+		if (followUserId == null) {
+			return null;
+		} else {
+			return followUserId.split(",");
+		}
 	}
 
 	/**
@@ -301,6 +309,14 @@ public class WeiboUser {
 	public String[] generateRelationArray() {
 		String[] userArr1 = generateFansArray();
 		String[] userArr2 = generateFollowsArray();
+		if (userArr1 == null) {
+			if (userArr2 == null) {
+				return null;
+			}
+			return userArr2;
+		} else if (userArr2 == null) {
+			return userArr1;
+		}
 		int userArr1Len = userArr1.length;
 		ArrayList<String> userList = new ArrayList<String>();
 		for (int i = 0; i < userArr1Len; i++)

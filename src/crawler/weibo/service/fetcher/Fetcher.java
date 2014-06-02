@@ -24,10 +24,6 @@ import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 public class Fetcher {
 	private static final Log logger = LogFactory.getLog(Fetcher.class);
 
-	public static void main(String args[]) {
-		System.out.println(fetchRawHtml("http://weibo.com/u/5061880888"));
-	}
-
 	/**
 	 * 根据用户Id返回改用户的个人信息页面
 	 * 
@@ -60,7 +56,12 @@ public class Fetcher {
 	 */
 	public static String fetchUserFollows(String userId, int page) {
 		String url = "http://weibo.com/" + userId + "/follow?page=" + page;
-		return Fetcher.fetchRawHtml(url);
+		String entity = Fetcher.fetchRawHtml(url);
+		if (entity.equals("账号异常(20003)")) {
+			logger.info("爬取用户关系异常url:" + url);
+			return null;
+		}
+		return entity;
 	}
 
 	/**
@@ -122,11 +123,19 @@ public class Fetcher {
 					e.printStackTrace();
 				}
 				return entityStr;
-			} else if (entityStr.indexOf("您当前访问的帐号异常") != -1) {
-				WeiboLoginHttpClientUtils.expireClient = true;
-				client = WeiboLoginHttpClientUtils.changeLoginAccount();
-				logger.error("您当前访问的帐号异常:" + url);
-				ex = true;
+			} else if (entityStr.indexOf("抱歉，您当前访问的帐号异常，暂时无法访问。(20003)") != -1) {
+				// WeiboLoginHttpClientUtils.expireClient = true;
+				// client = WeiboLoginHttpClientUtils.changeLoginAccount();
+				logger.error("抱歉，您当前访问的帐号异常，暂时无法访问。(20003):" + url);
+				return "账号异常(20003)";
+				// ex = true;
+			} else if (entityStr.indexOf("还没有微博帐号？现在加入") != -1
+					|| entityStr.indexOf("赶快注册微博粉我吧") != -1) {
+				// WeiboLoginHttpClientUtils.expireClient = true;
+				// client = WeiboLoginHttpClientUtils.changeLoginAccount();
+				logger.error("还没有微博帐号？现在加入" + url);
+				return "注册微博";
+				// ex = true;
 			} else if (entityStr
 					.indexOf("The server returned an invalid or incomplete response") != -1) {
 				WeiboLoginHttpClientUtils.expireClient = true;

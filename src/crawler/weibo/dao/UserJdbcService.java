@@ -422,4 +422,39 @@ public class UserJdbcService {
 		}
 		return false;
 	}
+
+	/**
+	 * 将某用户加入过滤列表当中
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public synchronized boolean addUserToFilterList(String userId, String type) {
+		PreparedStatement pstmt = null;
+		int rs = 0;
+		if (userId != null && type != null) {
+			String sql = "INSERT INTO  T_WEIBO_USER_FILTERLIST t (userid,type) values (?,?)";
+			try {
+				pstmt = oconn.prepareStatement(sql);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, type);
+				rs = pstmt.executeUpdate();
+				if (rs == 1) {
+					return true;
+				} else {
+					return false;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+				logger.error(e);
+			} finally {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return false;
+	}
 }

@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import utils.FileUtils;
 import crawler.weibo.model.WeiboUser;
 import crawler.weibo.service.fetcher.Fetcher;
+import crawler.weibo.service.filter.WeiboUserFilter;
 
 /**
  * 第一次以个人主页url抓取网页，分析后调用相应的接口，接口返回的是json
@@ -81,8 +82,12 @@ public class UserParser {
 	 */
 	public static WeiboUser getWeiboUserInfo(String userId) {
 		String url = "http://weibo.com/" + userId + "/info";
-		String entity = null;
-		entity = replaceESC(Fetcher.fetchRawHtml(url));
+		String entity = Fetcher.fetchRawHtml(url);
+		if (entity.indexOf("账号异常(20003)") != -1) {
+			WeiboUserFilter.addToFilterList(userId, "账号异常(20003)");
+			return null;
+		}
+		entity = replaceESC(entity);
 		if (entity == null) {
 			return null;
 		}
@@ -114,7 +119,7 @@ public class UserParser {
 			// FileUtils.saveToFile(entity, "pl_profile_hisInfo", "utf-8");
 			return paseUserInfo_plprofilehisInfo(entity);
 		} else {
-			
+
 			if (entity.indexOf("抱歉，网络繁忙") != -1) {
 				logger.warn("抱歉，网络繁忙!稍后再试！");
 				return null;
@@ -123,7 +128,8 @@ public class UserParser {
 				logger.warn("抱歉，你访问的页面地址有误，或者该页面不存在");
 				return null;
 			}
-			String entityFileName = "parseUserInfoDatabyModel" + new Date().getTime() + ".html";
+			String entityFileName = "parseUserInfoDatabyModel"
+					+ new Date().getTime() + ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
 			logger.error("日啊，又有新的模板！！！！！！！！！！！源文件保存至" + entityFileName);
 			return null;
@@ -243,7 +249,7 @@ public class UserParser {
 		} else {
 			String entityFileName = "userName" + new Date().getTime() + ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
-			logger.error("解析userName出错,保存至文件"+entityFileName);
+			logger.error("解析userName出错,保存至文件" + entityFileName);
 		}
 
 		domid = "<!-- 他人info -->";
@@ -435,7 +441,7 @@ public class UserParser {
 			weiboUser.setMessageNum(messageNum);
 		}
 
-		//用户名
+		// 用户名
 		Element userName = document.select(".username>#place>span").first();
 		if (userName != null) {
 			String hrefScr = userName.text();

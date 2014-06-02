@@ -845,6 +845,52 @@ function startCrawler() {
 		},
 		success : function(msg) {
 			alert(msg);
+			$("#startcrawler").hide();
+			$("#pausecrawler").show();
+		}, // 操作成功后的操作！msg是后台传过来的值
+		error : function(msg) {
+			alert("error! " + msg);
+		} // 操作成功
+	});
+}
+
+/**
+ * 暂停爬虫
+ */
+function pauseCrawler() {
+	$.ajax({
+		type : "post",
+		url : "crawler",
+		dataType : "text",
+		data : {
+			type : "pause"
+		},
+		success : function(msg) {
+			alert(msg);
+			$("#pausecrawler").hide();
+			$("#resumecrawler").show();
+		}, // 操作成功后的操作！msg是后台传过来的值
+		error : function(msg) {
+			alert("error! " + msg);
+		} // 操作成功
+	});
+}
+
+/**
+ * 暂停爬虫
+ */
+function resumeCrawler() {
+	$.ajax({
+		type : "post",
+		url : "crawler",
+		dataType : "text",
+		data : {
+			type : "resume"
+		},
+		success : function(msg) {
+			alert(msg);
+			$("#resumecrawler").hide();
+			$("#pausecrawler").show();
 		}, // 操作成功后的操作！msg是后台传过来的值
 		error : function(msg) {
 			alert("error! " + msg);
