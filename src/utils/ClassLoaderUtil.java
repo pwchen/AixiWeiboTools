@@ -22,7 +22,7 @@ public class ClassLoaderUtil {
 	 * @paramclassName
 	 * @return
 	 */
-	public static Class loadClass(String className) {
+	private static Class loadClass(String className) {
 		try {
 			return getClassLoader().loadClass(className);
 		} catch (ClassNotFoundException e) {
@@ -35,7 +35,7 @@ public class ClassLoaderUtil {
 	 * 
 	 * @return
 	 */
-	public static ClassLoader getClassLoader() {
+	private static ClassLoader getClassLoader() {
 		return ClassLoaderUtil.class.getClassLoader();
 	}
 
@@ -62,7 +62,7 @@ public class ClassLoaderUtil {
 	 * @return
 	 * @throwsIOException
 	 */
-	public static InputStream getStream(URL url) throws IOException {
+	private static InputStream getStream(URL url) throws IOException {
 		if (url != null) {
 			return url.openStream();
 		} else {
@@ -89,7 +89,7 @@ public class ClassLoaderUtil {
 	 * @param resource
 	 * @return
 	 */
-	public static Properties getProperties(String resource) {
+	private static Properties getProperties(String resource) {
 		Properties properties = new Properties();
 		try {
 			properties.load(getStream(resource));
@@ -117,8 +117,7 @@ public class ClassLoaderUtil {
 	 * @return 资源的绝对URL
 	 * @throwsMalformedURLException
 	 */
-	public static URL getExtendResource(String relativePath)
-			throws MalformedURLException {
+	private static URL getExtendResource(String relativePath) {
 		ClassLoaderUtil.logger.info("传入的相对路径：" + relativePath);
 		if (!relativePath.contains("../")) {
 			return ClassLoaderUtil.getResource(relativePath);
@@ -139,12 +138,18 @@ public class ClassLoaderUtil {
 				classPathAbsolutePath, "/", containSum);
 		String resourceAbsolutePath = classPathAbsolutePath + relativePath;
 		ClassLoaderUtil.logger.info("绝对路径：" + resourceAbsolutePath);
-		URL resourceAbsoluteURL = new URL(resourceAbsolutePath);
+		URL resourceAbsoluteURL = null;
+		try {
+			resourceAbsoluteURL = new URL(resourceAbsolutePath);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		return resourceAbsoluteURL;
 	}
 
 	/**
 	 * 判断source的前面包含几个dest
+	 * 
 	 * @param source
 	 * @param dest
 	 * @return
@@ -161,6 +166,7 @@ public class ClassLoaderUtil {
 
 	/**
 	 * 将source的路径向前走num次dest
+	 * 
 	 * @param source
 	 * @param dest
 	 * @param num
@@ -179,10 +185,19 @@ public class ClassLoaderUtil {
 	 * @paramresource
 	 * @return
 	 */
-	public static URL getResource(String resource) {
+	private static URL getResource(String resource) {
 		ClassLoaderUtil.logger.info("传入的相对于classpath的路径：" + resource);
 
 		return ClassLoaderUtil.getClassLoader().getResource(resource);
+	}
+
+	/**
+	 * 获取应用程序的根目录
+	 * 
+	 * @return
+	 */
+	public static String getAppRoot() {
+		return getExtendResource("../../../").getPath();
 	}
 
 	/**
@@ -190,8 +205,9 @@ public class ClassLoaderUtil {
 	 * @throwsMalformedURLException
 	 */
 	public static void main(String[] args) throws MalformedURLException {
-		System.out.println(ClassLoaderUtil
-				.getExtendResource("../../../img/log4j.properties"));
+		// System.out.println(ClassLoaderUtil
+		// .getExtendResource("../../../img/log4j.properties"));
+		System.out.println(getAppRoot());
 	}
 
 }

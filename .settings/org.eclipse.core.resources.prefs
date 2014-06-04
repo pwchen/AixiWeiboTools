@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
 encoding//WebRoot/library/js/crawler.js=gbk
-encoding//img/account.properties=UTF-8
+encoding//config/account.properties=UTF-8
 encoding//src/log4j.properties=UTF-8
 encoding/<project>=UTF-8
 encoding/html=UTF-8
