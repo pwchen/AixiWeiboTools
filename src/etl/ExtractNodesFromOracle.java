@@ -19,7 +19,7 @@ import crawler.weibo.dao.UserJdbcService;
 import crawler.weibo.model.WeiboUser;
 
 public class ExtractNodesFromOracle {
-	static String baseFileUrl = "G:\\data\\forward\\";
+	static String baseFileUrl = "D:\\data\\";
 	private static final Log logger = LogFactory
 			.getLog(ExtractNodesFromOracle.class);
 	static List<Long> nodeList = new ArrayList<Long>();
@@ -75,7 +75,7 @@ public class ExtractNodesFromOracle {
 	 * 
 	 * @param forwardFilefatherUrl
 	 */
-	private static void generateEdgesFile(String fatheFilerUrl) {
+	public static void generateEdgesFile(String fatheFilerUrl) {
 		File file = new File(fatheFilerUrl + "allnodes.csv");
 		FileReader fr = null;
 		BufferedReader br = null;
@@ -96,7 +96,7 @@ public class ExtractNodesFromOracle {
 					String[] fansIdArr = fansIds.split(";");
 					for (String targetUserId : fansIdArr) {
 						long target = Long.parseLong(targetUserId);
-						if (nodeList.contains(target)) {//这个是肯定不会重复的
+						if (nodeList.contains(target)) {// 这个是肯定不会重复的
 							long[] edge = { userId, target };
 							edgeList.add(edge);
 						}
@@ -409,7 +409,7 @@ public class ExtractNodesFromOracle {
 	 * @param url
 	 * @return
 	 */
-	private static void initNodeFileWriter(String url) {
+	public static void initNodeFileWriter(String url) {
 		FileWriter fw = FileUtils.getFileWriter(url, false);
 		try {
 			fw.write("id,fans,follows,fansidlist,followidlist\r\n");

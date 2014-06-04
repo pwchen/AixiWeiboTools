@@ -1,5 +1,11 @@
 package utils;
 
+/**
+ * 简单的文本处理工具类，包括文本匹配方法
+ * 
+ * @author Administrator
+ * 
+ */
 public class TextUtil {
 
 	/**

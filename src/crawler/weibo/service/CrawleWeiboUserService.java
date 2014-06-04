@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import utils.CrawlerContext;
-import utils.SeparatorUtils;
+import utils.SystemPropertiesUtils;
 import crawler.weibo.service.scheduler.Scheduler;
 import crawler.weibo.service.scheduler.Task;
 import crawler.weibo.service.worker.Worker;
@@ -96,7 +96,7 @@ public class CrawleWeiboUserService {
 	 * @param text
 	 */
 	public static void getUserTaskByText(String text) {
-		String[] stra = text.split(SeparatorUtils.getLineSeparator());
+		String[] stra = text.split(SystemPropertiesUtils.getLineSeparator());
 		for (int i = 0; i < stra.length; i++) {
 			String[] taskStr = stra[i].split(",");
 			if (taskStr.length != 2) {

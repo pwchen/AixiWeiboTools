@@ -1,6 +1,7 @@
 package crawler.weibo.servlet;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -53,4 +54,28 @@ public class CrawlerServlet extends HttpServlet {
 			resp.getWriter().print("resume crawling successfully!");
 		}
 	}
+
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		logger.info("doget!!");
+		// super.doGet(req, resp);
+		String type = req.getParameter("type");
+		if (type != null && type.equals("path")) {
+			logger.info("取得参数" + type);
+			logger.info(CrawlerServlet.class.getResource(""));
+			logger.info(CrawlerServlet.class.getResource("/"));
+			logger.info(ClassLoader.getSystemResource(""));
+			logger.info(CrawlerServlet.class.getClassLoader().getResource("/"));
+			try {
+				logger.info(Thread.currentThread().getContextClassLoader()
+						.getResource("").toURI().getPath());
+			} catch (URISyntaxException e) {
+				e.printStackTrace();
+			}
+			logger.info(this.getServletContext().getRealPath("/"));
+			resp.getWriter().print("resume crawling successfully!");
+		}
+	}
+
 }

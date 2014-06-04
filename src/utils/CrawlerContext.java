@@ -7,6 +7,11 @@ import org.apache.commons.logging.LogFactory;
 
 import utils.PropertyUtils;
 
+/**
+ * 微博采集爬虫上下文，配置文件
+ * @author Administrator
+ *
+ */
 public class CrawlerContext {
 	/**
 	 * 新浪账户用户名列表

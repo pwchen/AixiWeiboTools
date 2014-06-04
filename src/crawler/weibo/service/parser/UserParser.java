@@ -86,6 +86,9 @@ public class UserParser {
 		if (entity.indexOf("账号异常(20003)") != -1) {
 			WeiboUserFilter.addToFilterList(userId, "账号异常(20003)");
 			return null;
+		} else if (entity.indexOf("页面不存在") != -1) {
+			WeiboUserFilter.addToFilterList(userId, "页面不存在");
+			return null;
 		}
 		entity = replaceESC(entity);
 		if (entity == null) {

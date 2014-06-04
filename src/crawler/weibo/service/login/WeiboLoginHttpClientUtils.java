@@ -172,7 +172,8 @@ public class WeiboLoginHttpClientUtils {
 			if (entity.indexOf("retcode=4049") != -1) {
 				logger.error(nextUserName + "登陆失败！需要输入验证码！系统即将退出！");
 				// FileUtils.shutDoun();//关机
-				System.exit(1);
+				//System.exit(1);
+				Thread.currentThread().sleep(1000000);
 			}
 			if (entity.indexOf("code=0") == -1) {
 				String fileName = "loginFail" + new Date().getTime() + ".html";
@@ -213,6 +214,8 @@ public class WeiboLoginHttpClientUtils {
 		} catch (IOException e) {
 			logger.warn(e);
 			return null;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		return client;
 	}

@@ -108,9 +108,16 @@ public class Fetcher {
 				ex = true;
 			} else if (entityStr.indexOf("正确输入验证码答案") != -1) {
 				WeiboLoginHttpClientUtils.expireClient = true;// 账号异常，需要换号了
-				client = WeiboLoginHttpClientUtils.changeLoginAccount();
-				logger.error("正确输入验证码答案:" + url);
-				ex = true;
+				try {
+					Thread.currentThread().sleep(3000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (!ex) {
+					client = WeiboLoginHttpClientUtils.changeLoginAccount();
+					logger.error("正确输入验证码答案:" + url);
+					ex = true;
+				}
 			} else if (entityStr
 					.indexOf("æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿") != -1) {
 				FileUtils.saveToFile(entityStr, "tempuft.html", "utf-8");
@@ -145,7 +152,7 @@ public class Fetcher {
 				ex = true;
 			} else if (entityStr.indexOf("页面地址有误") != -1) {
 				logger.warn("页面地址有误，或者该页面不存在:" + url);
-				return null;
+				return "页面不存在";
 			} else {
 				int locationIndex = entityStr.indexOf("location.replace(");
 				if (locationIndex != -1) {
