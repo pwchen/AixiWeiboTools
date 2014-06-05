@@ -15,6 +15,7 @@ import org.jsoup.select.Elements;
 import utils.FileUtils;
 import crawler.weibo.model.WeiboUser;
 import crawler.weibo.service.fetcher.Fetcher;
+import crawler.weibo.service.filter.UserFilterService;
 import crawler.weibo.service.filter.WeiboUserFilter;
 
 /**
@@ -74,36 +75,6 @@ public class UserParser {
 	}
 
 	/**
-	 * 爬取用户页面，提取用户基本信息
-	 * 
-	 * @param httpClient
-	 * @param userId
-	 * @return
-	 */
-	public static WeiboUser getWeiboUserInfo(String userId) {
-		String url = "http://weibo.com/" + userId + "/info";
-		String entity = Fetcher.fetchRawHtml(url);
-		if (entity.indexOf("账号异常(20003)") != -1) {
-			WeiboUserFilter.addToFilterList(userId, "账号异常(20003)");
-			return null;
-		} else if (entity.indexOf("页面不存在") != -1) {
-			WeiboUserFilter.addToFilterList(userId, "页面不存在");
-			return null;
-		}
-		entity = replaceESC(entity);
-		if (entity == null) {
-			return null;
-		}
-		WeiboUser weiboUser = parseUserInfoDatabyModel(entity);
-		if (weiboUser == null) {// 解析错误
-			logger.error("解析" + userId + "失败！");
-			return null;
-		}
-		weiboUser.setUserId(userId);
-		return weiboUser;
-	}
-
-	/**
 	 * 判断页面类型并解析各类型页面特征，选择相应的页面解析方法,****这段代码非常乱，有时间要改写****
 	 * 
 	 * @param entity
@@ -122,15 +93,6 @@ public class UserParser {
 			// FileUtils.saveToFile(entity, "pl_profile_hisInfo", "utf-8");
 			return paseUserInfo_plprofilehisInfo(entity);
 		} else {
-
-			if (entity.indexOf("抱歉，网络繁忙") != -1) {
-				logger.warn("抱歉，网络繁忙!稍后再试！");
-				return null;
-			}
-			if (entity.indexOf("页面地址有误") != -1) {
-				logger.warn("抱歉，你访问的页面地址有误，或者该页面不存在");
-				return null;
-			}
 			String entityFileName = "parseUserInfoDatabyModel"
 					+ new Date().getTime() + ".html";
 			FileUtils.saveToFile(entity, entityFileName, "utf-8");
@@ -819,73 +781,4 @@ public class UserParser {
 		return followsStr;
 	}
 
-	/**
-	 * 获取微博用户的关注列表和粉丝列表
-	 * 
-	 * @param weiboUser
-	 * @return
-	 */
-
-	public WeiboUser getWeiboAllUserInfo(WeiboUser weiboUser) {
-		String userId = weiboUser.getUserId();
-		int followNum = weiboUser.getFollowNum();
-		int fansNum = weiboUser.getFansNum();
-		int followPage = followNum / 20 + 1;
-		if (followPage > 10) {
-			followPage = 10;
-		}
-		int fansPage = fansNum / 20 + 1;
-		if (fansPage > 10) {
-			fansPage = 10;
-		}
-		String followUserIds = "";
-		String fansUserIds = "";
-
-		if (followNum > 0) {
-			for (int i = 1; i <= followPage; i++) {
-				String url = "http://weibo.com/" + userId + "/follow?page=" + i;
-				String entity = null;
-				entity = Fetcher.fetchRawHtml(url);
-				if (entity == null) {
-					break;
-				}
-				String currentUids = paserUserRelations(entity);
-				if ("0".equals(currentUids)) {
-					currentUids = "";
-					logger.error("当前出错的URL：" + url);
-				}
-				followUserIds += currentUids;
-			}
-			if ("".equals(followUserIds)) {
-				followUserIds = null;
-			} else {
-				followUserIds = followUserIds.substring(1);
-			}
-		}
-
-		if (fansNum > 0) {
-			for (int i = 1; i <= fansPage; i++) {
-				String url = "http://weibo.com/" + userId + "/fans?page=" + i;
-				String entity = null;
-				entity = Fetcher.fetchRawHtml(url);
-				if (entity == null) {
-					break;
-				}
-				String currentUids = paserUserRelations(entity);
-				if ("0".equals(currentUids)) {
-					currentUids = "";
-					logger.error("当前出错的URL：" + url);
-				}
-				fansUserIds += currentUids;
-			}
-			if ("".equals(fansUserIds)) {
-				fansUserIds = null;
-			} else {
-				fansUserIds = fansUserIds.substring(1);
-			}
-		}
-		weiboUser.setFollowUserId(followUserIds);
-		weiboUser.setFansUserId(fansUserIds);
-		return weiboUser;
-	}
 }

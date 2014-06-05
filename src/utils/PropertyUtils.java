@@ -13,6 +13,12 @@ public class PropertyUtils {
 
 	private static final Log logger = LogFactory.getLog(PropertyUtils.class);
 
+	public static void main(String[] args) {
+		Properties p = PropertyUtils.getDefaultProperties();
+		System.out
+				.println(PropertyUtils.getStringProperty(p, "inituseridlist"));
+	}
+
 	/**
 	 * 获取一个默认的配置，默认加载img/account.properties
 	 * 
@@ -21,9 +27,9 @@ public class PropertyUtils {
 	public static Properties getDefaultProperties() {
 		Properties p = new Properties();
 		try {
-			InputStream in = new FileInputStream(new File(ClassLoaderUtil
-					.getExtendResource("../config/account.properties")
-					.getPath()));
+			InputStream in = new FileInputStream(
+					new File(ClassLoaderUtil
+							.getAppRealPath("config/account.properties")));
 			p.load(in);
 			in.close();
 		} catch (IOException e) {

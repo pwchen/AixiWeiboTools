@@ -26,8 +26,8 @@ public class CrawUserRelationsByForwardFile {
 	 */
 	public static void crawlUserConnection(String url) {
 		Long[] forwardIdArr = loadForwardIdArr(url);
-		new CrawlUserRelations(forwardIdArr, forwardIdArr.length)
-				.getUserConnection();
+		// new CrawlUserRelations(forwardIdArr, forwardIdArr.length)
+		//		.getUserConnection();
 	}
 
 	/**

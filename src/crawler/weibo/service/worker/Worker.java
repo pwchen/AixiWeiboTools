@@ -127,7 +127,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 	public WeiboUser crawlerUserInf(Task task) {
 		String userId = task.getUserId();
 		logger.info("开始采集用户ID：" + userId + "的基本信息...");
-		String rawHtml = Fetcher.fetchUserInfoHtmlByUid(userId);
+		String rawHtml = Fetcher.fetchUserInfoHtmlByUid(userId, httpClient);
 		if (rawHtml == null) {
 			return null;
 		}
@@ -159,14 +159,14 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 		if (followNum > 0) {
 			for (int i = 1; i <= followPage; i++) {
-				String entity = Fetcher.fetchUserFollows(userId, i);
+				String entity = Fetcher.fetchUserFollows(userId, i, httpClient);
 				if (entity == null) {
 					break;
 				}
 				String currentUids = UserParser.paserUserRelations(entity);
 				if ("0".equals(currentUids)) {
 					currentUids = "";
-					logger.warn("当前出错的id：" + userId + "/follow?page=" + i);
+					logger.error("当前出错的id：" + userId + "/follow?page=" + i);
 					i--;
 					continue;
 				}
@@ -181,7 +181,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 		if (fansNum > 0) {
 			for (int i = 1; i <= fansPage; i++) {
-				String entity = Fetcher.fetchUserFans(userId, i);
+				String entity = Fetcher.fetchUserFans(userId, i, httpClient);
 				if (entity == null) {
 					break;
 				}

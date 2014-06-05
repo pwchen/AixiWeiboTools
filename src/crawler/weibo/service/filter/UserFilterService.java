@@ -5,6 +5,8 @@ import org.apache.commons.logging.LogFactory;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import crawler.weibo.dao.UserJdbcService;
+
 public class UserFilterService {
 
 	private static final Log logger = LogFactory
@@ -27,5 +29,15 @@ public class UserFilterService {
 			e.printStackTrace();
 		}
 		return size;
+	}
+
+	/**
+	 * 加入到过滤表中
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public static boolean addToFilterList(String userId, String type) {
+		return WeiboUserFilter.addToFilterList(userId, type);
 	}
 }

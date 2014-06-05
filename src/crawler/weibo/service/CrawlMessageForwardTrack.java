@@ -10,6 +10,7 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
@@ -67,7 +68,8 @@ public class CrawlMessageForwardTrack {
 	 * @param url
 	 */
 	private static void startCrawling(String url) {
-		String entity = Fetcher.fetchRawHtml(url + "?type=repost");
+		HttpClient client = WeiboLoginHttpClientUtils.getLoginhttpClient();
+		String entity = Fetcher.fetchRawHtml(url + "?type=repost", client);
 		logger.info("爬取的微博地址:" + url);
 		if (entity == null) {
 			logger.error("页面被删了，监控器退出");
@@ -90,12 +92,16 @@ public class CrawlMessageForwardTrack {
 				String pageUrl = getPageUrl(document);
 				for (int i = 2; i <= totalPageNum; i++) {
 					try {
-						String temp = Fetcher.fetchRawHtml(pageUrl.substring(0,
-								pageUrl.indexOf("page=") + 5) + i);
+						String temp = Fetcher.fetchRawHtml(
+								pageUrl.substring(0,
+										pageUrl.indexOf("page=") + 5) + i,
+								client);
 						if (temp == null) {
 							for (int j = 0; j < 5; j++) {
-								temp = Fetcher.fetchRawHtml(pageUrl.substring(
-										0, pageUrl.indexOf("page=") + 5) + i);
+								temp = Fetcher.fetchRawHtml(
+										pageUrl.substring(0,
+												pageUrl.indexOf("page=") + 5)
+												+ i, client);
 								if (temp != null)
 									break;
 							}

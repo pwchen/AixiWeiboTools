@@ -1,0 +1,8 @@
+2014-06-05 09:26:03,717 INFO  [main] (ClassLoaderUtil.java:121)     - 传入的相对路径：../../../
+2014-06-05 09:26:03,717 INFO  [main] (ClassLoaderUtil.java:109)     - file:/D:/workspace/AixiWeiboTools/WebRoot/WEB-INF/classes/
+2014-06-05 09:26:03,717 INFO  [main] (ClassLoaderUtil.java:130)     - 6
+2014-06-05 09:26:03,732 INFO  [main] (ClassLoaderUtil.java:140)     - 绝对路径：file:/D:/workspace/AixiWeiboTools/
+2014-06-05 09:26:17,835 INFO  [main] (ClassLoaderUtil.java:121)     - 传入的相对路径：../../../
+2014-06-05 09:26:17,835 INFO  [main] (ClassLoaderUtil.java:109)     - file:/D:/workspace/AixiWeiboTools/WebRoot/WEB-INF/classes/
+2014-06-05 09:26:17,850 INFO  [main] (ClassLoaderUtil.java:130)     - 6
+2014-06-05 09:26:17,850 INFO  [main] (ClassLoaderUtil.java:140)     - 绝对路径：file:/D:/workspace/AixiWeiboTools/

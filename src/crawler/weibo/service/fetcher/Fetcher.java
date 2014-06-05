@@ -12,7 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 
 import utils.CrawlerContext;
-import utils.FileUtils;
+import crawler.weibo.service.filter.UserFilterService;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
 /**
@@ -30,9 +30,20 @@ public class Fetcher {
 	 * @param userId
 	 * @return
 	 */
-	public static String fetchUserInfoHtmlByUid(String userId) {
+	public static String fetchUserInfoHtmlByUid(String userId, HttpClient client) {
 		String url = "http://weibo.com/" + userId + "/info";
-		return fetchRawHtml(url);
+		String entity = fetchRawHtml(url, client);
+		if (entity.indexOf("账号异常") != -1) {
+			logger.warn(userId + "账号异常");
+			UserFilterService.addToFilterList(userId, "账号异常");
+			return null;
+		} else if (entity.indexOf("页面不存在") != -1
+				|| entity.indexOf("页面地址有误") != -1) {
+			logger.warn(url + "页面地址有误，或者该页面不存在");
+			UserFilterService.addToFilterList(userId, "页面地址有误，或者该页面不存在");
+			return null;
+		}
+		return entity;
 	}
 
 	/**
@@ -42,9 +53,18 @@ public class Fetcher {
 	 * @param page
 	 * @return
 	 */
-	public static String fetchUserFans(String userId, int page) {
+	public static String fetchUserFans(String userId, int page,
+			HttpClient client) {
 		String url = "http://weibo.com/" + userId + "/fans?page=" + page;
-		return Fetcher.fetchRawHtml(url);
+		String entity = Fetcher.fetchRawHtml(url, client);
+		if (entity.indexOf("页面不存在") != -1) {
+			logger.info("页面不存在" + url);
+			return null;
+		} else if (entity.indexOf("账号异常") != -1) {
+			logger.info("账号异常:" + url);
+			return Fetcher.fetchRawHtml(url, client);
+		}
+		return entity;
 	}
 
 	/**
@@ -54,12 +74,16 @@ public class Fetcher {
 	 * @param page
 	 * @return
 	 */
-	public static String fetchUserFollows(String userId, int page) {
+	public static String fetchUserFollows(String userId, int page,
+			HttpClient client) {
 		String url = "http://weibo.com/" + userId + "/follow?page=" + page;
-		String entity = Fetcher.fetchRawHtml(url);
-		if (entity.equals("账号异常(20003)")) {
-			logger.info("爬取用户关系异常url:" + url);
+		String entity = Fetcher.fetchRawHtml(url, client);
+		if (entity.indexOf("页面不存在") != -1) {
+			logger.info("页面不存在" + url);
 			return null;
+		} else if (entity.indexOf("账号异常") != -1) {
+			logger.info("账号异常:" + url);
+			return Fetcher.fetchRawHtml(url, client);
 		}
 		return entity;
 	}
@@ -71,16 +95,17 @@ public class Fetcher {
 	 * @param personalUrl
 	 * @return
 	 */
-	public static String fetchRawHtml(String url) {
-		HttpClient client = WeiboLoginHttpClientUtils.getLoginhttpClient();
+	public static String fetchRawHtml(String url, HttpClient client) {
 		HttpGet getMethod = new HttpGet(url);
 		String entityStr = null;
 		InputStream in = null;
 		int count = 0;
-		boolean ex = true;// 出异常
+		boolean exception = true;// 出异常
 		int failureCount = CrawlerContext.getContext().getFailureNumber();
-		while (count++ < CrawlerContext.getContext().getFailureNumber() && ex) {
-			ex = false;
+		while (count++ < CrawlerContext.getContext().getFailureNumber()
+				&& exception) {
+			exception = false;
+			/**** 获取页面html start ****/
 			try {
 				HttpResponse response = client.execute(getMethod);
 				HttpEntity entity = response.getEntity();
@@ -89,7 +114,7 @@ public class Fetcher {
 				}
 				entityStr = EntityUtils.toString(entity, "utf-8");
 			} catch (IOException e) {
-				ex = true;
+				exception = true;
 				logger.warn(e);
 				continue;
 			} finally {
@@ -101,40 +126,35 @@ public class Fetcher {
 					}
 				}
 			}
+			/**** 获取页面html end ****/
 
 			if (entityStr.indexOf("抱歉，网络繁忙") != -1) {
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("抱歉，网络繁忙:" + url);
-				ex = true;
-			} else if (entityStr.indexOf("正确输入验证码答案") != -1) {
-				WeiboLoginHttpClientUtils.expireClient = true;// 账号异常，需要换号了
 				try {
 					Thread.currentThread().sleep(3000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if (!ex) {
-					client = WeiboLoginHttpClientUtils.changeLoginAccount();
-					logger.error("正确输入验证码答案:" + url);
-					ex = true;
-				}
-			} else if (entityStr
-					.indexOf("æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿") != -1) {
-				FileUtils.saveToFile(entityStr, "tempuft.html", "utf-8");
-				// FileUtils.saveToFile(entityStr, "tempgbk.html", "gbk");
-				logger.error("乱码异常:æ°æµªå¾®å-éæ¶éå°åäº«èº«è¾¹çæ°é²äºå¿"
-						+ url);
-				try {
-					Thread.sleep(6000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				return entityStr;
-			} else if (entityStr.indexOf("抱歉，您当前访问的帐号异常，暂时无法访问。(20003)") != -1) {
+				exception = true;
+				continue;
+			} else if (entityStr.indexOf("正确输入验证码答案") != -1) {
+				WeiboLoginHttpClientUtils.expireClient = true;// 账号异常，需要换号了
+				client = WeiboLoginHttpClientUtils.changeLoginAccount();
+				logger.error("正确输入验证码答案:" + url);
+				exception = true;
+				continue;
+			} else if (entityStr.indexOf("违反了新浪微博的安全检测规则") != -1) {
+				WeiboLoginHttpClientUtils.expireClient = true;// 账号异常，需要换号了
+				client = WeiboLoginHttpClientUtils.changeLoginAccount();
+				logger.error("违反了新浪微博的安全检测规则:" + url);
+				exception = true;
+				continue;
+			} else if (entityStr.indexOf("抱歉，您当前访问的帐号异常，暂时无法访问。") != -1) {
 				// WeiboLoginHttpClientUtils.expireClient = true;
 				// client = WeiboLoginHttpClientUtils.changeLoginAccount();
-				logger.error("抱歉，您当前访问的帐号异常，暂时无法访问。(20003):" + url);
-				return "账号异常(20003)";
+				logger.error("抱歉，您当前访问的帐号异常，暂时无法访问:" + url);
+				return "账号异常";
 				// ex = true;
 			} else if (entityStr.indexOf("还没有微博帐号？现在加入") != -1
 					|| entityStr.indexOf("赶快注册微博粉我吧") != -1) {
@@ -149,9 +169,9 @@ public class Fetcher {
 				client = WeiboLoginHttpClientUtils.changeLoginAccount();
 				logger.error("502 Bad Gateway,The server returned an invalid or incomplete response:"
 						+ url);
-				ex = true;
+				exception = true;
 			} else if (entityStr.indexOf("页面地址有误") != -1) {
-				logger.warn("页面地址有误，或者该页面不存在:" + url);
+				// logger.warn("页面地址有误，或者该页面不存在:" + url);
 				return "页面不存在";
 			} else {
 				int locationIndex = entityStr.indexOf("location.replace(");
@@ -159,14 +179,15 @@ public class Fetcher {
 					String location = entityStr.substring(locationIndex + 18);
 					location = location.substring(0, location.indexOf("\");"));
 					getMethod = new HttpGet(location);
-					ex = true;
+					exception = true;
 					logger.info("地址跳转：" + location);
 					continue;
 				}
 			}
 		}
 		if (count > failureCount) {
-			logger.error("超时次数超过最大次数:" + failureCount + "放弃此次请求。");
+			logger.error("超时次数超过最大次数:" + failureCount + "放弃此次请求:" + url);
+			return null;
 		} else if (entityStr == null) {
 			logger.error("未知原因:" + url);
 		}

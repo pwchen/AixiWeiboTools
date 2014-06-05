@@ -118,14 +118,11 @@ public class WeiboLoginHttpClientUtils {
 		try {
 			info = getPreLoginBean(client);
 		} catch (HttpException e) {
-			// e.printStackTrace();
 			logger.error(e);
 		} catch (IOException e) {
-			// e.printStackTrace();
 			logger.error("登陆失败，请确认已连接正确网络！" + e);
 			return null;
 		} catch (JSONException e) {
-			// e.printStackTrace();
 			logger.error(e);
 		}
 
@@ -172,7 +169,7 @@ public class WeiboLoginHttpClientUtils {
 			if (entity.indexOf("retcode=4049") != -1) {
 				logger.error(nextUserName + "登陆失败！需要输入验证码！系统即将退出！");
 				// FileUtils.shutDoun();//关机
-				//System.exit(1);
+				// System.exit(1);
 				Thread.currentThread().sleep(1000000);
 			}
 			if (entity.indexOf("code=0") == -1) {
@@ -181,7 +178,7 @@ public class WeiboLoginHttpClientUtils {
 				FileUtils.saveToFile(entity, fileName, "utf-8");
 				return null;
 			}
-			if(entity.indexOf("UG020908")!=-1){
+			if (entity.indexOf("UG020908") != -1) {
 				String fileName = "loginFail" + new Date().getTime() + ".html";
 				logger.error("登陆失败,原因保存至:" + fileName);
 				FileUtils.saveToFile(entity, fileName, "utf-8");

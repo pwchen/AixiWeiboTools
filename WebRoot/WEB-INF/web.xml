@@ -17,6 +17,7 @@
 	<servlet>
 		<servlet-name>crawler</servlet-name>
 		<servlet-class>crawler.weibo.servlet.CrawlerServlet</servlet-class>
+		<load-on-startup>0</load-on-startup> 
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>crawler</servlet-name>

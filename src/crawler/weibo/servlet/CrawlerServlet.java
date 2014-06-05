@@ -1,7 +1,7 @@
 package crawler.weibo.servlet;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import utils.PropertyUtils;
 import crawler.weibo.service.CrawleWeiboUserService;
 import crawler.weibo.service.filter.UserFilterService;
 import crawler.weibo.service.scheduler.InitSchedulerService;
@@ -20,7 +21,7 @@ public class CrawlerServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		super.init();
+		logger.info("--------crawler inited successfully！！！--------");
 	}
 
 	@Override
@@ -62,19 +63,9 @@ public class CrawlerServlet extends HttpServlet {
 		// super.doGet(req, resp);
 		String type = req.getParameter("type");
 		if (type != null && type.equals("path")) {
-			logger.info("取得参数" + type);
-			logger.info(CrawlerServlet.class.getResource(""));
-			logger.info(CrawlerServlet.class.getResource("/"));
-			logger.info(ClassLoader.getSystemResource(""));
-			logger.info(CrawlerServlet.class.getClassLoader().getResource("/"));
-			try {
-				logger.info(Thread.currentThread().getContextClassLoader()
-						.getResource("").toURI().getPath());
-			} catch (URISyntaxException e) {
-				e.printStackTrace();
-			}
-			logger.info(this.getServletContext().getRealPath("/"));
-			resp.getWriter().print("resume crawling successfully!");
+			Properties p = PropertyUtils.getDefaultProperties();
+			System.out.println(PropertyUtils.getStringProperty(p,
+					"inituseridlist"));
 		}
 	}
 
