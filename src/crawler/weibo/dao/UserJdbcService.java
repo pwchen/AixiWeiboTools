@@ -445,8 +445,7 @@ public class UserJdbcService {
 					return false;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
-				logger.error(e);
+				logger.warn(e);
 			} finally {
 				try {
 					pstmt.close();

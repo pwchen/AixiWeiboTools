@@ -6,6 +6,7 @@ import org.apache.http.client.HttpClient;
 
 import utils.CrawlerContext;
 import crawler.weibo.dao.UserJdbcService;
+import crawler.weibo.model.WeiboLoginedClient;
 import crawler.weibo.model.WeiboUser;
 import crawler.weibo.service.fetcher.Fetcher;
 import crawler.weibo.service.filter.WeiboUserFilter;
@@ -22,7 +23,7 @@ import crawler.weibo.service.scheduler.Task;
  */
 public class Worker implements Runnable, CrawlerUserInterface {
 	private Task initTask = null;
-	private HttpClient httpClient = null;
+	WeiboLoginedClient wlClient = null;
 	private static final Log logger = LogFactory.getLog(Worker.class);
 
 	public Worker(Task task) {
@@ -34,7 +35,8 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 	@Override
 	public void run() {
-		httpClient = WeiboLoginHttpClientUtils.getLoginhttpClient();
+		WeiboLoginedClient wlClient = WeiboLoginHttpClientUtils
+				.getWeiboLoginedClient();
 		if (initTask != null) {
 			doWorkBytask(initTask);
 		}
@@ -127,7 +129,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 	public WeiboUser crawlerUserInf(Task task) {
 		String userId = task.getUserId();
 		logger.info("开始采集用户ID：" + userId + "的基本信息...");
-		String rawHtml = Fetcher.fetchUserInfoHtmlByUid(userId, httpClient);
+		String rawHtml = Fetcher.fetchUserInfoHtmlByUid(userId, wlClient);
 		if (rawHtml == null) {
 			return null;
 		}
@@ -159,7 +161,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 		if (followNum > 0) {
 			for (int i = 1; i <= followPage; i++) {
-				String entity = Fetcher.fetchUserFollows(userId, i, httpClient);
+				String entity = Fetcher.fetchUserFollows(userId, i, wlClient);
 				if (entity == null) {
 					break;
 				}
@@ -181,7 +183,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 		if (fansNum > 0) {
 			for (int i = 1; i <= fansPage; i++) {
-				String entity = Fetcher.fetchUserFans(userId, i, httpClient);
+				String entity = Fetcher.fetchUserFans(userId, i, wlClient);
 				if (entity == null) {
 					break;
 				}

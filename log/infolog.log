@@ -6,3 +6,353 @@
 2014-06-05 09:26:17,835 INFO  [main] (ClassLoaderUtil.java:109)     - file:/D:/workspace/AixiWeiboTools/WebRoot/WEB-INF/classes/
 2014-06-05 09:26:17,850 INFO  [main] (ClassLoaderUtil.java:130)     - 6
 2014-06-05 09:26:17,850 INFO  [main] (ClassLoaderUtil.java:140)     - 绝对路径：file:/D:/workspace/AixiWeiboTools/
+2014-06-06 15:15:39,610 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 15:15:39,625 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 15:15:39,625 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 15:15:39,625 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：1900
+2014-06-06 15:15:52,253 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:15:56,046 WARN  [main] (WeiboLoginHttpClientUtils.java:209)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:16:10,569 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:16:13,583 ERROR [main] (WeiboLoginHttpClientUtils.java:120)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:16:15,663 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-06-06 15:16:17,793 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3845698072","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"纯真的镜系列"}}
+2014-06-06 15:16:45,042 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 15:16:45,045 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 15:16:45,045 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 15:16:45,045 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：1900
+2014-06-06 15:16:58,743 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:02,354 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:03,789 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:04,618 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:05,528 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:06,149 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:06,755 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:07,367 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:08,189 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:17:08,800 INFO  [main] (WeiboLoginHttpClientUtils.java:201)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:26:38,132 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 15:26:38,135 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 15:26:38,135 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 15:26:38,135 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：1900
+2014-06-06 15:26:41,450 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:26:44,455 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:26:47,468 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:01,254 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 15:27:04,089 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 15:27:07,680 WARN  [main] (WeiboLoginHttpClientUtils.java:194)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:10,692 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:18,624 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2015@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846159823","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2015"}}
+2014-06-06 15:27:24,052 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2015@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846159823","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2015"}}
+2014-06-06 15:27:27,064 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:29,145 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 15:27:32,920 WARN  [main] (WeiboLoginHttpClientUtils.java:194)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:35,931 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:38,944 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:41,947 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:46,226 WARN  [main] (WeiboLoginHttpClientUtils.java:194)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:49,238 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:56,396 WARN  [main] (WeiboLoginHttpClientUtils.java:194)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:28:08,201 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:9850717@qq.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841291650","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"数据挖掘阿蒙"}}
+2014-06-06 15:28:11,214 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:28:14,494 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2015@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846159823","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2015"}}
+2014-06-06 15:28:17,505 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:28:21,446 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 15:28:25,713 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 15:28:28,071 INFO  [main] (WeiboLoginHttpClientUtils.java:186)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 15:42:34,129 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 15:42:34,132 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 15:42:34,132 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 15:42:34,132 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：1900
+2014-06-06 15:42:39,933 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:42:42,950 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:42:46,585 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:42:48,364 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 15:42:50,267 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:9850717@qq.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841291650","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"数据挖掘阿蒙"}}
+2014-06-06 15:42:52,142 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2015@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846159823","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2015"}}
+2014-06-06 15:42:53,982 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 15:42:56,995 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:42:58,938 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2018@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3848145582","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2018"}}
+2014-06-06 15:43:02,574 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:43:04,523 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-06-06 15:43:06,544 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3845698072","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"纯真的镜系列"}}
+2014-06-06 15:43:08,561 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 15:43:12,247 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:43:15,258 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:43:18,289 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:43:22,371 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2017@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841684770","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2017"}}
+2014-06-06 15:52:43,850 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 15:52:43,852 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 15:52:43,853 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 15:52:43,853 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：200
+2014-06-06 15:52:49,118 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 15:52:54,229 INFO  [main] ( Fetcher.java:184)     - 
+		<html>
+		<head>
+		<title>����ͨ��֤</title>
+		<meta http-equiv="refresh" content="0; url=&#39;http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&ticket=ST-MzgyNjI4MDYwMA==-1402041171-hk-6CAF1086B4F47FB52DB8DF9E1833A390&retcode=0&#39;"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+		</head>
+		<body bgcolor="#ffffff" text="#000000" link="#0000cc" vlink="#551a8b" alink="#ff0000">
+		<script type="text/javascript" language="javascript">
+		location.replace("http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&ticket=ST-MzgyNjI4MDYwMA==-1402041171-hk-6CAF1086B4F47FB52DB8DF9E1833A390&retcode=0");
+		</script>
+		</body>
+		</html>地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&
+2014-06-06 15:52:56,256 INFO  [main] ( Fetcher.java:184)     - 
+		<html>
+		<head>
+		<title>����ͨ��֤</title>
+		<meta http-equiv="refresh" content="0; url=&#39;http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577163&ticket=ST-MzgyNjI4MDYwMA==-1402041173-hk-D006F1222F50F22D3529C30F571974D3&retcode=0&#39;"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+		</head>
+		<body bgcolor="#ffffff" text="#000000" link="#0000cc" vlink="#551a8b" alink="#ff0000">
+		<script type="text/javascript" language="javascript">
+		location.replace("http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577163&ticket=ST-MzgyNjI4MDYwMA==-1402041173-hk-D006F1222F50F22D3529C30F571974D3&retcode=0");
+		</script>
+		</body>
+		</html>地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577163&
+2014-06-06 15:52:57,759 INFO  [main] ( Fetcher.java:184)     - 
+		<html>
+		<head>
+		<title>����ͨ��֤</title>
+		<meta http-equiv="refresh" content="0; url=&#39;http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577163&&ssosavestate=1433577163&ticket=ST-MzgyNjI4MDYwMA==-1402041175-hk-2DC4AB43C97782F32CC57ACDB769C1D5&retcode=0&#39;"/>
+		<meta http-equiv="Content-Type" content="text/html; charset=GBK" />
+		</head>
+		<body bgcolor="#ffffff" text="#000000" link="#0000cc" vlink="#551a8b" alink="#ff0000">
+		<script type="text/javascript" language="javascript">
+		location.replace("http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577163&&ssosavestate=1433577163&ticket=ST-MzgyNjI4MDYwMA==-1402041175-hk-2DC4AB43C97782F32CC57ACDB769C1D5&retcode=0");
+		</script>
+		</body>
+		</html>地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577163&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577163&&ssosavestate=1433577163&
+2014-06-06 15:55:35,864 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 15:55:35,867 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 15:55:35,867 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 15:55:35,867 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：200
+2014-06-06 15:55:39,031 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:55:46,274 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:55:52,868 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3845698072","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"纯真的镜系列"}}
+2014-06-06 15:58:32,285 WARN  [main] ( Fetcher.java:210)     - 当前请求次数reqCount:200.请求次数超过最大请求，换号
+2014-06-06 15:58:38,405 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 15:58:42,336 WARN  [main] ( Fetcher.java:210)     - 当前请求次数reqCount:200.请求次数超过最大请求，换号
+2014-06-06 15:58:47,296 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:9850717@qq.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841291650","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"数据挖掘阿蒙"}}
+2014-06-06 15:58:50,936 WARN  [main] ( Fetcher.java:210)     - 当前请求次数reqCount:200.请求次数超过最大请求，换号
+2014-06-06 16:00:41,374 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 16:00:41,377 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 16:00:41,378 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 16:00:41,378 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：20
+2014-06-06 16:00:45,742 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:00:49,718 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:00:53,645 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:00:55,918 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 16:01:19,934 WARN  [main] ( Fetcher.java:131)     - org.apache.http.conn.ConnectTimeoutException: Connect to weibo.com:80 timed out
+2014-06-06 16:01:21,395 WARN  [main] ( Fetcher.java:211)     - 当前请求次数reqCount:20.请求次数超过最大请求，换号
+2014-06-06 16:01:27,410 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:01:31,285 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:01:46,376 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 16:01:48,128 WARN  [main] ( Fetcher.java:211)     - 当前请求次数reqCount:20.请求次数超过最大请求，换号
+2014-06-06 16:01:53,043 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2017@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841684770","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2017"}}
+2014-06-06 16:01:53,940 WARN  [main] ( Fetcher.java:211)     - 当前请求次数reqCount:20.请求次数超过最大请求，换号
+2014-06-06 16:01:59,236 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2018@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3848145582","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2018"}}
+2014-06-06 16:02:00,611 WARN  [main] ( Fetcher.java:211)     - 当前请求次数reqCount:20.请求次数超过最大请求，换号
+2014-06-06 16:02:06,662 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 16:02:08,002 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&
+2014-06-06 16:02:11,911 WARN  [main] ( Fetcher.java:131)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:02:13,369 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577723&
+2014-06-06 16:02:14,734 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577723&&ssosavestate=1433577723&
+2014-06-06 16:02:19,320 WARN  [main] ( Fetcher.java:131)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:02:27,409 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&
+2014-06-06 16:02:31,028 WARN  [main] ( Fetcher.java:131)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:02:32,450 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&
+2014-06-06 16:02:37,060 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&
+2014-06-06 16:02:42,860 INFO  [main] ( Fetcher.java:185)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433577723&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&&ssosavestate=1433577723&
+2014-06-06 16:02:42,860 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:13:07,474 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 16:13:07,476 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 16:13:07,477 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 16:13:07,477 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：20
+2014-06-06 16:13:10,887 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 16:13:14,817 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&
+2014-06-06 16:13:18,016 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:13:23,132 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:13:34,275 WARN  [main] ( Fetcher.java:135)     - java.net.SocketTimeoutException: Read timed out
+2014-06-06 16:13:35,048 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:13:38,252 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:13:42,909 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:13:47,206 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:13:50,340 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:13:51,244 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:13:51,244 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:13:51,245 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:13:51,522 INFO  [main] (JDBCUtilSingle.java:43)     - main建立连接....
+2014-06-06 16:13:54,166 INFO  [main] (WeiboUserFilter.java:51)     - 1936617550:未知原因→加入过滤表！
+2014-06-06 16:13:55,393 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:13:56,500 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:13:57,609 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:00,750 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:14:01,708 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:07,786 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:08,526 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:11,661 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:14:12,357 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:13,071 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:13,072 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:14:13,072 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:14:13,075 INFO  [main] (WeiboUserFilter.java:51)     - 1936617550:未知原因→加入过滤表！
+2014-06-06 16:14:13,804 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:14,533 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:17,669 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:14:18,372 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:19,240 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:20,099 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:20,864 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:21,645 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:24,875 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:14:26,057 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:26,058 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:14:26,058 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:14:26,061 INFO  [main] (WeiboUserFilter.java:51)     - 1936617550:未知原因→加入过滤表！
+2014-06-06 16:14:27,269 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:31,071 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:32,119 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:35,254 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:14:38,389 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:14:45,816 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:50,651 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:51,659 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:52,720 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:57,437 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:57,438 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:14:57,439 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:14:57,441 INFO  [main] (WeiboUserFilter.java:51)     - 1936617550:未知原因→加入过滤表！
+2014-06-06 16:14:58,156 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:14:58,966 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:00,141 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:00,905 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:01,645 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:02,437 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:03,230 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:04,007 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:04,809 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:05,531 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:05,532 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:15:05,532 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:15:05,535 INFO  [main] (WeiboUserFilter.java:51)     - 1936617550:未知原因→加入过滤表！
+2014-06-06 16:15:06,301 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:07,100 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:15:07,861 INFO  [main] ( Fetcher.java:186)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578387&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&
+2014-06-06 16:19:59,842 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 16:19:59,844 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 16:19:59,844 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 16:19:59,845 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：20
+2014-06-06 16:20:02,495 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 16:20:03,574 INFO  [main] ( Fetcher.java:188)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578799&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&ticket=ST-MzgyNjI4MDYwMA==-1402042800-hk-23CC429D1D381B006A0BCA7F0FD7D18F&retcode=0
+2014-06-06 16:20:06,123 INFO  [main] ( Fetcher.java:188)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433578799&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D&ticket=ST-MzgyNjI4MDYwMA==-1402042803-hk-DF1C389758BC3161F04ABD1438668313&retcode=0
+2014-06-06 16:20:07,702 WARN  [main] ( Fetcher.java:135)     - org.apache.http.client.ClientProtocolException
+2014-06-06 16:20:09,196 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:17,877 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:joeman1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3834896721","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"期待出成绩"}}
+2014-06-06 16:20:18,565 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:23,462 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3845698072","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"纯真的镜系列"}}
+2014-06-06 16:20:23,951 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:30,099 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut_2013@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3841290127","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广东工业大学计算机学院"}}
+2014-06-06 16:20:30,634 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:36,896 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:20:40,144 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2015@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846159823","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2015"}}
+2014-06-06 16:20:40,680 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:45,659 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2016@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3846160604","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2016"}}
+2014-06-06 16:20:46,058 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:52,069 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:20:54,017 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:gdut2018@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3848145582","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"广工微博2018"}}
+2014-06-06 16:20:54,932 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:21:00,107 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 16:21:00,660 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:21:07,196 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:21:09,150 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:mengzaiqiao1003@163.com登陆成功！
+{"result":true,"redirect":"http://weibo.com/guide/welcome","userinfo":{"uniqueid":"3845698072","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"纯真的镜系列"}}
+2014-06-06 16:21:09,588 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:21:19,199 WARN  [main] (WeiboLoginHttpClientUtils.java:192)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:25:37,770 INFO  [main] (CrawlerContext.java:145)     - 在配置文件中读取了9个微博账户
+2014-06-06 16:25:37,773 INFO  [main] (CrawlerContext.java:150)     - 当前线程数量为：10
+2014-06-06 16:25:37,773 INFO  [main] (CrawlerContext.java:152)     - 允许连接失败最大次数为：10
+2014-06-06 16:25:37,774 INFO  [main] (CrawlerContext.java:156)     - 当前每次登陆最大的请求数量为：20
+2014-06-06 16:25:43,332 INFO  [main] (WeiboLoginHttpClientUtils.java:184)     - 用户名:8jingtai@163.com登陆成功！
+{"result":true,"userinfo":{"uniqueid":"3826280600","userdomain":"?wvr=5&lf=reg","userid":null,"displayname":"蒙蒙-dm"}}
+2014-06-06 16:25:44,364 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2Fsignup%2Fsignup.php%3FinviteCode%3D1936617550&ticket=ST-MzgyNjI4MDYwMA==-1402043141-hk-E0C484D642B00B51889E49AC366073E0&retcode=0
+2014-06-06 16:25:45,324 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043142-hk-34C022E57916E5D64FAED6CEFB5DE5E0&retcode=0
+2014-06-06 16:25:46,170 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043143-hk-1376E1FE7773FFFBD21714DF915AEF12&retcode=0
+2014-06-06 16:25:47,126 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043144-hk-EE7AEFFA21D6B474EFFF1986F48BFE80&retcode=0
+2014-06-06 16:25:48,102 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043145-hk-32BF406787928BF38BB36F4756D1F365&retcode=0
+2014-06-06 16:25:51,239 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:25:53,979 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043149-hk-5C48426A93168E0685298B656035D293&retcode=0
+2014-06-06 16:25:54,838 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043152-hk-1757C5B12F83739F52D04748736EEDA4&retcode=0
+2014-06-06 16:25:58,113 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:26:01,721 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:26:01,722 ERROR [main] ( Fetcher.java:192)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:26:01,723 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:26:01,812 INFO  [main] (JDBCUtilSingle.java:43)     - main建立连接....
+2014-06-06 16:26:02,053 INFO  [main] (WeiboUserFilter.java:51)     - 1936617550:未知原因→加入过滤表！
+2014-06-06 16:26:02,967 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043160-hk-7FB75E16EA689DC81478610DEF8F5169&retcode=0
+2014-06-06 16:26:03,893 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043161-hk-CC5E8C4B0E19D9F915C78B04DBAEE2EA&retcode=0
+2014-06-06 16:26:04,807 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043162-hk-3C357A9A9BF519C291809CA56E83E142&retcode=0
+2014-06-06 16:26:05,703 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043162-hk-6693723A6958928E7FDCC0BED9DBF245&retcode=0
+2014-06-06 16:26:06,635 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043163-hk-07A17B51E76515291B562C20171D8962&retcode=0
+2014-06-06 16:26:07,555 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043164-hk-56A9313F9E60CA8DF7F22757A0953719&retcode=0
+2014-06-06 16:26:10,698 WARN  [main] ( Fetcher.java:135)     - org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:26:14,518 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043168-hk-F5D4DBBA50191B638A259F536DECBF06&retcode=0
+2014-06-06 16:26:15,437 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043172-hk-91F863009BC724C460E5D4ECC6359064&retcode=0
+2014-06-06 16:26:16,391 INFO  [main] ( Fetcher.java:187)     - http://weibo.com/1936617550/info地址跳转：http://passport.weibo.com/wbsso/login?ssosavestate=1433579140&url=http%3A%2F%2Fweibo.com%2F1936617550%2Finfo&ticket=ST-MzgyNjI4MDYwMA==-1402043173-hk-7FF6B22EB87D2E53A3AB59A73018AB5B&retcode=0
+2014-06-06 16:26:16,392 ERROR [main] ( Fetcher.java:192)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:26:16,393 WARN  [main] ( Fetcher.java:48)     - 1936617550未知原因
+2014-06-06 16:26:16,546 ERROR [main] (UserJdbcService.java:449)     - java.sql.SQLIntegrityConstraintViolationException: ORA-00001: 违反唯一约束条件 (AIXI0.FILTER_USERID_KEY)
+

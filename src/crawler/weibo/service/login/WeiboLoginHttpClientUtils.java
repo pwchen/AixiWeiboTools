@@ -23,6 +23,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import crawler.weibo.model.WeiboLoginedClient;
 import utils.CrawlerContext;
 import utils.FileUtils;
 
@@ -40,24 +41,22 @@ public class WeiboLoginHttpClientUtils {
 			+ "1F6739884B9777E4FE9E88A1BBE495927AC4A799B3181D6442443";
 	public static String[] userNameList = CrawlerContext.getContext()
 			.getUserNameList();
-	public static String passwd = CrawlerContext.getContext().getCommonPwd();
+	public static String commonPwd = CrawlerContext.getContext().getCommonPwd();
 	public static int requestNumber = CrawlerContext.getContext()
 			.getRequestNumber();// 最大请求次数
 	public static int failureCount = CrawlerContext.getContext()
 			.getFailureNumber();// 最大连接失败的次数
 	public static String cookie = initCookieString();
-	public static HttpClient httpClient = null;
 	public static int currentUserIndex = 0; // 当前用户的编号
 	public static boolean expireClient = false;// 登陆过期
-	public static String nextUserName = userNameList[currentUserIndex];
 	public static int reqCount = 0;
 
 	private static final Log logger = LogFactory
 			.getLog(WeiboLoginHttpClientUtils.class);
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 20000; i++) {
-			getLoginhttpClient();
+		for (int i = 0; i < 10; i++) {
+			System.out.println(getWeiboLoginedClient());
 		}
 	}
 
@@ -66,41 +65,23 @@ public class WeiboLoginHttpClientUtils {
 	 * 
 	 * @return HttpClient
 	 */
-	public synchronized static HttpClient getLoginhttpClient() {
-		if (httpClient == null) {
-			int i = 0;
-			while (i++ < failureCount) {
-				httpClient = getLoginStatus();
-				reqCount = 0;
-				expireClient = false;
-				if (httpClient != null) {
-					break;
-				}
-				if (++currentUserIndex >= userNameList.length) {// 换下一个用户
-					currentUserIndex = 0;
-				}
-				nextUserName = userNameList[currentUserIndex];
-			}
-		}
-		int randomNumber = (int) Math.random() * 500;
-		if (++reqCount >= requestNumber - randomNumber) {// 请求次数超过最大请求，换号
-			logger.warn("当前请求次数reqCount:" + reqCount + ".请求次数超过最大请求，换号");
-			requestNumber = (int) (requestNumber - Math.random() * 200);
-			expireClient = true;
-			return changeLoginAccount();
-		}
-		return httpClient;
-	}
+	public synchronized static WeiboLoginedClient getWeiboLoginedClient() {
+		HttpClient httpClient = null;
+		int i = 0;
+		while (i++ < failureCount) {
 
-	public synchronized static HttpClient changeLoginAccount() {
-		if (expireClient) {
-			httpClient = null;
-			if (++currentUserIndex >= userNameList.length) {
+			String userName = userNameList[currentUserIndex++];
+			if (currentUserIndex >= userNameList.length) {// 换下一个用户
 				currentUserIndex = 0;
 			}
-			nextUserName = userNameList[currentUserIndex];
+			httpClient = getLoginStatus(userName, commonPwd);
+			if (httpClient != null) {
+				WeiboLoginedClient wlClient = new WeiboLoginedClient(
+						httpClient, userName);
+				return wlClient;
+			}
 		}
-		return getLoginhttpClient();
+		return null;
 	}
 
 	/**
@@ -108,7 +89,7 @@ public class WeiboLoginHttpClientUtils {
 	 * 
 	 * @return
 	 */
-	private static HttpClient getLoginStatus() {
+	private static HttpClient getLoginStatus(String userName, String password) {
 
 		final HttpClient client = HttpConnectionManager.getHttpClient();
 		HttpPost post = new HttpPost(
@@ -129,7 +110,7 @@ public class WeiboLoginHttpClientUtils {
 		long servertime = info.servertime;
 		String nonce = info.nonce;
 
-		String pwdString = servertime + "\t" + nonce + "\n" + passwd;
+		String pwdString = servertime + "\t" + nonce + "\n" + password;
 		String sp = new BigIntegerRSA().rsaCrypt(SINA_PK, "10001", pwdString);
 
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
@@ -141,7 +122,7 @@ public class WeiboLoginHttpClientUtils {
 		nvps.add(new BasicNameValuePair("vsnf", "1"));
 		nvps.add(new BasicNameValuePair("ssosimplelogin", "1"));
 		nvps.add(new BasicNameValuePair("vsnval", ""));
-		nvps.add(new BasicNameValuePair("su", encodeUserName(nextUserName)));
+		nvps.add(new BasicNameValuePair("su", encodeUserName(userName)));
 		nvps.add(new BasicNameValuePair("service", "miniblog"));
 		nvps.add(new BasicNameValuePair("servertime", servertime + ""));
 		nvps.add(new BasicNameValuePair("nonce", nonce));
@@ -164,11 +145,11 @@ public class WeiboLoginHttpClientUtils {
 						.replace("Set-Cookie:", "").trim();
 				cookie = cookiestr.substring(0, cookiestr.indexOf(";")) + ";";
 			}
-			cookie += "un=" + nextUserName;
+			cookie += "un=" + userName;
 			String entity = EntityUtils.toString(response.getEntity());
 			if (entity.indexOf("retcode=4049") != -1) {
-				logger.error(nextUserName + "登陆失败！需要输入验证码！系统即将退出！");
-				// FileUtils.shutDoun();//关机
+				logger.error(userName + "登陆失败！需要输入验证码！系统即将退出！");
+				FileUtils.shutDoun();// 关机
 				// System.exit(1);
 				Thread.currentThread().sleep(1000000);
 			}
@@ -200,8 +181,7 @@ public class WeiboLoginHttpClientUtils {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
-
-			logger.info("用户名:" + nextUserName + "登陆成功！\n" + s);
+			logger.info("用户名:" + userName + "登陆成功！\n" + s);
 		} catch (ParseException e) {
 			logger.error(e);
 			return null;
@@ -249,7 +229,7 @@ public class WeiboLoginHttpClientUtils {
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public static String getPreLoginInfo(HttpClient client)
+	private static String getPreLoginInfo(HttpClient client)
 			throws ParseException, IOException {
 		String preloginurl = "http://login.sina.com.cn/sso/prelogin.php?entry=sso&"
 				+ "callback=sinaSSOController.preloginCallBack&su="
@@ -267,7 +247,6 @@ public class WeiboLoginHttpClientUtils {
 
 		String jsonBody = getResp.substring(firstLeftBracket + 1,
 				lastRightBracket);
-		// System.out.println(jsonBody);
 		return jsonBody;
 
 	}

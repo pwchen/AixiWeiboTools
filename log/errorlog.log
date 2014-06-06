@@ -1,0 +1,39 @@
+2014-06-06 15:16:13,583 ERROR [main] (WeiboLoginHttpClientUtils.java:120)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:26:41,450 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:26:44,455 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:26:47,468 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:10,692 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:27,064 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:35,931 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:38,944 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:41,947 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:27:49,238 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:28:11,214 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:28:17,505 ERROR [main] (WeiboLoginHttpClientUtils.java:106)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:42:42,950 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:42:56,995 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:43:15,258 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:43:18,289 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 15:55:39,031 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:01:27,410 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:02:42,860 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:13:51,244 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:14:13,072 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:14:26,058 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:14:57,438 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:15:05,532 ERROR [main] ( Fetcher.java:191)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:20:09,196 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:18,565 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:23,951 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:30,634 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:36,896 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:20:40,680 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:46,058 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:20:52,069 ERROR [main] (WeiboLoginHttpClientUtils.java:104)     - 登陆失败，请确认已连接正确网络！org.apache.http.conn.ConnectTimeoutException: Connect to login.sina.com.cn:80 timed out
+2014-06-06 16:20:54,932 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:21:00,660 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:21:09,588 ERROR [main] ( Fetcher.java:168)     - 还没有微博帐号？现在加入http://weibo.com/1936617550/info等待3秒后换号...
+2014-06-06 16:26:01,722 ERROR [main] ( Fetcher.java:192)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:26:16,392 ERROR [main] ( Fetcher.java:192)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
+2014-06-06 16:26:16,546 ERROR [main] (UserJdbcService.java:449)     - java.sql.SQLIntegrityConstraintViolationException: ORA-00001: 违反唯一约束条件 (AIXI0.FILTER_USERID_KEY)
+

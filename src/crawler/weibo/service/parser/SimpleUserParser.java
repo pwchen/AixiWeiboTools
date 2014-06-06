@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import utils.FileUtils;
+import crawler.weibo.model.WeiboLoginedClient;
 import crawler.weibo.model.WeiboUser;
 import crawler.weibo.service.fetcher.Fetcher;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
@@ -39,8 +40,9 @@ public class SimpleUserParser {
 		String url = "http://weibo.com/aj/user/newcard?type=1&id=" + userId
 				+ "&callback=STK_" + (new Date().getTime() * 1000);
 		String entity = null;
-		HttpClient client = WeiboLoginHttpClientUtils.getLoginhttpClient();
-		entity = Fetcher.fetchRawHtml(url, client);
+		WeiboLoginedClient wlClient = WeiboLoginHttpClientUtils
+				.getWeiboLoginedClient();
+		entity = Fetcher.fetchRawHtml(url, wlClient);
 		if (entity == null) {
 			return null;
 		}

@@ -19,6 +19,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import utils.FileUtils;
+import crawler.weibo.model.WeiboLoginedClient;
 import crawler.weibo.service.fetcher.Fetcher;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
 
@@ -68,8 +69,9 @@ public class CrawlMessageForwardTrack {
 	 * @param url
 	 */
 	private static void startCrawling(String url) {
-		HttpClient client = WeiboLoginHttpClientUtils.getLoginhttpClient();
-		String entity = Fetcher.fetchRawHtml(url + "?type=repost", client);
+		WeiboLoginedClient wlClient = WeiboLoginHttpClientUtils
+				.getWeiboLoginedClient();
+		String entity = Fetcher.fetchRawHtml(url + "?type=repost", wlClient);
 		logger.info("爬取的微博地址:" + url);
 		if (entity == null) {
 			logger.error("页面被删了，监控器退出");
@@ -95,13 +97,13 @@ public class CrawlMessageForwardTrack {
 						String temp = Fetcher.fetchRawHtml(
 								pageUrl.substring(0,
 										pageUrl.indexOf("page=") + 5) + i,
-								client);
+								wlClient);
 						if (temp == null) {
 							for (int j = 0; j < 5; j++) {
 								temp = Fetcher.fetchRawHtml(
 										pageUrl.substring(0,
 												pageUrl.indexOf("page=") + 5)
-												+ i, client);
+												+ i, wlClient);
 								if (temp != null)
 									break;
 							}
