@@ -35,8 +35,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 
 	@Override
 	public void run() {
-		WeiboLoginedClient wlClient = WeiboLoginHttpClientUtils
-				.getWeiboLoginedClient();
+		wlClient = WeiboLoginHttpClientUtils.getWeiboLoginedClient();
 		if (initTask != null) {
 			doWorkBytask(initTask);
 		}
