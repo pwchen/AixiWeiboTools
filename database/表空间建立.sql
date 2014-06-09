@@ -13,11 +13,9 @@ autoextend on
 next 32m maxsize 4096m
 extent management local;
 
+create user aixi0 identified by aixi0;
+grant dba to aixi0;
 
 alter user aixi0 identified by aixi0
-default tablespace weibo_data
-temporary tablespace weibo_temp;
-
-alter user aixi1 identified by aixi1
 default tablespace weibo_data
 temporary tablespace weibo_temp;

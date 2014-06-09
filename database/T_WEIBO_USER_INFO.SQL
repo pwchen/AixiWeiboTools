@@ -1,4 +1,3 @@
-﻿-- Create table
 create table T_WEIBO_USER_INFO
 (
   userid            VARCHAR2(100) not null,

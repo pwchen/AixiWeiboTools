@@ -10,7 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public final class JDBCUtilSingle {
-	static String url = "jdbc:oracle:thin:@192.168.1.92:1521:weibo";
+	static String url = "jdbc:oracle:thin:@localhost:1521:weibo";
 	static String name = "aixi0";
 	static String password = "aixi0";
 	static Connection conn = null;

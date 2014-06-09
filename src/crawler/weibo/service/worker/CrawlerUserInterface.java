@@ -14,7 +14,7 @@ public interface CrawlerUserInterface {
 	public void crawlerUserInfAndReations(Task task);
 
 	/**
-	 * 仅仅爬取微博的用户信息，根据这些信息过滤用户
+	 * 仅仅爬取微博的用户基本信息，不包括关注和粉丝关系，根据这些信息过滤用户
 	 * 
 	 * @param task
 	 */

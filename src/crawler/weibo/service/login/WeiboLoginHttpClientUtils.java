@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import crawler.weibo.model.WeiboLoginedClient;
+import utils.ConnectNetworkUtil;
 import utils.CrawlerContext;
 import utils.FileUtils;
 
@@ -46,16 +47,13 @@ public class WeiboLoginHttpClientUtils {
 			.getRequestNumber();// 最大请求次数
 	public static int failureCount = CrawlerContext.getContext()
 			.getFailureNumber();// 最大连接失败的次数
-	public static String cookie = initCookieString();
 	public static int currentUserIndex = 0; // 当前用户的编号
-	public static boolean expireClient = false;// 登陆过期
-	public static int reqCount = 0;
 
 	private static final Log logger = LogFactory
 			.getLog(WeiboLoginHttpClientUtils.class);
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 1; i++) {
 			System.out.println(getWeiboLoginedClient());
 		}
 	}
@@ -69,7 +67,6 @@ public class WeiboLoginHttpClientUtils {
 		HttpClient httpClient = null;
 		int i = 0;
 		while (i++ < failureCount) {
-
 			String userName = userNameList[currentUserIndex++];
 			if (currentUserIndex >= userNameList.length) {// 换下一个用户
 				currentUserIndex = 0;
@@ -91,7 +88,7 @@ public class WeiboLoginHttpClientUtils {
 	 */
 	private static HttpClient getLoginStatus(String userName, String password) {
 
-		final HttpClient client = HttpConnectionManager.getHttpClient();
+		HttpClient client = HttpConnectionManager.getHttpClient();
 		HttpPost post = new HttpPost(
 				"http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.4.2)");
 
@@ -139,19 +136,25 @@ public class WeiboLoginHttpClientUtils {
 		try {
 			post.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
 			HttpResponse response = client.execute(post);
-			String cookiestr;
-			for (int i = 0; i < response.getHeaders("Set-Cookie").length; i++) {
-				cookiestr = response.getHeaders("Set-Cookie")[i].toString()
-						.replace("Set-Cookie:", "").trim();
-				cookie = cookiestr.substring(0, cookiestr.indexOf(";")) + ";";
-			}
-			cookie += "un=" + userName;
+			/*
+			 * String cookiestr; for (int i = 0; i <
+			 * response.getHeaders("Set-Cookie").length; i++) { cookiestr =
+			 * response.getHeaders("Set-Cookie")[i].toString()
+			 * .replace("Set-Cookie:", "").trim();
+			 * System.out.println("--------------");
+			 * System.out.println(cookiestr);
+			 * System.out.println("--------------"); }
+			 */
 			String entity = EntityUtils.toString(response.getEntity());
 			if (entity.indexOf("retcode=4049") != -1) {
-				logger.error(userName + "登陆失败！需要输入验证码！系统即将退出！");
-				FileUtils.shutDoun();// 关机
-				// System.exit(1);
-				Thread.currentThread().sleep(1000000);
+				logger.warn(userName + "登陆失败！需要输入验证码！重新拨号以验证IP！");
+				try {
+					Thread.sleep(100000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				// ConnectNetworkUtil.reConnAdsl("FZFTTH", "02007136612",
+				// "UPNMVHLJ");
 			}
 			if (entity.indexOf("code=0") == -1) {
 				String fileName = "loginFail" + new Date().getTime() + ".html";
@@ -191,8 +194,6 @@ public class WeiboLoginHttpClientUtils {
 		} catch (IOException e) {
 			logger.warn(e);
 			return null;
-		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 		return client;
 	}
@@ -273,14 +274,4 @@ public class WeiboLoginHttpClientUtils {
 		return un;
 	}
 
-	/**
-	 * 初始化Cookie
-	 * 
-	 * @return
-	 */
-	private static String initCookieString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("wvr=4;");
-		return sb.toString();
-	}
 }

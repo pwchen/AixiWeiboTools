@@ -37,3 +37,35 @@
 2014-06-06 16:26:16,392 ERROR [main] ( Fetcher.java:192)     - 超时次数超过最大次数:10放弃此次请求:http://weibo.com/1936617550/info
 2014-06-06 16:26:16,546 ERROR [main] (UserJdbcService.java:449)     - java.sql.SQLIntegrityConstraintViolationException: ORA-00001: 违反唯一约束条件 (AIXI0.FILTER_USERID_KEY)
 
+2014-06-09 11:51:55,345 ERROR [main] (ConnectNetworkUtil.java:180)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 11:51:55,610 ERROR [main] (ConnectNetworkUtil.java:195)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:14:53,057 ERROR [main] (ConnectNetworkUtil.java:203)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:14:53,313 ERROR [main] (ConnectNetworkUtil.java:218)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:15:52,657 ERROR [main] (ConnectNetworkUtil.java:203)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:15:52,929 ERROR [main] (ConnectNetworkUtil.java:218)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:20:35,811 ERROR [main] (ConnectNetworkUtil.java:204)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:20:36,074 ERROR [main] (ConnectNetworkUtil.java:219)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:22:31,372 ERROR [main] (ConnectNetworkUtil.java:200)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:22:31,824 ERROR [main] (ConnectNetworkUtil.java:215)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:27:19,245 ERROR [main] (ConnectNetworkUtil.java:206)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:27:19,499 ERROR [main] (ConnectNetworkUtil.java:222)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:34:57,451 ERROR [main] (ConnectNetworkUtil.java:205)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:34:57,701 ERROR [main] (ConnectNetworkUtil.java:221)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:36:21,022 ERROR [main] (ConnectNetworkUtil.java:205)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:36:21,287 ERROR [main] (ConnectNetworkUtil.java:221)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:36:37,092 ERROR [main] (ConnectNetworkUtil.java:206)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:36:37,514 ERROR [main] (ConnectNetworkUtil.java:222)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:38:46,775 ERROR [main] (ConnectNetworkUtil.java:206)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:38:47,044 ERROR [main] (ConnectNetworkUtil.java:222)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:42:10,445 ERROR [main] (ConnectNetworkUtil.java:207)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:42:10,703 ERROR [main] (ConnectNetworkUtil.java:223)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:43:05,042 ERROR [main] (ConnectNetworkUtil.java:207)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:43:05,588 ERROR [main] (ConnectNetworkUtil.java:223)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:43:35,744 ERROR [main] (ConnectNetworkUtil.java:207)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:43:36,010 ERROR [main] (ConnectNetworkUtil.java:223)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:52:43,136 ERROR [main] (ConnectNetworkUtil.java:203)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:52:43,401 ERROR [main] (ConnectNetworkUtil.java:219)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:59:03,997 ERROR [main] (ConnectNetworkUtil.java:203)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 16:59:04,262 ERROR [main] (ConnectNetworkUtil.java:219)     - ADSL重启失败！{"code":"99999","msg":"not auth."}
+2014-06-09 17:02:41,490 ERROR [main] (ConnectNetworkUtil.java:203)     - ADSL关闭失败！{"code":"99999","msg":"not auth."}
+2014-06-09 17:02:41,771 ERROR [main] (ConnectNetworkUtil.java:219)     - ADSL重启失败！{"code":"99999","msg":"not auth."}

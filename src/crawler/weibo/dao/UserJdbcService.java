@@ -402,7 +402,7 @@ public class UserJdbcService {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		if (userId != null) {
-			String sql = "select * from t_weibo_user_filterlist t where t.userid='"
+			String sql = "select USERID from t_weibo_user_filterlist t where t.userid='"
 					+ userId + "'";
 			try {
 				pstmt = oconn.prepareStatement(sql);

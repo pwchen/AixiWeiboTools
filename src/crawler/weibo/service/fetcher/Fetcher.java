@@ -12,6 +12,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
 
 import utils.CrawlerContext;
+import utils.FileUtil;
 import crawler.weibo.model.WeiboLoginedClient;
 import crawler.weibo.service.filter.UserFilterService;
 import crawler.weibo.service.login.WeiboLoginHttpClientUtils;
@@ -176,6 +177,7 @@ public class Fetcher {
 				wlClient = changeAnotherAccount();
 				exception = true;
 			} else if (entityStr.indexOf("页面地址有误") != -1) {
+				FileUtil.saveToFile(entityStr, "111.html", "utf-8");
 				return "页面不存在";
 			} else if (entityStr.indexOf("location.replace(") != -1) {
 				int locationIndex = entityStr.indexOf("location.replace(");
@@ -183,6 +185,7 @@ public class Fetcher {
 				location = location.substring(0, location.indexOf("\");"));
 				// location = location.substring(0,
 				// location.indexOf("ticket="));
+				getMethod = new HttpGet(location);
 				exception = true;
 				logger.info(url + "地址跳转：" + location);
 				continue;

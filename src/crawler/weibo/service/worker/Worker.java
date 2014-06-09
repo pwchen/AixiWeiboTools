@@ -2,7 +2,6 @@ package crawler.weibo.service.worker;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.client.HttpClient;
 
 import utils.CrawlerContext;
 import crawler.weibo.dao.UserJdbcService;
@@ -45,12 +44,12 @@ public class Worker implements Runnable, CrawlerUserInterface {
 			if (initTask == null) {
 				try {
 					logger.info("队列中任务数量为" + Scheduler.getScheduleList().size()
-							+ "，休息20s.");
-					Thread.sleep(20000);
+							+ "，休息10s.");
+					Thread.sleep(10000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if ((sleepCount--) < 0)
+				if ((sleepCount--) < -100)
 					break;
 			} else {
 				doWorkBytask(initTask);
@@ -58,6 +57,7 @@ public class Worker implements Runnable, CrawlerUserInterface {
 			}
 			initTask = Scheduler.pollTask();
 		}
+		logger.warn("线程退出...");
 	}
 
 	/**

@@ -21,9 +21,7 @@ public class InitSchedulerService {
 		int size = 0;
 		try {
 			jsonArr = new JSONArray(text);
-
 			for (int i = 0; jsonArr != null && i < jsonArr.length(); i++) {
-
 				JSONObject jsonObj = jsonArr.getJSONObject(i);
 				Task newTask = new Task(jsonObj.getString("userId"), 0,
 						jsonObj.getInt("depth"));

@@ -61,9 +61,11 @@ public class Scheduler {
 	 */
 	public static synchronized boolean checkTask(Task task) {
 		if (Scheduler.getWorkingList().contains(task)) {// 工作队列
+			logger.info(task+"已经正在工作！");
 			return true;
 		}
 		if (Scheduler.getScheduleList().contains(task)) {// 任务队列
+			logger.info(task+"已经存在工作队列中！");
 			return true;
 		}
 		if (WeiboUserFilter.filterUserByFilUserTab(task.getUserId())) {// 用户过滤表
