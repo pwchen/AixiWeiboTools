@@ -30,6 +30,11 @@ public class Fetcher {
 		WeiboLoginedClient wlClient = WeiboLoginHttpClientUtils
 				.getWeiboLoginedClient();
 		for (int i = 0; i < 3000; i++) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			fetchUserInfoHtmlByUid("1936617550", wlClient);
 			System.out.println(i);
 		}

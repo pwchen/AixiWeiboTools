@@ -23,10 +23,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import crawler.weibo.model.WeiboLoginedClient;
-import utils.ConnectNetworkUtil;
 import utils.CrawlerContext;
 import utils.FileUtils;
+import crawler.weibo.model.WeiboLoginedClient;
 
 /**
  * 微博登陆器，根据最大次数自动换号
